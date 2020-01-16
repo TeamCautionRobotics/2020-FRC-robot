@@ -57,6 +57,8 @@ public class BallChucker9000 {
         // Encoders
         rotatorEncoder = new Encoder(rotatorEncoderChannelA, rotatorEncoderChannelB);
         flywheelEncoder = new Encoder(flywheelEncoderChannelA, flywheelEncoderChannelB);
+        rotatorEncoder.setDistancePerPulse(1/1024);
+        flywheelEncoder.setDistancePerPulse(1/1024);
 
         // Piston
         indexerPiston = new Solenoid(indexerPistonPort);

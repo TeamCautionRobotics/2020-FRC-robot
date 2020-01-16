@@ -16,7 +16,7 @@
 
       - - - - - - - - - - - - - - - - - - - - - - -
 
-      Professionally blasting your balls since 2020
+      Professionally chucking balls since 2020
 */
 
 package frc.robot;

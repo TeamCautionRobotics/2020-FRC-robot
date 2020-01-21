@@ -16,7 +16,7 @@ public class RainbowDJ {
    // rainbowDJSpinner
 
     // Class initializer
-    public BallChucker9000(int rainbowDJEncoder) {
+    public RainbowDJ(int rainbowDJEncoderChannelA, int rainbowDJEncoderChannelB) {
     
         // Encoders
         rainbowDJEncoder = new Encoder(rainbowDJEncoderChannelA, rainbowDJEncoderChannelB);
@@ -27,18 +27,12 @@ public class RainbowDJ {
 
     // Getters
 
-    // Encoder
-    public double getRotatorEncoder() {
-        return rotatorEncoder.get();
+    public double getRainbowDJEncoderDistance() {
+        return rainbowDJEncoder.getDistance();
     }
 
-    public double getFlywheelEncoder() {
-        return flywheelEncoder.get();
-    }
-
-    // Limit switch 
-    public boolean getRotatorSwitch() {
-        return rotatorSwitch.get();
+    public double getRainbowDJEncoderRate() {
+        return rainbowDJEncoder.getRate();
     }
 
 }

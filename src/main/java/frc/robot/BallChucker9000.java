@@ -84,7 +84,7 @@ public class BallChucker9000 {
     }
 
     // Pistons
-    public void indexerPistonControl(boolean state) {
+    public void indexerPistonOut(boolean state) {
         indexerPiston.set(state);
     }
 

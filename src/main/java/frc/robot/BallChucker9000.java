@@ -1,18 +1,16 @@
 /*
-    This class includes:
-
      Rotator:
-      Motor
+      Motor - Positive for clockwise, negative for counterclockwise
       Encoder
-      Limit Switch
+      Limit Switch - False for closed, true for open
      
-      Flywheel:
-       Motor
-       Encoder
-
-      Indexer Wheel
-
-      Indexer Piston
+     Flywheel:
+      Motor - Positive will eject the ball
+      Encoder
+     
+      Indexer
+       Motor - Positive will push balls toward the flywheel
+       Piston - True for extended, false for retracted
 
       - - - - - - - - - - - - - - - - - - - - - - -
 

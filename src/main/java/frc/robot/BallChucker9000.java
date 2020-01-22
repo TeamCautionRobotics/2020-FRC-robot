@@ -39,13 +39,13 @@ public class BallChucker9000 {
     private final Solenoid indexerPiston;
 
     // Limit switches
-    private final DigitalInput rotatorSwitch;
+    private final DigitalInput rotatorAtZeroSwitch;
 
 
     // Class initializer
     public BallChucker9000(int flywheelMotorPort, int rotatorMotorPort, int indexerMotorPort, int rotatorEncoderChannelA, 
                             int rotatorEncoderChannelB, int flywheelEncoderChannelA, int flywheelEncoderChannelB, 
-                            int indexerPistonPort, int rotatorSwitchPort) {
+                            int indexerPistonPort, int rotatorAtZeroSwitchPort) {
     
         // ESCs
         flywheelMotor = new VictorSP(flywheelMotorPort);
@@ -62,7 +62,7 @@ public class BallChucker9000 {
         indexerPiston = new Solenoid(indexerPistonPort);
 
         //Limit switches
-        rotatorSwitch = new DigitalInput(rotatorSwitchPort);
+        rotatorAtZeroSwitch = new DigitalInput(rotatorAtZeroSwitchPort);
 
     }
 
@@ -99,8 +99,8 @@ public class BallChucker9000 {
     }
 
     // Limit switch 
-    public boolean getRotatorSwitch() {
-        return !rotatorSwitch.get();
+    public boolean getRotatorAtZeroSwitch() {
+        return !rotatorAtZeroSwitch.get();
     }
 
 }

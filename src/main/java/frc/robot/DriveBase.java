@@ -10,7 +10,7 @@ public class DriveBase {
 
     private final VictorSP driveLeft;
     private final VictorSP driveRight;
-    private Solenoid shifter;
+    private final Solenoid shifter;
 
     private final Encoder leftEncoder;
     private final Encoder rightEncoder;

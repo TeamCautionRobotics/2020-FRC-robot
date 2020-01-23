@@ -3,12 +3,14 @@ package frc.robot;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.VictorSP;
 
 public class DriveBase {
 
     private final VictorSP driveLeft;
     private final VictorSP driveRight;
+    private final Solenoid shifter;
 
     private final Encoder leftEncoder;
     private final Encoder rightEncoder;
@@ -20,7 +22,7 @@ public class DriveBase {
     private double heading;
     public double courseHeading;
 
-    public DriveBase(int left, int right, int leftA, int leftB, int rightA, int rightB) {
+    public DriveBase(int left, int right, int leftA, int leftB, int rightA, int rightB, int shifterChannel) {
         driveLeft = new VictorSP(left);
         driveRight = new VictorSP(right);
 
@@ -29,6 +31,8 @@ public class DriveBase {
 
         leftEncoder.setDistancePerPulse((4 * Math.PI) / 1024.0);
         rightEncoder.setDistancePerPulse((4 * Math.PI) / 1024.0);
+
+        shifter = new Solenoid(shifterChannel);
 
         gyro = new ADXRS450_Gyro();
         gyro.calibrate();
@@ -43,6 +47,10 @@ public class DriveBase {
 
     public void drive(double power) {
         drive(power, power);
+    }
+
+    public void useHighGear(boolean highGear) {
+        shifter.set(highGear);
     }
 
     public void resetGyro() {

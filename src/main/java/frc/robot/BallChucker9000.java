@@ -1,7 +1,7 @@
 /*
      Rotator:
       Motor - Positive for clockwise, negative for counterclockwise
-      Encoder
+      Encoder with offset
       Limit Switch - False for closed, true for open
      
      Flywheel:
@@ -41,6 +41,9 @@ public class BallChucker9000 {
     // Limit switches
     private final DigitalInput rotatorAtZeroSwitch;
 
+    // Other variables
+    private final double rotatorEncoderOffset = 0.0;
+
 
     // Class initializer
     public BallChucker9000(int flywheelMotorPort, int rotatorMotorPort, int indexerMotorPort, int rotatorEncoderChannelA, 
@@ -64,6 +67,12 @@ public class BallChucker9000 {
         //Limit switches
         rotatorAtZeroSwitch = new DigitalInput(rotatorAtZeroSwitchPort);
 
+    }
+
+    // Reset the encoder to zero when called
+    // The offset value may be a nonzero value, see line 45
+    public void resetRotatorEncoder() {
+        rotatorEncoder.reset();
     }
 
     // Setters
@@ -90,8 +99,9 @@ public class BallChucker9000 {
     // Getters
 
     // Encoder
+    // The offset value may be a nonzero value, see line 45
     public double getRotatorEncoder() {
-        return rotatorEncoder.getDistance();
+        return rotatorEncoder.getDistance() + rotatorEncoderOffset;
     }
 
     public double getFlywheelEncoder() {

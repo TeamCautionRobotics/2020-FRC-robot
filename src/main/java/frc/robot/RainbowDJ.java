@@ -49,7 +49,7 @@ public class RainbowDJ {
         return rainbowDJEncoder.getDistance();
     }
 
-    public double getRate() {
+    public double getSpeed() {
         return rainbowDJEncoder.getRate();
     }
 

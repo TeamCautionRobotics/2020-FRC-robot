@@ -12,9 +12,9 @@ public class BallTransfer {
 
     /**
      * 
-     * @param power positave to move ball in negative to move ball out
+     * @param power positive to move ball in, negative to move ball out
      */
-    public void moveBall(double power) {
+    public void moveBalls(double power) {
         beltMotor.set(power);
     }
 }

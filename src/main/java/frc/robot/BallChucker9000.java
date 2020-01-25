@@ -71,8 +71,10 @@ public class BallChucker9000 {
 
     // Reset the encoder to zero when called
     // The offset value may be a nonzero value, see line 45
-    public void resetRotatorEncoder() {
-        rotatorEncoder.reset();
+    public void update() {
+        if (getRotatorAtZeroSwitch()) {
+            rotatorEncoder.reset();
+        }
     }
 
     // Setters
@@ -97,13 +99,6 @@ public class BallChucker9000 {
 
 
     // Getters
-
-    // Encoder
-    // The offset value may be a nonzero value, see line 45
-    public double getRotatorEncoder() {
-        return rotatorEncoder.getDistance() + rotatorEncoderOffset;
-    }
-
     public double getFlywheelEncoder() {
         return flywheelEncoder.getRate();
     }

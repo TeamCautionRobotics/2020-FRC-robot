@@ -29,6 +29,7 @@ public class Climb {
 
     public void activateWinchLock(boolean lock) {
         winchLock.set(lock);
+        currentWinchLockState = lock;
     }
 
     public void moveArms(double power) {

@@ -5,19 +5,17 @@ import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.DigitalInput;
 
 public class Climb {
-    
 
     private final VictorSP winchMotor;
+    private final VictorSP armMotor;
 
     private final Solenoid winchLock;
-
-    private final VictorSP armMotor;
 
     private DigitalInput armLimitSwitch;
 
     private boolean currentWinchLockState;
 
-    public Climb(int winchMotorPort, int winchLockPort, int armMotorPort, int armLimitSwitchPort) {
+    public Climb(int winchMotorPort, int armMotorPort, int winchLockPort, int armLimitSwitchPort) {
         winchMotor = new VictorSP(winchLock);
         winchLock = new Solenoid(winchLockPort);
         armMotor = new VictorSP(armMotorPort);
@@ -37,12 +35,11 @@ public class Climb {
         armMotor.set(power);
     }
 
-    public boolean getArmLimitSwitchValue(){
+    public boolean getArmLimitSwitchValue() {
         return !armLimitSwitch.get();
     }
 
-    public void toggleWinchLock()
-    {
+    public void toggleWinchLock() {
         activateWinchLock(!currentWinchLockState);
     }
 }

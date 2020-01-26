@@ -17,11 +17,12 @@ public class Climb {
 
     private boolean currentWinchLockState;
 
-    public Climb(int winchMotorPort, int winchLockPort, int armMotorPort, armLimitSwitchPort) {
+    public Climb(int winchMotorPort, int winchLockPort, int armMotorPort, int armLimitSwitchPort) {
         winchMotor = new VictorSP(winchLock);
         winchLock = new Solenoid(winchLockPort);
         armMotor = new VictorSP(armMotorPort);
         armLimitSwitchPort = new DigitalInput(armLimitSwitchPort);
+        currentWinchLockState = false;
     }
 
     public void liftRobot(double power) {
@@ -37,16 +38,11 @@ public class Climb {
     }
 
     public boolean getArmLimitSwitchValue(){
-        return !armLimitSwitch.get()
+        return !armLimitSwitch.get();
     }
 
     public void toggleWinchLock()
     {
         activateWinchLock(!currentWinchLockState);
-    }
-
-    public void setArmsDown() {
-        if (getArmLimitSwitchValue()) armMotor.set(-.5);
-        else armMotor.set(0);
     }
 }

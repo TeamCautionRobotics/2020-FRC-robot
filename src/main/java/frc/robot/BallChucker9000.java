@@ -41,9 +41,6 @@ public class BallChucker9000 {
     // Limit switches
     private final DigitalInput rotatorAtZeroSwitch;
 
-    // Other variables
-    private final double rotatorEncoderOffset = 0.0;
-
 
     // Class initializer
     public BallChucker9000(int flywheelMotorPort, int rotatorMotorPort, int indexerMotorPort, int rotatorEncoderChannelA, 

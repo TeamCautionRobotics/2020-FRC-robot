@@ -16,10 +16,10 @@ public class Climb {
     private boolean currentWinchLockState;
 
     public Climb(int winchMotorPort, int armMotorPort, int winchLockPort, int armLimitSwitchPort) {
-        winchMotor = new VictorSP(winchLock);
+        winchMotor = new VictorSP(winchMotorPort);
         winchLock = new Solenoid(winchLockPort);
         armMotor = new VictorSP(armMotorPort);
-        armLimitSwitchPort = new DigitalInput(armLimitSwitchPort);
+        armLimitSwitch = new DigitalInput(armLimitSwitchPort);
         currentWinchLockState = false;
     }
 

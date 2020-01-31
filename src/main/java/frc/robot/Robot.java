@@ -10,6 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.misc2020.EnhancedJoystick;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -24,6 +25,11 @@ public class Robot extends TimedRobot {
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
+  EnhancedJoystick leftJoystick;
+  EnhancedJoystick rightJoystick;
+
+  DriveBase driveBase;
+
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
@@ -33,6 +39,11 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
+
+    leftJoystick = new EnhancedJoystick(0);
+    rightJoystick = new EnhancedJoystick(1);
+
+    driveBase = new DriveBase(0, 1, 0, 1, 2, 3, 0);
   }
 
   /**
@@ -86,6 +97,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+    driveBase.drive(leftJoystick.getY(), rightJoystick.getY());
   }
 
   /**

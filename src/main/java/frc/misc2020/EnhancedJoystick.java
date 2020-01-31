@@ -49,7 +49,5 @@ public class EnhancedJoystick extends Joystick {
             return (value + deadbandSize) / (1 - deadbandSize);
         }
         return 0;
-
     }
-
 }

@@ -1,4 +1,4 @@
-package frc.robot.autonomous;
+package frc.autonomous;
 
 import java.util.function.Supplier;
 

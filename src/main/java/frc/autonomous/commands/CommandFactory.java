@@ -1,8 +1,8 @@
-package frc.robot.autonomous.commands;
+package frc.autonomous.commands;
 
 import java.lang.reflect.Method;
 
-import frc.robot.autonomous.Command;
+import frc.autonomous.Command;
 
 public class CommandFactory {
 

@@ -2,7 +2,7 @@
  * A Mission that will load a MissionScript file every time it is run. The MissionScriptMission
  * commands are set by the MissionScript file and updated every time its reset function is called.
  */
-package frc.robot.autonomous;
+package frc.autonomous;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -10,7 +10,7 @@ import java.nio.file.Path;
 import java.text.ParseException;
 import java.util.ArrayList;
 
-import frc.robot.autonomous.commands.CommandFactory;
+import frc.autonomous.commands.CommandFactory;
 
 public class MissionScriptMission extends Mission {
     Path missionScriptFile;

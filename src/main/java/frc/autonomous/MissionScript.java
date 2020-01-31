@@ -1,11 +1,11 @@
-package frc.robot.autonomous;
+package frc.autonomous;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.List;
 
-import frc.robot.autonomous.commands.CommandFactory;
+import frc.autonomous.commands.CommandFactory;
 
 public class MissionScript {
 

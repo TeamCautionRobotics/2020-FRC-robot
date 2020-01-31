@@ -1,6 +1,6 @@
-package frc.robot.autonomous.commands;
+package frc.autonomous.commands;
 
-import frc.robot.autonomous.Command;
+import frc.autonomous.Command;
 
 import edu.wpi.first.wpilibj.Timer;
 

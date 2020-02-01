@@ -10,6 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.misc2020.EnhancedJoystick;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -24,6 +25,11 @@ public class Robot extends TimedRobot {
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
+  private EnhancedJoystick driverLeft;
+  private EnhancedJoystick driverRight;
+
+  private BallChucker9000 ballChucker9000;
+
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
@@ -33,6 +39,11 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
+
+    driverLeft = new EnhancedJoystick(0, 0.1);
+    driverRight = new EnhancedJoystick(1, 0.1);
+
+    ballChucker9000 = new BallChucker9000(4, 5, 6, 4, 5, 6, 7, 2, 8);
   }
 
   /**
@@ -86,6 +97,33 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+
+    // Check the limit switch every loop 
+    ballChucker9000.update();
+
+    // This needs some PID!
+    if (driverRight.getTrigger()) {
+      ballChucker9000.flywheelMotorControl(1);
+    } else {
+      ballChucker9000.flywheelMotorControl(0);
+    }
+
+    // Call limelight function for the rotator
+
+    // Indexer motor
+    if (driverLeft.getTrigger()) {
+      ballChucker9000.indexerMotorControl(0.75);
+    } else {
+      ballChucker9000.indexerMotorControl(0);
+    }
+
+    // Indexer piston
+    if (driverLeft.getRawButton(1)) {
+      ballChucker9000.indexerPistonOut(true);
+    } else {
+      ballChucker9000.indexerPistonOut(false);
+    }
+
   }
 
   /**

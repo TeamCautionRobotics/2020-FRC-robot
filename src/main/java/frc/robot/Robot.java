@@ -29,11 +29,12 @@ public class Robot extends TimedRobot {
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
   Harvester harvester;
-
+  BallTransfer ballTransfer;
   EnhancedJoystick leftJoystick;
   EnhancedJoystick rightJoystick;
 
   Gamepad manipulator;
+
   /**
    * This function is run when the robot is first started up and should be used
    * for any initialization code.
@@ -41,6 +42,8 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     harvester = new Harvester(2, 1);
+    ballTransfer = new BallTransfer(3);
+  
     leftJoystick = new EnhancedJoystick(0);
     rightJoystick = new EnhancedJoystick(1);
     manipulator = new Gamepad(2);
@@ -101,6 +104,8 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     harvester.intakeMotorControl(manipulator.getAxis(Axis.LEFT_Y));
     harvester.delpoyIntake(manipulator.getButton(Button.A));
+
+    ballTransfer.moveBalls(manipulator.getAxis(Axis.RIGHT_TRIGGER));
   }
 
   /**
@@ -110,4 +115,3 @@ public class Robot extends TimedRobot {
   public void testPeriodic() {
   }
 }
-

@@ -40,13 +40,11 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousPeriodic() {
-    if (timer.get() < 1)
-    {
+    if (timer.get() < 1) {
       driveBase.drive(0.5, 0.5);
     }
 
-    else
-    {
+    else {
       driveBase.drive(0, 0);
     }
   }

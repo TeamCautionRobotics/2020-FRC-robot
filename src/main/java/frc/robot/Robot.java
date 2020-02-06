@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import frc.misc2020.EnhancedJoystick;
 
@@ -16,12 +17,15 @@ public class Robot extends TimedRobot {
 
   DriveBase driveBase;
 
+  Timer timer;
+
   @Override
   public void robotInit() {
     leftJoystick = new EnhancedJoystick(0);
     rightJoystick = new EnhancedJoystick(1);
 
     driveBase = new DriveBase(0, 1, 0, 1, 2, 3, 0);
+    timer = new Timer();
   }
 
   @Override
@@ -30,10 +34,21 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
+    timer.reset();
+    timer.start();
   }
 
   @Override
   public void autonomousPeriodic() {
+    if (timer.get() < 1)
+    {
+      driveBase.drive(0.5, 0.5);
+    }
+
+    else
+    {
+      driveBase.drive(0, 0);
+    }
   }
 
   @Override

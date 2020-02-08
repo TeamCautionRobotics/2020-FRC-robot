@@ -16,4 +16,44 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+    public static final class AutoConstants{
+        /*
+        driveBase = new DriveBase(0, 1, 0, 1, 2, 3, 0);
+        */
+    }
+    public static final class BallChucker9000Constants{
+        public static final int flywheelMotorPort = 4;
+        public static final int rotatorMotorPort = 5;
+        public static final int indexerMotorPort = 6; 
+        public static final int rotatorEncoderChannelA = 4; 
+        public static final int rotatorEncoderChannelB = 5; 
+        public static final int flywheelEncoderChannelA = 6; 
+        public static final int flywheelEncoderChannelB = 7; 
+        public static final int indexerPistonPort = 2;
+        public static final int rotatorAtZeroSwitchPort = 8;
+    }
+    public static final class BallTransferConstants{
+        public static final int beltMotorPort = 3;
+    }
+    public static final class ClimbConstants{
+        /*
+        Winch port 7
+        Arm port 8
+        Piston port 3
+        Limit switch port 9
+        */
+    }
+    public static final class DriveConstants{
+        public static final int left = 0;
+        public static final int right = 1; 
+        public static final int leftA = 0; 
+        public static final int leftB = 1; 
+        public static final int rightA = 2; 
+        public static final int rightB = 3;
+        public static final int shifterChannel = 0;
+    }
+    public static final class HarvesterConstants{
+        public static final int intakeMotorPort = 2;
+        public static final int deployPistonPort = 1;
+    }
 }

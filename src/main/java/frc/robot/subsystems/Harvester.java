@@ -7,11 +7,10 @@ import edu.wpi.first.wpilibj.Solenoid;
 public class Harvester extends SubsystemBase {
 
     // ESC declarations
-    private final VictorSP intakeMotor; 
+    private final VictorSP intakeMotor;
 
     // Piston declarations
     private final Solenoid deployPistion;
-
 
     // class initializer
     public Harvester(int intakeMotorPort, int deployPistonPort) {

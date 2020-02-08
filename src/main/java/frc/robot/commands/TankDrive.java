@@ -9,24 +9,27 @@ package frc.robot.commands;
 
 import frc.robot.misc2020.EnhancedJoystick;
 import frc.robot.subsystems.DriveBase;
+
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class TankDrive extends CommandBase {
     @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
     private final DriveBase driveBase;
-    private final EnhancedJoystick leftJoystick;
-    private final EnhancedJoystick rightJoystick;
+    private final DoubleSupplier leftPowerSupplier;
+    private final DoubleSupplier rightPowerSupplier;
 
-    public TankDrive(DriveBase driveBase, EnhancedJoystick leftJoystick, EnhancedJoystick rightJoystick) {
+    public TankDrive(DriveBase driveBase, DoubleSupplier leftPowerSupplier, DoubleSupplier rightPowerSupplier) {
         this.driveBase = driveBase;
-        this.leftJoystick = leftJoystick;
-        this.rightJoystick = rightJoystick;
+        this.leftPowerSupplier = leftPowerSupplier;
+        this.rightPowerSupplier = rightPowerSupplier;
         addRequirements(driveBase);
     }
 
     @Override
     public void execute() {
-        driveBase.drive(leftJoystick.getY(), rightJoystick.getY());
+        driveBase.drive(leftPowerSupplier.getAsDouble(), rightPowerSupplier.getAsDouble());
     }
 
     @Override

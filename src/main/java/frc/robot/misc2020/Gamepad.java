@@ -10,12 +10,20 @@ public class Gamepad extends EnhancedJoystick {
         super(port, deadband);
     }
 
+    public int getAxisNumber(Axis axis) {
+        return axis.ordinal();
+    }
+
     public double getAxis(Axis axis) {
-        return getRawAxis(axis.ordinal());
+        return getRawAxis(getAxisNumber(axis));
+    }
+
+    public int getButtonNumber(Button button) {
+        return button.ordinal() + 1;
     }
 
     public boolean getButton(Button button) {
-        return getRawButton(button.ordinal() + 1);
+        return getRawButton(getButtonNumber(button));
     }
 
     public boolean getAxisAsButton(Axis axis) {

@@ -41,13 +41,12 @@ public class DriveBase extends SubsystemBase {
     courseHeading = heading;
   }
 
-  public void drive(double leftPower, double rightPower) {
-    driveLeft.set(leftPower);
-    driveRight.set(-rightPower);
+  public void setLeftPower(double power) {
+    driveLeft.set(power);
   }
 
-  public void drive(double power) {
-    drive(power, power);
+  public void setRightPower(double power) {
+    driveRight.set(power);
   }
 
   public void useHighGear(boolean highGear) {

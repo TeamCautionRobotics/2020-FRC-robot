@@ -54,6 +54,10 @@ public class DriveBase extends SubsystemBase {
     setRightPower(rightPower);
   }
 
+  public void drive(double power) {
+    drive(power, power);
+  }
+
   public void useHighGear(boolean highGear) {
     shifter.set(highGear);
   }

@@ -18,6 +18,7 @@ package frc.robot;
  * wherever the constants are needed, to reduce verbosity.
  */
 public final class Constants {
+	// Ports
 	public static final int LEFT_JOYSTICK_PORT = 0;
 	public static final int RIGHT_JOYSTICK_PORT = 1;
 	public static final int MANIPULATOR_PORT = 2;
@@ -31,4 +32,7 @@ public final class Constants {
 	public static final int RIGHT_DRIVE_ENCODER_PORT_B = 3;
 
 	public static final int SHIFTER_PORT = 0;
+
+	// Buttons and Axes
+	public static final int LEFT_JOYSTICK_SHIFTER_BUTTON = 0;
 }

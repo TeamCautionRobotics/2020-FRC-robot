@@ -8,13 +8,14 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.commands.TankDrive;
+import frc.robot.commands.ToggleShifter;
 import frc.robot.misc2020.EnhancedJoystick;
 import frc.robot.misc2020.Gamepad;
 import frc.robot.subsystems.DriveBase;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -41,7 +42,7 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
 
-    driveBase.setDefaultCommand(new RunCommand(() -> driveBase.drive(leftJoystick.getY(), rightJoystick.getY()), driveBase));
+    driveBase.setDefaultCommand(new TankDrive(driveBase, leftJoystick, rightJoystick));
   }
 
   /**
@@ -51,6 +52,8 @@ public class RobotContainer {
    * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    new JoystickButton(leftJoystick, Constants.LEFT_JOYSTICK_SHIFTER_BUTTON)
+        .toggleWhenPressed(new ToggleShifter(driveBase));
   }
 
   /**

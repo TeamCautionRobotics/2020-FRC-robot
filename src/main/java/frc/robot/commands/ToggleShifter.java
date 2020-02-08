@@ -8,24 +8,12 @@
 package frc.robot.commands;
 
 import frc.robot.subsystems.DriveBase;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 
-public class ToggleShifter extends CommandBase {
+public class ToggleShifter extends InstantCommand {
     @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
-    private final DriveBase driveBase;
 
     public ToggleShifter(DriveBase driveBase) {
-        this.driveBase = driveBase;
-        addRequirements(driveBase);
-    }
-
-    @Override
-    public void execute() {
-        driveBase.switchGears();
-    }
-
-    @Override
-    public boolean isFinished() {
-        return true;
+        super(() -> driveBase.changeShifterState(), driveBase);
     }
 }

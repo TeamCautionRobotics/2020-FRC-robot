@@ -18,6 +18,7 @@ public class DriveBase extends SubsystemBase {
 
   private final ADXRS450_Gyro gyro;
 
+  private boolean shifterState = false;
   private boolean usingLeftEncoder = false;
 
   private double heading;
@@ -60,6 +61,15 @@ public class DriveBase extends SubsystemBase {
 
   public void useHighGear(boolean highGear) {
     shifter.set(highGear);
+    shifterState = highGear;
+  }
+
+  public boolean getShifterState() {
+    return shifterState;
+  }
+
+  public void switchGears() {
+    useHighGear(!shifterState);
   }
 
   public void resetGyro() {

@@ -108,7 +108,14 @@ public class Robot extends TimedRobot {
       ballChucker9000.flywheelMotorControl(0);
     }
 
-    // Call limelight function for the rotator
+    // Replace with limelight stuff at some point
+    if (driverRight.getRawButton(2)) {
+      ballChucker9000.rotatorMotorControl(1);
+    } else if (driverRight.getRawButton(3)) {
+      ballChucker9000.rotatorMotorControl(-1);
+    } else {
+      ballChucker9000.rotatorMotorControl(0);
+    }
 
     // Indexer motor
     if (driverLeft.getTrigger()) {

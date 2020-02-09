@@ -9,19 +9,28 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import frc.misc2020.EnhancedJoystick;
+import frc.misc2020.Gamepad;
+import frc.misc2020.Gamepad.Axis;
+import frc.misc2020.Gamepad.Button;
 
 public class Robot extends TimedRobot {
   EnhancedJoystick leftJoystick;
   EnhancedJoystick rightJoystick;
+  Gamepad manipulator;
 
   DriveBase driveBase;
+  Harvester harvester;
+  BallTransfer ballTransfer;
 
   @Override
   public void robotInit() {
     leftJoystick = new EnhancedJoystick(0);
     rightJoystick = new EnhancedJoystick(1);
+    manipulator = new Gamepad(2);
 
     driveBase = new DriveBase(0, 1, 0, 1, 2, 3, 0);
+    harvester = new Harvester(2, 1);
+    ballTransfer = new BallTransfer(3);
   }
 
   @Override
@@ -39,6 +48,11 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     driveBase.drive(leftJoystick.getY(), rightJoystick.getY());
+
+    harvester.intakeMotorControl(manipulator.getAxis(Axis.LEFT_Y));
+    harvester.delpoyIntake(manipulator.getButton(Button.A));
+
+    ballTransfer.moveBalls(manipulator.getAxis(Axis.RIGHT_TRIGGER));
   }
 
   @Override

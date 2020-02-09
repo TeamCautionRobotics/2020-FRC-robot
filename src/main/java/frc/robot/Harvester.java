@@ -9,20 +9,20 @@ public class Harvester {
     private final VictorSP intakeMotor; 
 
     // Piston declarations
-    private final Solenoid deployPistion;
+    private final Solenoid deployerPiston;
 
 
     // class initializer
     public Harvester(int intakeMotorPort, int deployPistonPort) {
         intakeMotor = new VictorSP(intakeMotorPort);
-        deployPistion = new Solenoid(deployPistonPort);
+        deployerPiston = new Solenoid(deployPistonPort);
     }
 
     // Setters
 
     /**
      * 
-     * @param power positave intakes ball? negative outakes the balls? duhhhh
+     * @param power positive intakes ball? negative outakes the balls? duhhhh
      */
     public void intakeMotorControl(double power) {
         intakeMotor.set(power);
@@ -30,6 +30,6 @@ public class Harvester {
 
     // Piston
     public void delpoyIntake(boolean deployed) {
-        deployPistion.set(deployed);
+        deployerPiston.set(deployed);
     }
 }

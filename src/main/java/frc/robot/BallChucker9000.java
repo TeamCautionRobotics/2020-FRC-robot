@@ -67,7 +67,6 @@ public class BallChucker9000 {
     }
 
     // Reset the encoder to zero when called
-    // The offset value may be a nonzero value, see line 45
     public void update() {
         if (getRotatorAtZeroSwitch()) {
             rotatorEncoder.reset();

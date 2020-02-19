@@ -51,5 +51,4 @@ public class RainbowDJ {
     public double getSpeed() {
         return rainbowDJEncoder.getRate();
     }
-
 }

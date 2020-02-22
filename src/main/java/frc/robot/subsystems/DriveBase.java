@@ -42,19 +42,42 @@ public class DriveBase extends SubsystemBase {
     courseHeading = heading;
   }
 
+  /**
+   * The front of the robot is the climb side. The back of the robot is the intake
+   * side.
+   * 
+   * @param power positive moves the left side of the robot forward
+   */
   public void setLeftPower(double power) {
     driveLeft.set(power);
   }
 
+  /**
+   * The front of the robot is the climb side. The back of the robot is the intake
+   * side.
+   * 
+   * @param power positive moves the right side of the robot forward
+   */
   public void setRightPower(double power) {
     driveRight.set(power);
   }
 
+  /**
+   * The front of the robot is the climb side.
+   * The back of the robot is the intake side.
+   * @param leftPower positive moves the left side of the robot forward
+   * @param leftPower positive moves the right side of the robot forward
+   */
   public void drive(double leftPower, double rightPower) {
     setLeftPower(leftPower);
     setRightPower(rightPower);
   }
 
+    /**
+   * The front of the robot is the climb side.
+   * The back of the robot is the intake side.
+   * @param power positive moves the robot forward
+   */
   public void drive(double power) {
     drive(power, power);
   }

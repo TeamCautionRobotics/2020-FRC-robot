@@ -8,10 +8,10 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.TankDrive;
 import frc.robot.commands.ToggleShifter;
 import frc.robot.misc2020.EnhancedJoystick;
-import frc.robot.misc2020.Gamepad;
 import frc.robot.subsystems.DriveBase;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -33,7 +33,7 @@ public class RobotContainer {
 
   EnhancedJoystick leftJoystick = new EnhancedJoystick(Constants.LEFT_JOYSTICK_PORT);
   EnhancedJoystick rightJoystick = new EnhancedJoystick(Constants.RIGHT_JOYSTICK_PORT);
-  Gamepad manipulator = new Gamepad(Constants.MANIPULATOR_PORT);
+  XboxController manipulator = new XboxController(Constants.MANIPULATOR_PORT);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.

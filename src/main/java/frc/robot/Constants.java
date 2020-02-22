@@ -23,8 +23,8 @@ public final class Constants {
 	public static final int RIGHT_JOYSTICK_PORT = 1;
 	public static final int MANIPULATOR_PORT = 2;
 
-	public static final int LEFT_DRIVE_PORT = 0;
-	public static final int RIGHT_DRIVE_PORT = 1;
+	public static final int LEFT_DRIVE_MOTOR_PORT = 0;
+	public static final int RIGHT_DRIVE__MOTOR_PORT = 1;
 
 	public static final int LEFT_DRIVE_ENCODER_PORT_A = 0;
 	public static final int LEFT_DRIVE_ENCODER_PORT_B = 1;

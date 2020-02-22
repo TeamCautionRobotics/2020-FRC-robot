@@ -11,8 +11,6 @@ import frc.robot.subsystems.DriveBase;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 public class ToggleShifter extends InstantCommand {
-    @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
-
     public ToggleShifter(DriveBase driveBase) {
         super(() -> driveBase.changeShifterState(), driveBase);
     }

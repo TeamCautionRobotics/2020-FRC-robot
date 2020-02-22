@@ -59,11 +59,17 @@ public class DriveBase extends SubsystemBase {
     drive(power, power);
   }
 
+  /**
+   * @param boolean highGear is positive when the robot is in high gear
+   */
   public void useHighGear(boolean highGear) {
     shifter.set(highGear);
     shifterState = highGear;
   }
 
+  /**
+   * @return boolean shifterState is positive when the robot is in high gear
+   */
   public boolean getShifterState() {
     return shifterState;
   }

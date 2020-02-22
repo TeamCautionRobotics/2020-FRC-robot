@@ -27,7 +27,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
-  public static final DriveBase driveBase = new DriveBase(Constants.LEFT_DRIVE_MOTOR_PORT, Constants.RIGHT_DRIVE__MOTOR_PORT,
+  public static final DriveBase driveBase = new DriveBase(Constants.LEFT_DRIVE_MOTOR_PORT, Constants.RIGHT_DRIVE_MOTOR_PORT,
       Constants.LEFT_DRIVE_ENCODER_PORT_A, Constants.LEFT_DRIVE_ENCODER_PORT_B, Constants.RIGHT_DRIVE_ENCODER_PORT_A,
       Constants.RIGHT_DRIVE_ENCODER_PORT_B, Constants.SHIFTER_PORT);
 

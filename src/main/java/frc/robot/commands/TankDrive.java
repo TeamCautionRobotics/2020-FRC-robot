@@ -7,7 +7,6 @@
 
 package frc.robot.commands;
 
-import frc.robot.misc2020.EnhancedJoystick;
 import frc.robot.subsystems.DriveBase;
 
 import java.util.function.DoubleSupplier;

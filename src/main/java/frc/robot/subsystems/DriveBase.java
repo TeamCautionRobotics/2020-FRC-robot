@@ -68,7 +68,7 @@ public class DriveBase extends SubsystemBase {
     return shifterState;
   }
 
-  public void changeShifterState() {
+  public void toggleShifterState() {
     useHighGear(!shifterState);
   }
 

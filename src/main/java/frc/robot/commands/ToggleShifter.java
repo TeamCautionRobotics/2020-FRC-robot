@@ -12,6 +12,6 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 public class ToggleShifter extends InstantCommand {
     public ToggleShifter(DriveBase driveBase) {
-        super(() -> driveBase.changeShifterState(), driveBase);
+        super(() -> driveBase.toggleShifterState(), driveBase);
     }
 }

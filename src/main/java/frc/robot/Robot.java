@@ -22,7 +22,7 @@ public class Robot extends TimedRobot {
   DriveBase driveBase;
   Harvester harvester;
   BallTransfer ballTransfer;
-  BallChucker9000 BallChucker9000;
+  BallChucker9000 ballChucker9000;
 
   Timer timer;
 

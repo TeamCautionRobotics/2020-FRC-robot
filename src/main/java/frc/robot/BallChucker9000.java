@@ -30,7 +30,7 @@ public class BallChucker9000 {
     private final VictorSP rotatorMotor;
     private final VictorSP flywheelMotor;
     private final VictorSP indexerMotor;
-    
+
     // Encoder declarations
     private final Encoder rotatorEncoder;
     private final Encoder flywheelEncoder;
@@ -41,12 +41,11 @@ public class BallChucker9000 {
     // Limit switches
     private final DigitalInput rotatorAtZeroSwitch;
 
-
     // Class initializer
-    public BallChucker9000(int flywheelMotorPort, int rotatorMotorPort, int indexerMotorPort, int rotatorEncoderChannelA, 
-                            int rotatorEncoderChannelB, int flywheelEncoderChannelA, int flywheelEncoderChannelB, 
-                            int indexerPistonPort, int rotatorAtZeroSwitchPort) {
-    
+    public BallChucker9000(int flywheelMotorPort, int rotatorMotorPort, int indexerMotorPort,
+            int rotatorEncoderChannelA, int rotatorEncoderChannelB, int flywheelEncoderChannelA,
+            int flywheelEncoderChannelB, int indexerPistonPort, int rotatorAtZeroSwitchPort) {
+
         // ESCs
         flywheelMotor = new VictorSP(flywheelMotorPort);
         rotatorMotor = new VictorSP(rotatorMotorPort);
@@ -55,13 +54,13 @@ public class BallChucker9000 {
         // Encoders
         rotatorEncoder = new Encoder(rotatorEncoderChannelA, rotatorEncoderChannelB);
         flywheelEncoder = new Encoder(flywheelEncoderChannelA, flywheelEncoderChannelB);
-        rotatorEncoder.setDistancePerPulse(1.0/1024.0);
-        flywheelEncoder.setDistancePerPulse(1.0/1024.0);
+        rotatorEncoder.setDistancePerPulse(1.0 / 1024.0);
+        flywheelEncoder.setDistancePerPulse(1.0 / 1024.0);
 
         // Piston
         indexerPiston = new Solenoid(indexerPistonPort);
 
-        //Limit switches
+        // Limit switches
         rotatorAtZeroSwitch = new DigitalInput(rotatorAtZeroSwitchPort);
 
     }
@@ -93,13 +92,12 @@ public class BallChucker9000 {
         indexerPiston.set(state);
     }
 
-
     // Getters
     public double getFlywheelEncoder() {
         return flywheelEncoder.getRate();
     }
 
-    // Limit switch 
+    // Limit switch
     public boolean getRotatorAtZeroSwitch() {
         return !rotatorAtZeroSwitch.get();
     }

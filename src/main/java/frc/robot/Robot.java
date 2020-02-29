@@ -8,7 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.TimedRobot;  
+import edu.wpi.first.wpilibj.TimedRobot;
 import frc.misc2020.EnhancedJoystick;
 import frc.misc2020.Gamepad;
 import frc.misc2020.Gamepad.Axis;
@@ -64,7 +64,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
 
-    // Check the limit switch every loop 
+    // Check the limit switch every loop
     ballChucker9000.update();
 
     // This needs some PID!
@@ -96,7 +96,7 @@ public class Robot extends TimedRobot {
     } else {
       ballChucker9000.indexerPistonOut(false);
     }
-    
+
     driveBase.drive(leftJoystick.getY(), rightJoystick.getY());
 
     harvester.intakeMotorControl(manipulator.getAxis(Axis.LEFT_Y));

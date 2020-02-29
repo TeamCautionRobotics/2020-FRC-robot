@@ -39,10 +39,7 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
-
-    driverLeft = new EnhancedJoystick(0, 0.1);
-    driverRight = new EnhancedJoystick(1, 0.1);
-
+    
     ballChucker9000 = new BallChucker9000(4, 5, 6, 4, 5, 6, 7, 2, 8);
   }
 

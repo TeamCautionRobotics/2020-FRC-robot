@@ -23,6 +23,7 @@ public class Robot extends TimedRobot {
   Harvester harvester;
   BallTransfer ballTransfer;
   BallChucker9000 ballChucker9000;
+  Climb climb;
 
   Timer timer;
 
@@ -36,6 +37,7 @@ public class Robot extends TimedRobot {
     harvester = new Harvester(2, 1);
     ballTransfer = new BallTransfer(3);
     ballChucker9000 = new BallChucker9000(4, 5, 6, 4, 5, 6, 7, 2, 8);
+    climb = new Climb(7, 8, 9);
 
     timer = new Timer();
   }
@@ -63,7 +65,6 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-
     // Check the limit switch every loop
     ballChucker9000.update();
 
@@ -104,6 +105,13 @@ public class Robot extends TimedRobot {
 
     ballTransfer.moveBalls(manipulator.getAxis(Axis.RIGHT_TRIGGER));
 
+    if (manipulator.getButton(Button.X)) {
+      climb.runWinch(1);
+    } else {
+      climb.runWinch(0);
+    }
+
+    climb.moveArms(manipulator.getAxis(Axis.RIGHT_Y));
   }
 
   @Override

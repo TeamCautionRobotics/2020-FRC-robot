@@ -22,6 +22,7 @@ public class Robot extends TimedRobot {
   DriveBase driveBase;
   Harvester harvester;
   BallTransfer ballTransfer;
+  BallChucker9000 ballChucker9000;
 
   Timer timer;
 
@@ -34,6 +35,7 @@ public class Robot extends TimedRobot {
     driveBase = new DriveBase(0, 1, 0, 1, 2, 3, 0);
     harvester = new Harvester(2, 1);
     ballTransfer = new BallTransfer(3);
+    ballChucker9000 = new BallChucker9000(4, 5, 6, 4, 5, 6, 7, 2, 8);
 
     timer = new Timer();
   }
@@ -61,12 +63,47 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
+
+    // Check the limit switch every loop
+    ballChucker9000.update();
+
+    // This needs some PID!
+    if (rightJoystick.getTrigger()) {
+      ballChucker9000.flywheelMotorControl(1);
+    } else {
+      ballChucker9000.flywheelMotorControl(0);
+    }
+
+    // Replace with limelight stuff at some point
+    if (rightJoystick.getRawButton(2)) {
+      ballChucker9000.rotatorMotorControl(1);
+    } else if (rightJoystick.getRawButton(3)) {
+      ballChucker9000.rotatorMotorControl(-1);
+    } else {
+      ballChucker9000.rotatorMotorControl(0);
+    }
+
+    // Indexer motor
+    if (leftJoystick.getTrigger()) {
+      ballChucker9000.indexerMotorControl(0.75);
+    } else {
+      ballChucker9000.indexerMotorControl(0);
+    }
+
+    // Indexer piston
+    if (leftJoystick.getRawButton(1)) {
+      ballChucker9000.indexerPistonOut(true);
+    } else {
+      ballChucker9000.indexerPistonOut(false);
+    }
+
     driveBase.drive(leftJoystick.getY(), rightJoystick.getY());
 
     harvester.intakeMotorControl(manipulator.getAxis(Axis.LEFT_Y));
     harvester.delpoyIntake(manipulator.getButton(Button.A));
 
     ballTransfer.moveBalls(manipulator.getAxis(Axis.RIGHT_TRIGGER));
+
   }
 
   @Override

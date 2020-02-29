@@ -12,7 +12,7 @@ public class BallTransfer {
 
     /**
      * 
-     * @param power positive to move ball in, negative to move ball out
+     * @param power positive to move ball towards Ball Chucker 9000, negative to move ball towards Harvester
      */
     public void moveBalls(double power) {
         beltMotor.set(power);

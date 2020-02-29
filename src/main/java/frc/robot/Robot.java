@@ -7,91 +7,60 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.TimedRobot;  
 import frc.misc2020.EnhancedJoystick;
+import frc.misc2020.Gamepad;
+import frc.misc2020.Gamepad.Axis;
+import frc.misc2020.Gamepad.Button;
 
-/**
- * The VM is configured to automatically run this class, and to call the
- * functions corresponding to each mode, as described in the TimedRobot
- * documentation. If you change the name of this class or the package after
- * creating this project, you must also update the build.gradle file in the
- * project.
- */
 public class Robot extends TimedRobot {
-  private static final String kDefaultAuto = "Default";
-  private static final String kCustomAuto = "My Auto";
-  private String m_autoSelected;
-  private final SendableChooser<String> m_chooser = new SendableChooser<>();
+  EnhancedJoystick leftJoystick;
+  EnhancedJoystick rightJoystick;
+  Gamepad manipulator;
 
-  private EnhancedJoystick driverLeft;
-  private EnhancedJoystick driverRight;
+  DriveBase driveBase;
+  Harvester harvester;
+  BallTransfer ballTransfer;
+  BallChucker9000 BallChucker9000;
 
-  private BallChucker9000 ballChucker9000;
+  Timer timer;
 
-  /**
-   * This function is run when the robot is first started up and should be
-   * used for any initialization code.
-   */
   @Override
   public void robotInit() {
-    m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
-    m_chooser.addOption("My Auto", kCustomAuto);
-    SmartDashboard.putData("Auto choices", m_chooser);
-    
+    leftJoystick = new EnhancedJoystick(0);
+    rightJoystick = new EnhancedJoystick(1);
+    manipulator = new Gamepad(2);
+
+    driveBase = new DriveBase(0, 1, 0, 1, 2, 3, 0);
+    harvester = new Harvester(2, 1);
+    ballTransfer = new BallTransfer(3);
     ballChucker9000 = new BallChucker9000(4, 5, 6, 4, 5, 6, 7, 2, 8);
+
+    timer = new Timer();
   }
 
-  /**
-   * This function is called every robot packet, no matter the mode. Use
-   * this for items like diagnostics that you want ran during disabled,
-   * autonomous, teleoperated and test.
-   *
-   * <p>This runs after the mode specific periodic functions, but before
-   * LiveWindow and SmartDashboard integrated updating.
-   */
   @Override
   public void robotPeriodic() {
   }
 
-  /**
-   * This autonomous (along with the chooser code above) shows how to select
-   * between different autonomous modes using the dashboard. The sendable
-   * chooser code works with the Java SmartDashboard. If you prefer the
-   * LabVIEW Dashboard, remove all of the chooser code and uncomment the
-   * getString line to get the auto name from the text box below the Gyro
-   *
-   * <p>You can add additional auto modes by adding additional comparisons to
-   * the switch structure below with additional strings. If using the
-   * SendableChooser make sure to add them to the chooser code above as well.
-   */
   @Override
   public void autonomousInit() {
-    m_autoSelected = m_chooser.getSelected();
-    // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
-    System.out.println("Auto selected: " + m_autoSelected);
+    timer.reset();
+    timer.start();
   }
 
-  /**
-   * This function is called periodically during autonomous.
-   */
   @Override
   public void autonomousPeriodic() {
-    switch (m_autoSelected) {
-      case kCustomAuto:
-        // Put custom auto code here
-        break;
-      case kDefaultAuto:
-      default:
-        // Put default auto code here
-        break;
+    if (timer.get() < 1) {
+      driveBase.drive(0.5, 0.5);
+    }
+
+    else {
+      driveBase.drive(0, 0);
     }
   }
 
-  /**
-   * This function is called periodically during operator control.
-   */
   @Override
   public void teleopPeriodic() {
 
@@ -99,40 +68,44 @@ public class Robot extends TimedRobot {
     ballChucker9000.update();
 
     // This needs some PID!
-    if (driverRight.getTrigger()) {
+    if (rightJoystick.getTrigger()) {
       ballChucker9000.flywheelMotorControl(1);
     } else {
       ballChucker9000.flywheelMotorControl(0);
     }
 
     // Replace with limelight stuff at some point
-    if (driverRight.getRawButton(2)) {
+    if (rightJoystick.getRawButton(2)) {
       ballChucker9000.rotatorMotorControl(1);
-    } else if (driverRight.getRawButton(3)) {
+    } else if (rightJoystick.getRawButton(3)) {
       ballChucker9000.rotatorMotorControl(-1);
     } else {
       ballChucker9000.rotatorMotorControl(0);
     }
 
     // Indexer motor
-    if (driverLeft.getTrigger()) {
+    if (leftJoystick.getTrigger()) {
       ballChucker9000.indexerMotorControl(0.75);
     } else {
       ballChucker9000.indexerMotorControl(0);
     }
 
     // Indexer piston
-    if (driverLeft.getRawButton(1)) {
+    if (leftJoystick.getRawButton(1)) {
       ballChucker9000.indexerPistonOut(true);
     } else {
       ballChucker9000.indexerPistonOut(false);
     }
+    
+    driveBase.drive(leftJoystick.getY(), rightJoystick.getY());
+
+    harvester.intakeMotorControl(manipulator.getAxis(Axis.LEFT_Y));
+    harvester.delpoyIntake(manipulator.getButton(Button.A));
+
+    ballTransfer.moveBalls(manipulator.getAxis(Axis.RIGHT_TRIGGER));
 
   }
 
-  /**
-   * This function is called periodically during test mode.
-   */
   @Override
   public void testPeriodic() {
   }

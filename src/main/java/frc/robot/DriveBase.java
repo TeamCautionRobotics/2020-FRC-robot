@@ -10,7 +10,8 @@ public class DriveBase {
 
     private final VictorSP driveLeft;
     private final VictorSP driveRight;
-    private final Solenoid shifter;
+    private final Solenoid leftShifter;
+    private final Solenoid rightShifter;
 
     private final Encoder leftEncoder;
     private final Encoder rightEncoder;
@@ -22,7 +23,8 @@ public class DriveBase {
     private double heading;
     public double courseHeading;
 
-    public DriveBase(int left, int right, int leftA, int leftB, int rightA, int rightB, int shifterChannel) {
+    public DriveBase(int left, int right, int leftA, int leftB, int rightA, int rightB, int leftShifterChannel,
+            int rightShifterChannel) {
         driveLeft = new VictorSP(left);
         driveRight = new VictorSP(right);
 
@@ -32,7 +34,8 @@ public class DriveBase {
         leftEncoder.setDistancePerPulse((4 * Math.PI) / 1024.0);
         rightEncoder.setDistancePerPulse((4 * Math.PI) / 1024.0);
 
-        shifter = new Solenoid(shifterChannel);
+        leftShifter = new Solenoid(leftShifterChannel);
+        rightShifter = new Solenoid(rightShifterChannel);
 
         gyro = new ADXRS450_Gyro();
         gyro.calibrate();
@@ -50,7 +53,8 @@ public class DriveBase {
     }
 
     public void useHighGear(boolean highGear) {
-        shifter.set(highGear);
+        leftShifter.set(highGear);
+        rightShifter.set(highGear);
     }
 
     public void resetGyro() {

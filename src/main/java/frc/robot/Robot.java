@@ -33,11 +33,11 @@ public class Robot extends TimedRobot {
     rightJoystick = new EnhancedJoystick(1);
     manipulator = new Gamepad(2);
 
-    driveBase = new DriveBase(0, 1, 0, 1, 2, 3, 0);
-    harvester = new Harvester(2, 1);
-    ballTransfer = new BallTransfer(3);
-    ballChucker9000 = new BallChucker9000(4, 5, 6, 4, 5, 6, 7, 2, 8);
-    climb = new Climb(7, 8, 9);
+    driveBase = new DriveBase(c, c, 0, 1, 2, 3, 3, 4);
+    harvester = new Harvester(3, 0, 2);
+    ballTransfer = new BallTransfer(c);
+    ballChucker9000 = new BallChucker9000(0, 1, 4, c, 4, 5, 6, 7, 8);
+    climb = new Climb(7, 8, 1, 9);
 
     timer = new Timer();
   }

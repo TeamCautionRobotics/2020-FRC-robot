@@ -7,8 +7,10 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.VictorSP;
 import frc.misc2020.EnhancedJoystick;
 import frc.misc2020.Gamepad;
 import frc.misc2020.Gamepad.Axis;
@@ -33,11 +35,12 @@ public class Robot extends TimedRobot {
     rightJoystick = new EnhancedJoystick(1);
     manipulator = new Gamepad(2);
 
-    driveBase = new DriveBase(c, c, 0, 1, 2, 3, 3, 4);
-    harvester = new Harvester(3, 0, 2);
-    ballTransfer = new BallTransfer(c);
-    ballChucker9000 = new BallChucker9000(0, 1, 4, c, 4, 5, 6, 7, 8);
-    climb = new Climb(c, 2, 1, 9);
+    driveBase = new DriveBase(new SpeedControllerGroup(new VictorSP(-1), new VictorSP(-1), new VictorSP(-1)),
+        new SpeedControllerGroup(new VictorSP(-1), new VictorSP(-1), new VictorSP(-1)), 0, 1, 2, 3, 3, 4);
+    harvester = new Harvester(new VictorSP(3), 0, 2);
+    ballTransfer = new BallTransfer(new VictorSP(-1));
+    ballChucker9000 = new BallChucker9000(new VictorSP(0), new VictorSP(1), new VictorSP(4), new VictorSP(-1), 4, 5, 6, 7, 8);
+    climb = new Climb(new VictorSP(-1), new VictorSP(2), 1, 9);
 
     timer = new Timer();
   }

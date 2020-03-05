@@ -4,12 +4,15 @@ import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.VictorSP;
 
 public class DriveBase {
 
-    private final VictorSP driveLeft;
-    private final VictorSP driveRight;
+    private final SpeedControllerGroup driveLeft;
+    private final SpeedControllerGroup driveRight;
+    
     private final Solenoid leftShifter;
     private final Solenoid rightShifter;
 
@@ -23,10 +26,15 @@ public class DriveBase {
     private double heading;
     public double courseHeading;
 
-    public DriveBase(int left, int right, int leftA, int leftB, int rightA, int rightB, int leftShifterChannel,
-            int rightShifterChannel) {
-        driveLeft = new VictorSP(left);
-        driveRight = new VictorSP(right);
+    public DriveBase(SpeedControllerGroup driveLeft, SpeedControllerGroup driveRight, int leftShifterChannel, int rightShifterChannel, int leftA, int leftB,
+            int rightA, int rightB) {
+        this.driveLeft = driveLeft;
+        this.driveRight = driveRight;
+
+        leftShifter = new Solenoid(leftShifterChannel);
+        rightShifter = new Solenoid(rightShifterChannel);
+
+        gyro = new ADXRS450_Gyro();
 
         leftEncoder = new Encoder(leftA, leftB, false, EncodingType.k4X);
         rightEncoder = new Encoder(rightA, rightB, true, EncodingType.k4X);
@@ -34,10 +42,6 @@ public class DriveBase {
         leftEncoder.setDistancePerPulse((4 * Math.PI) / 1024.0);
         rightEncoder.setDistancePerPulse((4 * Math.PI) / 1024.0);
 
-        leftShifter = new Solenoid(leftShifterChannel);
-        rightShifter = new Solenoid(rightShifterChannel);
-
-        gyro = new ADXRS450_Gyro();
         gyro.calibrate();
         heading = gyro.getAngle();
         courseHeading = heading;

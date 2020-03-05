@@ -21,15 +21,15 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.VictorSP;
+import edu.wpi.first.wpilibj.SpeedController;
 
 public class BallChucker9000 {
 
     // ESC declarations
-    private final VictorSP rotatorMotor;
-    private final VictorSP leftFlywheelMotor;
-    private final VictorSP rightFlywheelMotor;
-    private final VictorSP indexerMotor;
+    private final SpeedController leftFlywheelMotor;
+    private final SpeedController rightFlywheelMotor;
+    private final SpeedController rotatorMotor;
+    private final SpeedController indexerMotor;
 
     // Encoder declarations
     private final Encoder rotatorEncoder;
@@ -39,15 +39,16 @@ public class BallChucker9000 {
     private final DigitalInput rotatorAtZeroSwitch;
 
     // Class initializer
-    public BallChucker9000(int leftFlywheelMotorPort, int rightFlywheelMotorPort, int rotatorMotorPort, int indexerMotorPort,
-            int rotatorEncoderChannelA, int rotatorEncoderChannelB, int flywheelEncoderChannelA,
-            int flywheelEncoderChannelB, int rotatorAtZeroSwitchPort) {
+    public BallChucker9000(SpeedController leftFlywheelMotor, SpeedController rightFlywheelMotor,
+            SpeedController rotatorMotor, SpeedController indexerMotor, int rotatorEncoderChannelA,
+            int rotatorEncoderChannelB, int flywheelEncoderChannelA, int flywheelEncoderChannelB,
+            int rotatorAtZeroSwitchPort) {
 
         // ESCs
-        leftFlywheelMotor = new VictorSP(leftFlywheelMotorPort);
-        rightFlywheelMotor = new VictorSP(rightFlywheelMotorPort);
-        rotatorMotor = new VictorSP(rotatorMotorPort);
-        indexerMotor = new VictorSP(indexerMotorPort);
+        this.leftFlywheelMotor = leftFlywheelMotor;
+        this.rightFlywheelMotor = rightFlywheelMotor;
+        this.rotatorMotor = rotatorMotor;
+        this.indexerMotor = indexerMotor;
 
         // Encoders
         rotatorEncoder = new Encoder(rotatorEncoderChannelA, rotatorEncoderChannelB);

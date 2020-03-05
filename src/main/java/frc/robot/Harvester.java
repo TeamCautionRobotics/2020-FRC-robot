@@ -2,19 +2,20 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.SpeedController;
 
 public class Harvester {
 
     // ESC declarations
-    private final VictorSP intakeMotor;
+    private final SpeedController intakeMotor;
 
     // Piston declarations
     private final Solenoid leftDeployerPiston;
     private final Solenoid rightDeployerPiston;
 
     // class initializer
-    public Harvester(int intakeMotorPort, int leftDeployPistonPort, int rightDeployerPistonPort) {
-        intakeMotor = new VictorSP(intakeMotorPort);
+    public Harvester(SpeedController intakeMotor, int leftDeployPistonPort, int rightDeployerPistonPort) {
+        this.intakeMotor = intakeMotor;
         leftDeployerPiston = new Solenoid(leftDeployPistonPort);
         rightDeployerPiston = new Solenoid(rightDeployerPistonPort);
     }

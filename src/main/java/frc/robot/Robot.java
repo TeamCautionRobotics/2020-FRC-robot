@@ -8,6 +8,10 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
 import frc.misc2020.EnhancedJoystick;
 import frc.misc2020.Gamepad;
@@ -27,8 +31,26 @@ public class Robot extends TimedRobot {
 
   Timer timer;
 
+    // Limelight
+    NetworkTableEntry limeTargetDetected;
+    NetworkTableEntry limeHorizontalOffset;
+    NetworkTableEntry limeDistance;
+    NetworkTableEntry limeLED;
+  
+    boolean targetDetected = false;
+    double targetHorizontalOffset;
+    double targetDistance;
+
   @Override
   public void robotInit() {
+    NetworkTableInstance NTInstance = NetworkTableInstance.getDefault();
+    NetworkTable limelightTable = NTInstance.getTable("limelight");
+
+    limeTargetDetected = limelightTable.getEntry("tv");
+    limeHorizontalOffset = limelightTable.getEntry("tx");
+    limeDistance = limelightTable.getEntry("ta");
+    limeLED = limelightTable.getEntry("ledMode");
+
     leftJoystick = new EnhancedJoystick(0);
     rightJoystick = new EnhancedJoystick(1);
     manipulator = new Gamepad(2);
@@ -116,5 +138,28 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testPeriodic() {
+  }
+
+  void autoTarget() {
+
+    // Check if we have a target. Default to false.
+    targetDetected = limeTargetDetected.getBoolean(false);
+
+    // Put values on SmartDashboard to see if we're reading correctly
+    // (Will be removed once we know it's working right.)
+    SmartDashboard.putBoolean("Limelight Target Detected", targetDetected);
+    SmartDashboard.putNumber("Limelight Horizontal Offset", targetHorizontalOffset);
+    SmartDashboard.putNumber("Limelight Target Distance", targetDistance);
+
+    if (targetDetected) { // "Lock" state
+
+      // Read offset and distance (target size) values
+      targetHorizontalOffset = limeHorizontalOffset.getDouble(0.0);
+      targetDistance = limeDistance.getDouble(0.0);
+
+    } else { // "Search" state
+
+    }
+
   }
 }

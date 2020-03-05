@@ -21,33 +21,31 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.VictorSP;
 
 public class BallChucker9000 {
 
     // ESC declarations
     private final VictorSP rotatorMotor;
-    private final VictorSP flywheelMotor;
+    private final VictorSP leftFlywheelMotor;
+    private final VictorSP rightFlywheelMotor;
     private final VictorSP indexerMotor;
 
     // Encoder declarations
     private final Encoder rotatorEncoder;
     private final Encoder flywheelEncoder;
 
-    // Piston declarations
-    private final Solenoid indexerPiston;
-
     // Limit switches
     private final DigitalInput rotatorAtZeroSwitch;
 
     // Class initializer
-    public BallChucker9000(int flywheelMotorPort, int rotatorMotorPort, int indexerMotorPort,
+    public BallChucker9000(int leftFlywheelMotorPort, int rightFlywheelMotorPort, int rotatorMotorPort, int indexerMotorPort,
             int rotatorEncoderChannelA, int rotatorEncoderChannelB, int flywheelEncoderChannelA,
-            int flywheelEncoderChannelB, int indexerPistonPort, int rotatorAtZeroSwitchPort) {
+            int flywheelEncoderChannelB, int rotatorAtZeroSwitchPort) {
 
         // ESCs
-        flywheelMotor = new VictorSP(flywheelMotorPort);
+        leftFlywheelMotor = new VictorSP(leftFlywheelMotorPort);
+        rightFlywheelMotor = new VictorSP(rightFlywheelMotorPort);
         rotatorMotor = new VictorSP(rotatorMotorPort);
         indexerMotor = new VictorSP(indexerMotorPort);
 
@@ -56,9 +54,6 @@ public class BallChucker9000 {
         flywheelEncoder = new Encoder(flywheelEncoderChannelA, flywheelEncoderChannelB);
         rotatorEncoder.setDistancePerPulse(1.0 / 1024.0);
         flywheelEncoder.setDistancePerPulse(1.0 / 1024.0);
-
-        // Piston
-        indexerPiston = new Solenoid(indexerPistonPort);
 
         // Limit switches
         rotatorAtZeroSwitch = new DigitalInput(rotatorAtZeroSwitchPort);
@@ -80,16 +75,12 @@ public class BallChucker9000 {
     }
 
     public void flywheelMotorControl(double power) {
-        flywheelMotor.set(power);
+        leftFlywheelMotor.set(power);
+        rightFlywheelMotor.set(-power);
     }
 
     public void indexerMotorControl(double power) {
         indexerMotor.set(power);
-    }
-
-    // Pistons
-    public void indexerPistonOut(boolean state) {
-        indexerPiston.set(state);
     }
 
     // Getters
@@ -101,5 +92,4 @@ public class BallChucker9000 {
     public boolean getRotatorAtZeroSwitch() {
         return !rotatorAtZeroSwitch.get();
     }
-
 }

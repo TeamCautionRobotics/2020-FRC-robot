@@ -37,7 +37,7 @@ public class Robot extends TimedRobot {
     harvester = new Harvester(3, 0, 2);
     ballTransfer = new BallTransfer(c);
     ballChucker9000 = new BallChucker9000(0, 1, 4, c, 4, 5, 6, 7, 8);
-    climb = new Climb(7, 8, 1, 9);
+    climb = new Climb(c, 2, 1, 9);
 
     timer = new Timer();
   }

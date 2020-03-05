@@ -7,6 +7,9 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
@@ -35,12 +38,12 @@ public class Robot extends TimedRobot {
     rightJoystick = new EnhancedJoystick(1);
     manipulator = new Gamepad(2);
 
-    driveBase = new DriveBase(new SpeedControllerGroup(new VictorSP(-1), new VictorSP(-1), new VictorSP(-1)),
-        new SpeedControllerGroup(new VictorSP(-1), new VictorSP(-1), new VictorSP(-1)), 0, 1, 2, 3, 3, 4);
+    driveBase = new DriveBase(new SpeedControllerGroup(new WPI_TalonSRX(10), new WPI_VictorSPX(11), new WPI_VictorSPX(12)),
+        new SpeedControllerGroup(new WPI_TalonSRX(20), new WPI_VictorSPX(21), new WPI_VictorSPX(22)), 0, 1, 2, 3, 3, 4);
     harvester = new Harvester(new VictorSP(3), 0, 2);
-    ballTransfer = new BallTransfer(new VictorSP(-1));
-    ballChucker9000 = new BallChucker9000(new VictorSP(0), new VictorSP(1), new VictorSP(4), new VictorSP(-1), 4, 5, 6, 7, 8);
-    climb = new Climb(new VictorSP(-1), new VictorSP(2), 1, 9);
+    ballTransfer = new BallTransfer(new VictorSP(5));
+    ballChucker9000 = new BallChucker9000(new VictorSP(0), new VictorSP(1), new VictorSP(4), new WPI_VictorSPX(31), 4, 5, 6, 7, 8);
+    climb = new Climb(new WPI_VictorSPX(30), new VictorSP(2), 1, 9);
 
     timer = new Timer();
   }
@@ -100,13 +103,6 @@ public class Robot extends TimedRobot {
       ballChucker9000.indexerMotorControl(0.75);
     } else {
       ballChucker9000.indexerMotorControl(0);
-    }
-
-    // Indexer piston
-    if (leftJoystick.getRawButton(1)) {
-      ballChucker9000.indexerPistonOut(true);
-    } else {
-      ballChucker9000.indexerPistonOut(false);
     }
 
     if (manipulator.getButton(Button.X)) {

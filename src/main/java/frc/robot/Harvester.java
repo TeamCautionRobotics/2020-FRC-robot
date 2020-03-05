@@ -6,16 +6,17 @@ import edu.wpi.first.wpilibj.Solenoid;
 public class Harvester {
 
     // ESC declarations
-    private final VictorSP intakeMotor; 
+    private final VictorSP intakeMotor;
 
     // Piston declarations
-    private final Solenoid deployerPiston;
-
+    private final Solenoid leftDeployerPiston;
+    private final Solenoid rightDeployerPiston;
 
     // class initializer
-    public Harvester(int intakeMotorPort, int deployPistonPort) {
+    public Harvester(int intakeMotorPort, int leftDeployPistonPort, int rightDeployerPistonPort) {
         intakeMotor = new VictorSP(intakeMotorPort);
-        deployerPiston = new Solenoid(deployPistonPort);
+        leftDeployerPiston = new Solenoid(leftDeployPistonPort);
+        rightDeployerPiston = new Solenoid(rightDeployerPistonPort);
     }
 
     // Setters
@@ -30,6 +31,7 @@ public class Harvester {
 
     // Piston
     public void delpoyIntake(boolean deployed) {
-        deployerPiston.set(deployed);
+        leftDeployerPiston.set(deployed);
+        rightDeployerPiston.set(deployed);
     }
 }

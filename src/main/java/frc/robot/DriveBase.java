@@ -4,9 +4,7 @@ import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.VictorSP;
 
 public class DriveBase {
 
@@ -30,6 +28,7 @@ public class DriveBase {
             int rightA, int rightB) {
         this.driveLeft = driveLeft;
         this.driveRight = driveRight;
+        this.driveRight.setInverted(true);
 
         leftShifter = new Solenoid(leftShifterChannel);
         rightShifter = new Solenoid(rightShifterChannel);
@@ -49,7 +48,7 @@ public class DriveBase {
 
     public void drive(double leftPower, double rightPower) {
         driveLeft.set(leftPower);
-        driveRight.set(-rightPower);
+        driveRight.set(rightPower);
     }
 
     public void drive(double power) {

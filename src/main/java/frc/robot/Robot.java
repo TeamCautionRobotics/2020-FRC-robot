@@ -42,8 +42,9 @@ public class Robot extends TimedRobot {
         new SpeedControllerGroup(new WPI_TalonSRX(20), new WPI_VictorSPX(21), new WPI_VictorSPX(22)), 0, 1, 2, 3, 3, 4);
     harvester = new Harvester(new VictorSP(3), 0, 2);
     ballTransfer = new BallTransfer(new VictorSP(5));
-    ballChucker9000 = new BallChucker9000(new VictorSP(0), new VictorSP(1), new VictorSP(4), new WPI_VictorSPX(31), 4, 5, 6, 7, 8);
-    climb = new Climb(new WPI_VictorSPX(30), new VictorSP(2), 1, 9);
+    ballChucker9000 = new BallChucker9000(new VictorSP(0), new VictorSP(1), new VictorSP(4), new WPI_VictorSPX(31), 4,
+        5, 6, 7, 8, 9);
+    climb = new Climb(new WPI_VictorSPX(30), new VictorSP(2), 1, 10);
 
     timer = new Timer();
   }
@@ -91,9 +92,9 @@ public class Robot extends TimedRobot {
 
     // Replace with limelight stuff at some point
     if (rightJoystick.getRawButton(2)) {
-      ballChucker9000.rotatorMotorControl(1);
+      ballChucker9000.rotatorMotorControl(ballChucker9000.getRotatorAtZeroSwitch() ? 0 : 0.1);
     } else if (rightJoystick.getRawButton(3)) {
-      ballChucker9000.rotatorMotorControl(-1);
+      ballChucker9000.rotatorMotorControl(ballChucker9000.getRotatorAtZeroSwitch() ? 0 : -0.1);
     } else {
       ballChucker9000.rotatorMotorControl(0);
     }

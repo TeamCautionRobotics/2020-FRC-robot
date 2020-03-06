@@ -38,7 +38,8 @@ public class Robot extends TimedRobot {
     rightJoystick = new EnhancedJoystick(1);
     manipulator = new Gamepad(2);
 
-    driveBase = new DriveBase(new SpeedControllerGroup(new WPI_TalonSRX(10), new WPI_VictorSPX(11), new WPI_VictorSPX(12)),
+    driveBase = new DriveBase(
+        new SpeedControllerGroup(new WPI_TalonSRX(10), new WPI_VictorSPX(11), new WPI_VictorSPX(12)),
         new SpeedControllerGroup(new WPI_TalonSRX(20), new WPI_VictorSPX(21), new WPI_VictorSPX(22)), 0, 1, 2, 3, 3, 4);
     harvester = new Harvester(new VictorSP(3), 0, 2);
     ballTransfer = new BallTransfer(new VictorSP(5));
@@ -63,16 +64,13 @@ public class Robot extends TimedRobot {
   public void autonomousPeriodic() {
     if (timer.get() < 1) {
       driveBase.drive(0.5, 0.5);
-    }
-
-    else {
+    } else {
       driveBase.drive(0, 0);
     }
   }
 
   @Override
   public void teleopPeriodic() {
-
     driveBase.drive(leftJoystick.getY(), rightJoystick.getY());
 
     harvester.intakeMotorControl(manipulator.getAxis(Axis.LEFT_TRIGGER));

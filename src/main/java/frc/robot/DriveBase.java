@@ -10,7 +10,7 @@ public class DriveBase {
 
     private final SpeedControllerGroup driveLeft;
     private final SpeedControllerGroup driveRight;
-    
+
     private final Solenoid leftShifter;
     private final Solenoid rightShifter;
 
@@ -24,8 +24,8 @@ public class DriveBase {
     private double heading;
     public double courseHeading;
 
-    public DriveBase(SpeedControllerGroup driveLeft, SpeedControllerGroup driveRight, int leftShifterChannel, int rightShifterChannel, int leftA, int leftB,
-            int rightA, int rightB) {
+    public DriveBase(SpeedControllerGroup driveLeft, SpeedControllerGroup driveRight, int leftShifterChannel,
+            int rightShifterChannel, int leftA, int leftB, int rightA, int rightB) {
         this.driveLeft = driveLeft;
         this.driveRight = driveRight;
         this.driveRight.setInverted(true);

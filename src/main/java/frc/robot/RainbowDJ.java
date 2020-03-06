@@ -25,8 +25,9 @@ public class RainbowDJ {
     private final VictorSP rainbowDJMotor;
 
     // Class initializer
-    public RainbowDJ(int rainbowDJMotorPort, int rainbowDJEncoderChannelA, int rainbowDJEncoderChannelB, I2C.Port colorSensorPort) {
-    
+    public RainbowDJ(int rainbowDJMotorPort, int rainbowDJEncoderChannelA, int rainbowDJEncoderChannelB,
+            I2C.Port colorSensorPort) {
+
         // ESCs
         rainbowDJMotor = new VictorSP(rainbowDJMotorPort);
 

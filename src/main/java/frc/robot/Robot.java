@@ -107,12 +107,12 @@ public class Robot extends TimedRobot {
     }
 
     if (manipulator.getButton(Button.X)) {
-      climb.runWinch(1);
+      climb.runWinch(0.5);
     } else {
       climb.runWinch(0);
     }
 
-    climb.moveArms(manipulator.getAxis(Axis.RIGHT_Y));
+    climb.moveArms(manipulator.getAxis(Axis.RIGHT_Y) * 0.4);
   }
 
   @Override

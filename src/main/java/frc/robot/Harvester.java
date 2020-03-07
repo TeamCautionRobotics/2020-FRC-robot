@@ -9,14 +9,20 @@ public class Harvester {
     private final SpeedController intakeMotor;
 
     // Piston declarations
-    private final Solenoid leftDeployerPiston;
-    private final Solenoid rightDeployerPiston;
+    private final Solenoid portDeployerPiston;
+    private final Solenoid starboardDeployerPiston;
 
-    // class initializer
-    public Harvester(SpeedController intakeMotor, int leftDeployPistonPort, int rightDeployerPistonPort) {
+    /**
+     * 
+     * @param intakeMotor
+     * @param portDeployPistonPort        This is the left piston, relative to the
+     *                                    front being the climb side of the robot
+     * @param starboardDeployerPistonPort This is the right piston.
+     */
+    public Harvester(SpeedController intakeMotor, int portDeployPistonPort, int starboardDeployerPistonPort) {
         this.intakeMotor = intakeMotor;
-        leftDeployerPiston = new Solenoid(leftDeployPistonPort);
-        rightDeployerPiston = new Solenoid(rightDeployerPistonPort);
+        portDeployerPiston = new Solenoid(portDeployPistonPort);
+        starboardDeployerPiston = new Solenoid(starboardDeployerPistonPort);
     }
 
     // Setters
@@ -31,7 +37,7 @@ public class Harvester {
 
     // Piston
     public void delpoyIntake(boolean deployed) {
-        leftDeployerPiston.set(deployed);
-        rightDeployerPiston.set(deployed);
+        portDeployerPiston.set(deployed);
+        starboardDeployerPiston.set(deployed);
     }
 }

@@ -42,7 +42,7 @@ public class BallChucker9000 {
     public BallChucker9000(SpeedController leftFlywheelMotor, SpeedController rightFlywheelMotor,
             SpeedController rotatorMotor, SpeedController indexerMotor, int rotatorEncoderChannelA,
             int rotatorEncoderChannelB, int flywheelEncoderChannelA, int flywheelEncoderChannelB,
-            int rotatorAtZeroSwitchPort, int rotatorAtMaxSwitchPort) {
+            int rotatorAtZeroSwitchPort) {
 
         // ESCs
         this.leftFlywheelMotor = leftFlywheelMotor;

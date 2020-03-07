@@ -49,8 +49,8 @@ public class Robot extends TimedRobot {
         new SpeedControllerGroup(new WPI_TalonSRX(20), new WPI_VictorSPX(21), new WPI_VictorSPX(22)), 4, 3, 0, 1, 2, 3);
     harvester = new Harvester(new VictorSP(5), 2, 0);
     ballTransfer = new BallTransfer(new VictorSP(3));
-    ballChucker9000 = new BallChucker9000(new VictorSP(0), new VictorSP(1), new WPI_VictorSPX(4), new WPI_VictorSPX(31), 5, 6, 7, 8, 9, 10);
-    climb = new Climb(new WPI_VictorSPX(30), new WPI_VictorSPX(32), 1, 11);
+    ballChucker9000 = new BallChucker9000(new VictorSP(0), new VictorSP(1), new WPI_VictorSPX(4), new WPI_VictorSPX(31), 5, 6, 7, 8, 9);
+    climb = new Climb(new WPI_VictorSPX(30), new WPI_VictorSPX(32), 1, 10);
 
     timer = new Timer();
 

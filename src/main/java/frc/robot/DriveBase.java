@@ -14,8 +14,6 @@ public class DriveBase {
     private final Solenoid leftShifter;
     private final Solenoid rightShifter;
 
-    private boolean highGearEnabled;
-
     private final Encoder leftEncoder;
     private final Encoder rightEncoder;
 
@@ -45,8 +43,6 @@ public class DriveBase {
         leftShifter = new Solenoid(leftShifterChannel);
         rightShifter = new Solenoid(rightShifterChannel);
 
-        highGearEnabled = false;
-
         leftEncoder = new Encoder(leftA, leftB, false, EncodingType.k4X);
         rightEncoder = new Encoder(rightA, rightB, true, EncodingType.k4X);
 
@@ -66,12 +62,10 @@ public class DriveBase {
     public void useHighGear(boolean highGear) {
         leftShifter.set(highGear);
         rightShifter.set(highGear);
-        highGearEnabled = highGear;
     }
 
     public void toggleHighGear() {
-        useHighGear(!highGearEnabled);
-        highGearEnabled = !highGearEnabled;
+        useHighGear(!leftShifter.get());
     }
 
     public void resetGyro() {

@@ -37,7 +37,6 @@ public class BallChucker9000 {
 
     // Limit switches
     private final DigitalInput rotatorAtZeroSwitch;
-    private final DigitalInput rotatorAtMaxSwitch;
 
     // Class initializer
     public BallChucker9000(SpeedController leftFlywheelMotor, SpeedController rightFlywheelMotor,
@@ -59,7 +58,6 @@ public class BallChucker9000 {
 
         // Limit switches
         rotatorAtZeroSwitch = new DigitalInput(rotatorAtZeroSwitchPort);
-        rotatorAtMaxSwitch = new DigitalInput(rotatorAtMaxSwitchPort);
     }
 
     // Reset the encoder to zero when called
@@ -90,12 +88,8 @@ public class BallChucker9000 {
         return flywheelEncoder.getRate();
     }
 
-    // Limit switches
+    // Limit switch
     public boolean getRotatorAtZeroSwitch() {
         return !rotatorAtZeroSwitch.get();
-    }
-
-    public boolean getRotatorAtMaxSwitch() {
-        return !rotatorAtMaxSwitch.get();
     }
 }

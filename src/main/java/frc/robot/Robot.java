@@ -92,7 +92,7 @@ public class Robot extends TimedRobot {
     if (rightJoystick.getRawButton(2)) {
       ballChucker9000.rotatorMotorControl(ballChucker9000.getRotatorAtZeroSwitch() ? 0 : 0.1);
     } else if (rightJoystick.getRawButton(3)) {
-      ballChucker9000.rotatorMotorControl(ballChucker9000.getRotatorAtZeroSwitch() ? 0 : -0.1);
+      ballChucker9000.rotatorMotorControl(-0.1);
     } else {
       ballChucker9000.rotatorMotorControl(0);
     }

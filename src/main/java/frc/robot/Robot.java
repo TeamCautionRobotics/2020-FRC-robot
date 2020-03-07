@@ -71,7 +71,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    driveBase.drive(leftJoystick.getY(), rightJoystick.getY());
+    driveBase.drive(-leftJoystick.getY(), -rightJoystick.getY());
 
     harvester.intakeMotorControl(manipulator.getAxis(Axis.LEFT_TRIGGER));
     harvester.delpoyIntake(manipulator.getButton(Button.A));

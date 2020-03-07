@@ -22,6 +22,17 @@ public class DriveBase {
     private double heading;
     public double courseHeading;
 
+    /**
+     * 
+     * @param driveLeft positive moves forward. the front of the robot is opposite the intake.
+     * @param driveRight
+     * @param leftShifterChannel
+     * @param rightShifterChannel
+     * @param leftA
+     * @param leftB
+     * @param rightA
+     * @param rightB
+     */
     public DriveBase(SpeedControllerGroup driveLeft, SpeedControllerGroup driveRight, int leftShifterChannel,
             int rightShifterChannel, int leftA, int leftB, int rightA, int rightB) {
         this.driveLeft = driveLeft;

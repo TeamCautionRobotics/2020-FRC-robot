@@ -53,6 +53,8 @@ public class BallChucker9000 {
         // Encoders
         rotatorEncoder = new Encoder(rotatorEncoderChannelA, rotatorEncoderChannelB);
         flywheelEncoder = new Encoder(flywheelEncoderChannelA, flywheelEncoderChannelB);
+
+        // 50 to 1 gearbox. Gear on output shaft has 15 teeth, sprocket has 124 teeth
         rotatorEncoder.setDistancePerPulse(15.0 * 360.0 / (50.0 * 124.0 * 1024.0));
         flywheelEncoder.setDistancePerPulse(1.0 / 1024.0);
 

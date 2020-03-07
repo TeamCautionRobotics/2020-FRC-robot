@@ -43,19 +43,20 @@ public class Robot extends TimedRobot {
     rightJoystick = new EnhancedJoystick(1);
     manipulator = new Gamepad(2);
 
-
     driveBase = new DriveBase(
         new SpeedControllerGroup(new WPI_TalonSRX(10), new WPI_VictorSPX(11), new WPI_VictorSPX(12)),
         new SpeedControllerGroup(new WPI_TalonSRX(20), new WPI_VictorSPX(21), new WPI_VictorSPX(22)), 4, 3, 0, 1, 2, 3);
     harvester = new Harvester(new VictorSP(5), 2, 0);
     ballTransfer = new BallTransfer(new VictorSP(3));
-    ballChucker9000 = new BallChucker9000(new VictorSP(0), new VictorSP(1), new WPI_VictorSPX(4), new WPI_VictorSPX(31), 5, 6, 7, 8, 9);
+    ballChucker9000 = new BallChucker9000(new VictorSP(0), new VictorSP(1), new WPI_VictorSPX(4), new WPI_VictorSPX(31),
+        5, 6, 7, 8, 9);
     climb = new Climb(new WPI_VictorSPX(30), new WPI_VictorSPX(32), 1, 10);
 
     timer = new Timer();
 
     shifterToggleRunner = new ButtonToggleRunner(() -> leftJoystick.getRawButton(3), driveBase::toggleHighGear);
-    intakeDeployerToggleRunner = new ButtonToggleRunner(() -> manipulator.getButton(Button.A), harvester::toggleDeployer);
+    intakeDeployerToggleRunner = new ButtonToggleRunner(() -> manipulator.getButton(Button.A),
+        harvester::toggleDeployer);
     winchLockToggleRunner = new ButtonToggleRunner(() -> manipulator.getButton(Button.X), climb::toggleLock);
   }
 
@@ -91,7 +92,6 @@ public class Robot extends TimedRobot {
       harvester.intakeMotorControl(manipulator.getAxis(Axis.LEFT_Y));
       ballTransfer.moveBalls(manipulator.getAxis(Axis.RIGHT_Y));
     }
-
 
     // Check the limit switch every loop
     ballChucker9000.update();

@@ -64,8 +64,12 @@ public class DriveBase {
         rightShifter.set(highGear);
     }
 
+    public boolean shifterEngaged() {
+        return leftShifter.get();
+    }
+
     public void toggleHighGear() {
-        useHighGear(!leftShifter.get());
+        useHighGear(!shifterEngaged());
     }
 
     public void resetGyro() {

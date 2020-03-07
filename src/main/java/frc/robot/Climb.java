@@ -9,20 +9,20 @@ public class Climb {
     private final SpeedController winchMotor;
     private final SpeedController armMotor;
 
-    private final Solenoid armLockPiston;
+    private final Solenoid winchLockPiston;
 
     private DigitalInput armLimitSwitch;
 
     public Climb(SpeedController winchMotor, SpeedController armMotor, int armLockPistonPort, int armLimitSwitchPort) {
         this.winchMotor = winchMotor;
         this.armMotor = armMotor;
-        armLockPiston = new Solenoid(armLockPistonPort);
+        winchLockPiston = new Solenoid(armLockPistonPort);
 
         armLimitSwitch = new DigitalInput(armLimitSwitchPort);
     }
 
     public void runWinch(double power) {
-        if (!armLockPiston.get()) {
+        if (!LockLocked()) {
             winchMotor.set(power);
         } else {
             winchMotor.set(0);
@@ -34,11 +34,15 @@ public class Climb {
     }
 
     public void lock(boolean on) {
-        armLockPiston.set(on);
+        winchLockPiston.set(on);
     }
 
     public void toggleLock() {
-        lock(!armLockPiston.get());
+        lock(!LockLocked());
+    }
+
+    public boolean LockLocked() {
+        return winchLockPiston.get();
     }
 
     public boolean getArmLimitSwitchValue() {

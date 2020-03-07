@@ -41,7 +41,11 @@ public class Harvester {
         starboardDeployerPiston.set(deployed);
     }
 
+    public boolean deployerDeployed() {
+        return portDeployerPiston.get();
+    }
+
     public void toggleDeployer() {
-        deployIntake(!portDeployerPiston.get());
+        deployIntake(!deployerDeployed());
     }
 }

@@ -26,7 +26,7 @@ public class Climb {
     }
 
     public void moveArms(double power) {
-        armMotor.set(power);
+        armMotor.set(-power);
     }
 
     public void lock(boolean on) {

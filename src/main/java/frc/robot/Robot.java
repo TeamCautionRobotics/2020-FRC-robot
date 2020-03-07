@@ -42,8 +42,8 @@ public class Robot extends TimedRobot {
     driveBase = new DriveBase(
         new SpeedControllerGroup(new WPI_TalonSRX(10), new WPI_VictorSPX(11), new WPI_VictorSPX(12)),
         new SpeedControllerGroup(new WPI_TalonSRX(20), new WPI_VictorSPX(21), new WPI_VictorSPX(22)), 0, 1, 0, 1, 2, 3);
-    harvester = new Harvester(new VictorSP(3), 2, 3);
-    ballTransfer = new BallTransfer(new VictorSP(5));
+    harvester = new Harvester(new VictorSP(5), 2, 3);
+    ballTransfer = new BallTransfer(new VictorSP(3));
     ballChucker9000 = new BallChucker9000(new VictorSP(0), new VictorSP(1), new WPI_VictorSPX(4), new WPI_VictorSPX(31), 5, 6, 7, 8, 9, 10);
     climb = new Climb(new WPI_VictorSPX(30), new VictorSP(2), 4, 11);
 
@@ -73,6 +73,7 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     driveBase.drive(-leftJoystick.getY(), -rightJoystick.getY());
 
+
     harvester.intakeMotorControl(manipulator.getAxis(Axis.LEFT_TRIGGER));
     harvester.delpoyIntake(manipulator.getButton(Button.A));
 
@@ -92,7 +93,7 @@ public class Robot extends TimedRobot {
     if (rightJoystick.getRawButton(2)) {
       ballChucker9000.rotatorMotorControl(ballChucker9000.getRotatorAtZeroSwitch() ? 0 : 0.1);
     } else if (rightJoystick.getRawButton(3)) {
-      ballChucker9000.rotatorMotorControl(-0.1);
+      ballChucker9000.rotatorMotorControl(ballChucker9000.getRotatorAtZeroSwitch() ? 0 : -0.1);
     } else {
       ballChucker9000.rotatorMotorControl(0);
     }
@@ -110,7 +111,7 @@ public class Robot extends TimedRobot {
       climb.runWinch(0);
     }
 
-    climb.moveArms(manipulator.getAxis(Axis.RIGHT_Y) * 0.4);
+    climb.moveArms(manipulator.getAxis(Axis.RIGHT_Y));
   }
 
   @Override

@@ -22,7 +22,11 @@ public class Climb {
     }
 
     public void runWinch(double power) {
-        winchMotor.set(power);
+        if (!armLockPiston.get()) {
+            winchMotor.set(power);
+        } else {
+            winchMotor.set(0);
+        }
     }
 
     public void moveArms(double power) {

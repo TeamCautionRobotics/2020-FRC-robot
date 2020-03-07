@@ -53,7 +53,7 @@ public class BallChucker9000 {
         // Encoders
         rotatorEncoder = new Encoder(rotatorEncoderChannelA, rotatorEncoderChannelB);
         flywheelEncoder = new Encoder(flywheelEncoderChannelA, flywheelEncoderChannelB);
-        rotatorEncoder.setDistancePerPulse(1.0 / 1024.0);
+        rotatorEncoder.setDistancePerPulse(15.0 * 360.0 / (50.0 * 124.0 * 1024.0));
         flywheelEncoder.setDistancePerPulse(1.0 / 1024.0);
 
         // Limit switches
@@ -87,6 +87,10 @@ public class BallChucker9000 {
     }
 
     // Getters
+    public double getRotatorEncoder() {
+        return rotatorEncoder.getDistance();
+    }
+
     public double getFlywheelEncoder() {
         return flywheelEncoder.getRate();
     }

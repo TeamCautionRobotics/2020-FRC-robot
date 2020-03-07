@@ -11,9 +11,13 @@ import com.revrobotics.ColorSensorV3;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.VictorSP;
 
 public class RainbowDJ {
+
+    // ESCs
+    private final SpeedController rainbowDJMotor;
 
     // Encoder declarations
     private final Encoder rainbowDJEncoder;
@@ -21,15 +25,12 @@ public class RainbowDJ {
     // Color Sensor
     private final ColorSensorV3 rainbowDJColorSensor;
 
-    // ESCs
-    private final VictorSP rainbowDJMotor;
-
     // Class initializer
-    public RainbowDJ(int rainbowDJMotorPort, int rainbowDJEncoderChannelA, int rainbowDJEncoderChannelB,
+    public RainbowDJ(SpeedController rainbowDJMotorPort, int rainbowDJEncoderChannelA, int rainbowDJEncoderChannelB,
             I2C.Port colorSensorPort) {
 
         // ESCs
-        rainbowDJMotor = new VictorSP(rainbowDJMotorPort);
+        this.rainbowDJMotor = rainbowDJMotorPort;
 
         // Encoders
         rainbowDJEncoder = new Encoder(rainbowDJEncoderChannelA, rainbowDJEncoderChannelB);

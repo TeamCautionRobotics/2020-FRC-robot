@@ -33,6 +33,10 @@ public class Climb {
         armLockPiston.set(on);
     }
 
+    public void toggleLock() {
+        lock(!armLockPiston.get());
+    }
+
     public boolean getArmLimitSwitchValue() {
         return !armLimitSwitch.get();
     }

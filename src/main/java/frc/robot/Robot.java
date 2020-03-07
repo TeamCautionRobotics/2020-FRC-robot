@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.VictorSP;
+import frc.misc2020.ButtonToggleRunner;
 import frc.misc2020.EnhancedJoystick;
 import frc.misc2020.Gamepad;
 import frc.misc2020.Gamepad.Axis;
@@ -32,6 +33,10 @@ public class Robot extends TimedRobot {
 
   Timer timer;
 
+  ButtonToggleRunner shifterToggleRunner;
+  ButtonToggleRunner intakeDeployerToggleRunner;
+  ButtonToggleRunner winchLockToggleRunner;
+
   @Override
   public void robotInit() {
     leftJoystick = new EnhancedJoystick(0);
@@ -48,6 +53,10 @@ public class Robot extends TimedRobot {
     climb = new Climb(new WPI_VictorSPX(30), new WPI_VictorSPX(32), 1, 11);
 
     timer = new Timer();
+
+    shifterToggleRunner = new ButtonToggleRunner(() -> leftJoystick.getRawButton(3), driveBase::toggleHighGear);
+    intakeDeployerToggleRunner = new ButtonToggleRunner(() -> manipulator.getButton(Button.A), harvester::toggleDeployer);
+    winchLockToggleRunner = new ButtonToggleRunner(() -> manipulator.getButton(Button.X), climb::toggleLock);
   }
 
   @Override
@@ -121,6 +130,10 @@ public class Robot extends TimedRobot {
     } else {
       climb.moveArms(-manipulator.getAxis(Axis.LEFT_TRIGGER));
     }
+
+    shifterToggleRunner.update();
+    intakeDeployerToggleRunner.update();
+    winchLockToggleRunner.update();
   }
 
   @Override

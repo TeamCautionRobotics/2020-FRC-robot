@@ -45,7 +45,7 @@ public class Robot extends TimedRobot {
     harvester = new Harvester(new VictorSP(5), 2, 3);
     ballTransfer = new BallTransfer(new VictorSP(3));
     ballChucker9000 = new BallChucker9000(new VictorSP(0), new VictorSP(1), new WPI_VictorSPX(4), new WPI_VictorSPX(31), 5, 6, 7, 8, 9, 10);
-    climb = new Climb(new WPI_VictorSPX(30), new VictorSP(2), 4, 11);
+    climb = new Climb(new WPI_VictorSPX(30), new WPI_VictorSPX(32), 4, 11);
 
     timer = new Timer();
   }

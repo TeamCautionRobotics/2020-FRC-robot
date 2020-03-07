@@ -35,8 +35,8 @@ public class Harvester {
         intakeMotor.set(-power);
     }
 
-    // Piston
-    public void delpoyIntake(boolean deployed) {
+    // Pistons
+    public void deployIntake(boolean deployed) {
         portDeployerPiston.set(deployed);
         starboardDeployerPiston.set(deployed);
     }

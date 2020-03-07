@@ -69,17 +69,20 @@ public class BallChucker9000 {
 
     // Setters
 
-    // ESC
-    public void rotatorMotorControl(double power) {
+    /**
+     * 
+     * @param power positive is counter clockwise
+     */
+    public void moveRotator(double power) {
         rotatorMotor.set(power);
     }
 
-    public void flywheelMotorControl(double power) {
+    public void moveFlywheel(double power) {
         leftFlywheelMotor.set(power);
         rightFlywheelMotor.set(-power);
     }
 
-    public void indexerMotorControl(double power) {
+    public void moveIndexer(double power) {
         indexerMotor.set(power);
     }
 

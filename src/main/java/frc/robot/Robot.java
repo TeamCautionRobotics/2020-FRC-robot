@@ -98,9 +98,9 @@ public class Robot extends TimedRobot {
 
     // This needs some PID!
     if (rightJoystick.getTrigger()) {
-      ballChucker9000.flywheelMotorControl(1);
+      ballChucker9000.moveFlywheel(1);
     } else {
-      ballChucker9000.flywheelMotorControl(0);
+      ballChucker9000.moveFlywheel(0);
     }
 
     // Replace with limelight stuff at some point
@@ -109,14 +109,14 @@ public class Robot extends TimedRobot {
     } else if (manipulator.getButton(Button.LEFT_BUMPER)) {
       ballChucker9000.rotatorMotorControl(-0.1);
     } else {
-      ballChucker9000.rotatorMotorControl(0);
+      ballChucker9000.moveRotator(0);
     }
 
     // Indexer motor
     if (rightJoystick.getRawButton(3)) {
-      ballChucker9000.indexerMotorControl(0.75);
+      ballChucker9000.moveIndexer(0.75);
     } else {
-      ballChucker9000.indexerMotorControl(0);
+      ballChucker9000.moveIndexer(0);
     }
 
     if (manipulator.getButton(Button.X)) {

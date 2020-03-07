@@ -17,8 +17,6 @@ public class DriveBase {
     private final Encoder leftEncoder;
     private final Encoder rightEncoder;
 
-    private final ADXRS450_Gyro gyro;
-
     private boolean usingLeftEncoder = false;
 
     private double heading;
@@ -33,17 +31,12 @@ public class DriveBase {
         leftShifter = new Solenoid(leftShifterChannel);
         rightShifter = new Solenoid(rightShifterChannel);
 
-        gyro = new ADXRS450_Gyro();
 
         leftEncoder = new Encoder(leftA, leftB, false, EncodingType.k4X);
         rightEncoder = new Encoder(rightA, rightB, true, EncodingType.k4X);
 
         leftEncoder.setDistancePerPulse((4 * Math.PI) / 1024.0);
         rightEncoder.setDistancePerPulse((4 * Math.PI) / 1024.0);
-
-        gyro.calibrate();
-        heading = gyro.getAngle();
-        courseHeading = heading;
     }
 
     public void drive(double leftPower, double rightPower) {
@@ -61,11 +54,11 @@ public class DriveBase {
     }
 
     public void resetGyro() {
-        gyro.reset();
+        //TODO: NOPE
     }
 
     public double getGyroAngle() {
-        return gyro.getAngle();
+        return 0;
     }
 
     public void resetEncoders() {

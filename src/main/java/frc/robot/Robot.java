@@ -73,11 +73,16 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     driveBase.drive(-leftJoystick.getY(), -rightJoystick.getY());
 
-
-    harvester.intakeMotorControl(manipulator.getAxis(Axis.LEFT_TRIGGER));
     harvester.delpoyIntake(manipulator.getButton(Button.A));
 
-    ballTransfer.moveBalls(manipulator.getAxis(Axis.RIGHT_TRIGGER));
+    if (leftJoystick.getTrigger()) {
+      harvester.intakeMotorControl(0.6);
+      ballTransfer.moveBalls(0.6);
+    } else {
+      harvester.intakeMotorControl(manipulator.getAxis(Axis.LEFT_Y));
+      ballTransfer.moveBalls(manipulator.getAxis(Axis.RIGHT_Y));
+    }
+
 
     // Check the limit switch every loop
     ballChucker9000.update();
@@ -90,16 +95,16 @@ public class Robot extends TimedRobot {
     }
 
     // Replace with limelight stuff at some point
-    if (rightJoystick.getRawButton(2)) {
+    if (manipulator.getButton(Button.RIGHT_BUMPER)) {
       ballChucker9000.rotatorMotorControl(ballChucker9000.getRotatorAtZeroSwitch() ? 0 : 0.1);
-    } else if (rightJoystick.getRawButton(3)) {
-      ballChucker9000.rotatorMotorControl(ballChucker9000.getRotatorAtZeroSwitch() ? 0 : -0.1);
+    } else if (manipulator.getButton(Button.LEFT_BUMPER)) {
+      ballChucker9000.rotatorMotorControl(-0.1);
     } else {
       ballChucker9000.rotatorMotorControl(0);
     }
 
     // Indexer motor
-    if (leftJoystick.getTrigger()) {
+    if (rightJoystick.getRawButton(3)) {
       ballChucker9000.indexerMotorControl(0.75);
     } else {
       ballChucker9000.indexerMotorControl(0);
@@ -111,7 +116,11 @@ public class Robot extends TimedRobot {
       climb.runWinch(0);
     }
 
-    climb.moveArms(manipulator.getAxis(Axis.RIGHT_Y));
+    if (manipulator.getAxis(Axis.RIGHT_TRIGGER) >= 0.1) {
+      climb.moveArms(manipulator.getAxis(Axis.RIGHT_TRIGGER));
+    } else {
+      climb.moveArms(-manipulator.getAxis(Axis.LEFT_TRIGGER));
+    }
   }
 
   @Override

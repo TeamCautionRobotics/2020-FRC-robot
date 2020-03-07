@@ -26,11 +26,11 @@ public class RainbowDJ {
     private final ColorSensorV3 rainbowDJColorSensor;
 
     // Class initializer
-    public RainbowDJ(SpeedController rainbowDJMotorPort, int rainbowDJEncoderChannelA, int rainbowDJEncoderChannelB,
+    public RainbowDJ(SpeedController rainbowDJMotor, int rainbowDJEncoderChannelA, int rainbowDJEncoderChannelB,
             I2C.Port colorSensorPort) {
 
         // ESCs
-        this.rainbowDJMotor = rainbowDJMotorPort;
+        this.rainbowDJMotor = rainbowDJMotor;
 
         // Encoders
         rainbowDJEncoder = new Encoder(rainbowDJEncoderChannelA, rainbowDJEncoderChannelB);

@@ -24,7 +24,8 @@ public class DriveBase {
 
     /**
      * 
-     * @param driveLeft positive moves forward. the front of the robot is opposite the intake.
+     * @param driveLeft           positive moves forward. the front of the robot is
+     *                            opposite the intake.
      * @param driveRight
      * @param leftShifterChannel
      * @param rightShifterChannel
@@ -41,7 +42,6 @@ public class DriveBase {
 
         leftShifter = new Solenoid(leftShifterChannel);
         rightShifter = new Solenoid(rightShifterChannel);
-
 
         leftEncoder = new Encoder(leftA, leftB, false, EncodingType.k4X);
         rightEncoder = new Encoder(rightA, rightB, true, EncodingType.k4X);
@@ -65,7 +65,7 @@ public class DriveBase {
     }
 
     public void resetGyro() {
-        //TODO: NOPE
+        // TODO: NOPE
     }
 
     public double getGyroAngle() {

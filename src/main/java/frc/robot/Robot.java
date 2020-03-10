@@ -38,6 +38,15 @@ public class Robot extends TimedRobot {
   ButtonToggleRunner intakeDeployerToggleRunner;
   ButtonToggleRunner winchLockToggleRunner;
 
+  private static final boolean USING_ARM_PID = false;
+
+  private double armP = 0.1;
+  private double armI = 0.01;
+  private double armD = 0.1;
+
+  private static final double ARM_UP_SPEED_SETPOINT = 50; // degrees per second
+  private static final double ARM_DOWN_SPEED_SETPOINT = -50; // degrees per second
+
   @Override
   public void robotInit() {
     leftJoystick = new EnhancedJoystick(0);
@@ -81,7 +90,7 @@ public class Robot extends TimedRobot {
     ballTransfer = new BallTransfer(ballTransfterMotor);
     ballChucker9000 = new BallChucker9000(leftFlywheelMotor, rightFlywheelMotor, rotatorMotor, indexerMotor, 0, 1, 7, 8,
         2);
-    climb = new Climb(winchMotor, armMotor, 1, 10);
+    climb = new Climb(winchMotor, armMotor, 1, 10, 11, 12, 1, 1, 1);
 
     timer = new Timer();
 
@@ -89,6 +98,11 @@ public class Robot extends TimedRobot {
     intakeDeployerToggleRunner = new ButtonToggleRunner(() -> manipulator.getButton(Button.B),
         harvester::toggleDeployer);
     winchLockToggleRunner = new ButtonToggleRunner(() -> manipulator.getButton(Button.X), climb::toggleLock);
+
+    SmartDashboard.putNumber("Arm angle", climb.getArmAngle());
+    SmartDashboard.putNumber("Arm speed", climb.getArmSpeed());
+
+    SmartDashboard.putData(climb.armPidController);
   }
 
   @Override
@@ -165,12 +179,22 @@ public class Robot extends TimedRobot {
       climb.runWinch(-0.5 * manipulator.getAxis(Axis.LEFT_TRIGGER));
     }
 
-    if (leftJoystick.getRawButton(3)) {
-      climb.moveArm(0.7);
-    } else if (leftJoystick.getRawButton(2)) {
-      climb.moveArm(-1);
+    if (USING_ARM_PID) {
+      if (leftJoystick.getRawButton(3)) {
+        climb.moveArmPID(ARM_UP_SPEED_SETPOINT);
+      } else if (leftJoystick.getRawButton(2)) {
+        climb.moveArmPID(ARM_DOWN_SPEED_SETPOINT);
+      } else {
+        climb.moveArmPID(0);
+      }
     } else {
-      climb.moveArm(0);
+      if (leftJoystick.getRawButton(3)) {
+        climb.moveArm(0.7);
+      } else if (leftJoystick.getRawButton(2)) {
+        climb.moveArm(-1);
+      } else {
+        climb.moveArm(0);
+      }
     }
 
     shifterToggleRunner.update();

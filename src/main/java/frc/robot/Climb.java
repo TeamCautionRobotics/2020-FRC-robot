@@ -22,15 +22,15 @@ public class Climb {
     }
 
     public void runWinch(double power) {
-        if (!LockLocked()) {
+        if (!lockLocked()) {
             winchMotor.set(power);
         } else {
             winchMotor.set(0);
         }
     }
 
-    public void moveArms(double power) {
-        armMotor.set(-power);
+    public void moveArm(double power) {
+        armMotor.set(power);
     }
 
     public void lock(boolean on) {
@@ -38,10 +38,10 @@ public class Climb {
     }
 
     public void toggleLock() {
-        lock(!LockLocked());
+        lock(!lockLocked());
     }
 
-    public boolean LockLocked() {
+    public boolean lockLocked() {
         return !winchLockPiston.get();
     }
 

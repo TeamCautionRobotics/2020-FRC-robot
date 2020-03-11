@@ -32,7 +32,7 @@ public class Harvester {
      * @param power positive intakes ball? negative outakes the balls? duhhhh
      */
     public void intakeMotorControl(double power) {
-        intakeMotor.set(-power);
+        intakeMotor.set(power);
     }
 
     // Pistons

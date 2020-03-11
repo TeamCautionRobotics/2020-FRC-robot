@@ -2,11 +2,12 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 
-public class DriveBase {
+public class DriveBase extends DifferentialDrive {
 
     private final SpeedControllerGroup driveLeft;
     private final SpeedControllerGroup driveRight;
@@ -36,9 +37,9 @@ public class DriveBase {
      */
     public DriveBase(SpeedControllerGroup driveLeft, SpeedControllerGroup driveRight, int leftShifterChannel,
             int rightShifterChannel, int leftA, int leftB, int rightA, int rightB) {
+        super(driveLeft, driveRight);
         this.driveLeft = driveLeft;
         this.driveRight = driveRight;
-        this.driveRight.setInverted(true);
 
         leftShifter = new Solenoid(leftShifterChannel);
         rightShifter = new Solenoid(rightShifterChannel);

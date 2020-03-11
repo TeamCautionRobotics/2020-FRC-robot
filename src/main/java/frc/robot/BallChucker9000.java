@@ -80,12 +80,12 @@ public class BallChucker9000 {
     }
 
     public void moveFlywheel(double power) {
-        leftFlywheelMotor.set(-power);
-        rightFlywheelMotor.set(-power);
+        leftFlywheelMotor.set(power);
+        rightFlywheelMotor.set(power);
     }
 
     public void moveIndexer(double power) {
-        indexerMotor.set(-power);
+        indexerMotor.set(power);
     }
 
     // Getters

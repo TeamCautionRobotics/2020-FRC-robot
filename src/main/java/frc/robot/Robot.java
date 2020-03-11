@@ -7,7 +7,6 @@
 
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
@@ -44,18 +43,41 @@ public class Robot extends TimedRobot {
     rightJoystick = new EnhancedJoystick(1);
     manipulator = new Gamepad(2);
 
-    WPI_VictorSPX leftDrive2 = new WPI_VictorSPX(11);
-    leftDrive2.setInverted(true);
-    WPI_VictorSPX rightDrive2 = new WPI_VictorSPX(21);
-    rightDrive2.setInverted(true);
-    driveBase = new DriveBase(
-        new SpeedControllerGroup(new WPI_TalonSRX(10), leftDrive2, new WPI_VictorSPX(12)),
-        new SpeedControllerGroup(new WPI_TalonSRX(20), rightDrive2, new WPI_VictorSPX(22)), 4, 3, 0, 1, 2, 3);
-    harvester = new Harvester(new VictorSP(5), 2, 0);
-    ballTransfer = new BallTransfer(new VictorSP(3));
-    ballChucker9000 = new BallChucker9000(new VictorSP(0), new VictorSP(1), new WPI_VictorSPX(4), new WPI_VictorSPX(31),
-        5, 6, 7, 8, 9);
-    climb = new Climb(new WPI_VictorSPX(30), new WPI_VictorSPX(32), 1, 10);
+    // motors are 0 indexed here
+    WPI_VictorSPX leftDriveMotor1 = new WPI_VictorSPX(11);
+    leftDriveMotor1.setInverted(true);
+    WPI_VictorSPX rightDriveMotor1 = new WPI_VictorSPX(21);
+    rightDriveMotor1.setInverted(true);
+
+    SpeedControllerGroup leftDriveGroup = new SpeedControllerGroup(new WPI_TalonSRX(10), leftDriveMotor1,
+        new WPI_VictorSPX(12));
+    SpeedControllerGroup rightDriveGroup = new SpeedControllerGroup(new WPI_TalonSRX(20), rightDriveMotor1,
+        new WPI_VictorSPX(22));
+
+    VictorSP harvesterMotor = new VictorSP(5);
+    harvesterMotor.setInverted(true);
+    VictorSP ballTransfterMotor = new VictorSP(3);
+    ballTransfterMotor.setInverted(true);
+
+    VictorSP leftFlywheelMotor = new VictorSP(0);
+    leftFlywheelMotor.setInverted(true);
+    VictorSP rightFlywheelMotor = new VictorSP(1);
+    rightFlywheelMotor.setInverted(true);
+    WPI_VictorSPX rotatorMotor = new WPI_VictorSPX(4);
+    rotatorMotor.setInverted(true);
+    WPI_VictorSPX indexerMotor = new WPI_VictorSPX(31);
+    indexerMotor.setInverted(true);
+
+    WPI_VictorSPX winchMotor = new WPI_VictorSPX(30);
+    WPI_VictorSPX armMotor = new WPI_VictorSPX(32);
+    armMotor.setInverted(true);
+
+    driveBase = new DriveBase(leftDriveGroup, rightDriveGroup, 4, 3, 0, 1, 2, 3);
+    harvester = new Harvester(harvesterMotor, 2, 0);
+    ballTransfer = new BallTransfer(ballTransfterMotor);
+    ballChucker9000 = new BallChucker9000(leftFlywheelMotor, rightFlywheelMotor, rotatorMotor, indexerMotor, 5, 6, 7, 8,
+        9);
+    climb = new Climb(winchMotor, armMotor, 1, 10);
 
     timer = new Timer();
 

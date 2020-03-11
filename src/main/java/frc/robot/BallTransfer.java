@@ -16,6 +16,6 @@ public class BallTransfer {
      *              move ball towards Harvester
      */
     public void moveBalls(double power) {
-        beltMotor.set(-power);
+        beltMotor.set(power);
     }
 }

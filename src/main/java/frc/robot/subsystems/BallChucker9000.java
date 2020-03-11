@@ -70,7 +70,8 @@ public class BallChucker9000 extends SubsystemBase {
 
     // Reset the encoder to zero when called
     // The offset value may be a nonzero value, see line 45
-    public void update() {
+    @Override
+    public void periodic() {
         if (getRotatorAtZeroSwitch()) {
             rotatorEncoder.reset();
         }

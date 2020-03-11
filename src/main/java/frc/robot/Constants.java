@@ -38,4 +38,7 @@ public final class Constants {
 
 	public static final int LEFT_SHIFTER_PORT = 4;
 	public static final int RIGHT_SHIFTER_PORT = 3;
+
+	public static final int INTAKE_MOTOR_PORT = 5;
+	public static final int DEPLOY_PISTON_PORT = 2;
 }

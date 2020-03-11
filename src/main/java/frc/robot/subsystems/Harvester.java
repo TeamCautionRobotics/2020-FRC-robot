@@ -10,12 +10,12 @@ public class Harvester extends SubsystemBase {
     private final VictorSP intakeMotor;
 
     // Piston declarations
-    private final Solenoid deployPistion;
+    private final Solenoid deployPiston;
 
     // class initializer
     public Harvester(int intakeMotorPort, int deployPistonPort) {
         intakeMotor = new VictorSP(intakeMotorPort);
-        deployPistion = new Solenoid(deployPistonPort);
+        deployPiston = new Solenoid(deployPistonPort);
     }
 
     // Setters
@@ -29,7 +29,17 @@ public class Harvester extends SubsystemBase {
     }
 
     // Piston
-    public void delpoyIntake(boolean deployed) {
-        deployPistion.set(deployed);
+    public void deployIntake(boolean deployed) {
+        deployPiston.set(deployed);
+    }
+
+    // Toggles piston
+    public void toggleIntakeDeployer() {
+        deployPiston.set(!getDeployPiston());
+    }
+
+    // Method to return piston state
+    public boolean getDeployPiston() {
+        return deployPiston.get();
     }
 }

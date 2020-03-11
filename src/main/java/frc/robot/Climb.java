@@ -34,7 +34,7 @@ public class Climb {
     }
 
     public void lock(boolean on) {
-        winchLockPiston.set(on);
+        winchLockPiston.set(!on);
     }
 
     public void toggleLock() {
@@ -42,7 +42,7 @@ public class Climb {
     }
 
     public boolean LockLocked() {
-        return winchLockPiston.get();
+        return !winchLockPiston.get();
     }
 
     public boolean getArmLimitSwitchValue() {

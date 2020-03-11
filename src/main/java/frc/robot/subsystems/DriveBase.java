@@ -1,40 +1,42 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DriveBase extends SubsystemBase {
 
-  private final VictorSP driveLeft;
-  private final VictorSP driveRight;
-  private final Solenoid shifter;
+  private final SpeedControllerGroup leftDrive;
+  private final SpeedControllerGroup rightDrive;
+  private final Solenoid leftShifter;
+  private final Solenoid rightShifter;
+  
 
   private final Encoder leftEncoder;
   private final Encoder rightEncoder;
 
   private final ADXRS450_Gyro gyro;
 
-  private boolean shifterState = false;
   private boolean usingLeftEncoder = false;
 
   private double heading;
   public double courseHeading;
 
-  public DriveBase(int left, int right, int leftA, int leftB, int rightA, int rightB, int shifterChannel) {
-    driveLeft = new VictorSP(left);
-    driveRight = new VictorSP(right);
+  public DriveBase(SpeedControllerGroup leftDrive, SpeedControllerGroup rightDrive, int leftA, int leftB, int rightA, int rightB, int leftShifterPort, int rightShifterPort) {
+    this.leftDrive = leftDrive;
+    this.rightDrive = rightDrive;
+
+    leftShifter = new Solenoid(leftShifterPort);
+    rightShifter = new Solenoid(rightShifterPort);
 
     leftEncoder = new Encoder(leftA, leftB, false, EncodingType.k4X);
     rightEncoder = new Encoder(rightA, rightB, true, EncodingType.k4X);
 
     leftEncoder.setDistancePerPulse((4 * Math.PI) / 1024.0);
     rightEncoder.setDistancePerPulse((4 * Math.PI) / 1024.0);
-
-    shifter = new Solenoid(shifterChannel);
 
     gyro = new ADXRS450_Gyro();
     gyro.calibrate();
@@ -49,7 +51,7 @@ public class DriveBase extends SubsystemBase {
    * @param power positive moves the left side of the robot forward
    */
   public void setLeftPower(double power) {
-    driveLeft.set(power);
+    leftDrive.set(power);
   }
 
   /**
@@ -59,7 +61,7 @@ public class DriveBase extends SubsystemBase {
    * @param power positive moves the right side of the robot forward
    */
   public void setRightPower(double power) {
-    driveRight.set(power);
+    rightDrive.set(power);
   }
 
   /**
@@ -86,19 +88,19 @@ public class DriveBase extends SubsystemBase {
    * @param boolean highGear is positive when the robot is in high gear
    */
   public void useHighGear(boolean highGear) {
-    shifter.set(highGear);
-    shifterState = highGear;
+    leftShifter.set(highGear);
+    rightShifter.set(highGear);
   }
 
   /**
    * @return boolean shifterState is positive when the robot is in high gear
    */
   public boolean getShifterState() {
-    return shifterState;
+    return leftShifter.get();
   }
 
   public void toggleShifterState() {
-    useHighGear(!shifterState);
+    useHighGear(!getShifterState());
   }
 
   public void resetGyro() {

@@ -151,9 +151,22 @@ public class Robot extends TimedRobot {
     winchLockToggleRunner.update();
   }
 
-  ButtonToggleRunner testWinchLockToggleRunner = new ButtonToggleRunner(() -> rightJoystick.getTrigger(), climb::toggleLock);
+  ButtonToggleRunner testWinchLockToggleRunner = new ButtonToggleRunner(() -> rightJoystick.getTrigger(),
+      climb::toggleLock);
 
   @Override
   public void testPeriodic() {
+    driveBase.arcadeDrive(leftJoystick.getY(), leftJoystick.getX());
+    climb.moveArm(rightJoystick.getY());
+
+    if (rightJoystick.getRawButton(3)) {
+      climb.runWinch(0.5);
+    } else if (rightJoystick.getRawButton(2)) {
+      climb.runWinch(-0.5);
+    } else {
+      climb.runWinch(0);
+    }
+
+    testWinchLockToggleRunner.update();
   }
 }

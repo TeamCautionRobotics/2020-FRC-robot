@@ -9,10 +9,13 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.XboxController.Button;
+import frc.robot.commands.ToggleIntake;
 import frc.robot.commands.TankDrive;
 import frc.robot.commands.ToggleShifter;
 import frc.robot.misc2020.EnhancedJoystick;
 import frc.robot.subsystems.DriveBase;
+import frc.robot.subsystems.Harvester;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -31,6 +34,9 @@ public class RobotContainer {
       Constants.LEFT_DRIVE_ENCODER_PORT_A, Constants.LEFT_DRIVE_ENCODER_PORT_B, Constants.RIGHT_DRIVE_ENCODER_PORT_A,
       Constants.RIGHT_DRIVE_ENCODER_PORT_B, Constants.SHIFTER_PORT);
 
+
+  public static final Harvester harvester = new Harvester(Constants.INTAKE_MOTOR_PORT, Constants.DEPLOY_PISTON_PORT);
+
   EnhancedJoystick leftJoystick = new EnhancedJoystick(Constants.LEFT_JOYSTICK_PORT);
   EnhancedJoystick rightJoystick = new EnhancedJoystick(Constants.RIGHT_JOYSTICK_PORT);
   XboxController manipulator = new XboxController(Constants.MANIPULATOR_PORT);
@@ -43,6 +49,7 @@ public class RobotContainer {
     configureButtonBindings();
 
     driveBase.setDefaultCommand(new TankDrive(driveBase, () -> leftJoystick.getY(), () -> rightJoystick.getY()));
+  
   }
 
   /**
@@ -54,6 +61,9 @@ public class RobotContainer {
   private void configureButtonBindings() {
     new JoystickButton(leftJoystick, Constants.LEFT_JOYSTICK_SHIFTER_BUTTON)
         .toggleWhenPressed(new ToggleShifter(driveBase));
+
+    new JoystickButton(manipulator, Button.kA.value)
+        .toggleWhenPressed(new ToggleIntake(harvester));
   }
 
   /**

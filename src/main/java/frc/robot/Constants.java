@@ -33,6 +33,9 @@ public final class Constants {
 
 	public static final int SHIFTER_PORT = 0;
 
+	public static final int INTAKE_MOTOR_PORT = 5;
+	public static final int DEPLOY_PISTON_PORT = 2;
+
 	// Buttons and Axes
 	public static final int LEFT_JOYSTICK_SHIFTER_BUTTON = 0;
 }

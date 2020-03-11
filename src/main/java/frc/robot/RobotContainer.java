@@ -7,6 +7,9 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -34,12 +37,12 @@ public class RobotContainer {
   EnhancedJoystick rightJoystick = new EnhancedJoystick(Constants.RIGHT_JOYSTICK_PORT);
   XboxController manipulator = new XboxController(Constants.MANIPULATOR_PORT);
 
-  public static final DriveBase driveBase = new DriveBase(new VictorSP(Constants.LEFT_DRIVE_MOTOR_0_DEVICE_NUMBER),
-      new VictorSP(Constants.LEFT_DRIVE_MOTOR_1_DEVICE_NUMBER),
-      new VictorSP(Constants.LEFT_DRIVE_MOTOR_2_DEVICE_NUMBER),
-      new VictorSP(Constants.RIGHT_DRIVE_MOTOR_0_DEVICE_NUMBER),
-      new VictorSP(Constants.RIGHT_DRIVE_MOTOR_1_DEVICE_NUMBER),
-      new VictorSP(Constants.RIGHT_DRIVE_MOTOR_2_DEVICE_NUMBER), Constants.LEFT_DRIVE_ENCODER_PORT_A,
+  public static final DriveBase driveBase = new DriveBase(new WPI_TalonSRX(Constants.LEFT_DRIVE_MOTOR_0_DEVICE_NUMBER),
+      new WPI_VictorSPX(Constants.LEFT_DRIVE_MOTOR_1_DEVICE_NUMBER),
+      new WPI_VictorSPX(Constants.LEFT_DRIVE_MOTOR_2_DEVICE_NUMBER),
+      new WPI_TalonSRX(Constants.RIGHT_DRIVE_MOTOR_0_DEVICE_NUMBER),
+      new WPI_VictorSPX(Constants.RIGHT_DRIVE_MOTOR_1_DEVICE_NUMBER),
+      new WPI_VictorSPX(Constants.RIGHT_DRIVE_MOTOR_2_DEVICE_NUMBER), Constants.LEFT_DRIVE_ENCODER_PORT_A,
       Constants.LEFT_DRIVE_ENCODER_PORT_B, Constants.RIGHT_DRIVE_ENCODER_PORT_A, Constants.RIGHT_DRIVE_ENCODER_PORT_B,
       Constants.LEFT_SHIFTER_PORT, Constants.RIGHT_SHIFTER_PORT);
 

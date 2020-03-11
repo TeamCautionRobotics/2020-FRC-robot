@@ -30,31 +30,18 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
-  static VictorSP leftDrive1;
-  static VictorSP leftDrive2;
-  static VictorSP leftDrive3;
-  static VictorSP rightDrive1;
-  static VictorSP rightDrive2;
-  static VictorSP rightDrive3;
-  
-  leftDrive1=new VictorSP(Constants.LEFT_DRIVE_MOTOR_1_DEVICE_NUMBER);
-  leftDrive2=new VictorSP(Constants.LEFT_DRIVE_MOTOR_2_DEVICE_NUMBER);
-  leftDrive3=new VictorSP(Constants.LEFT_DRIVE_MOTOR_3_DEVICE_NUMBER);
-  rightDrive1=new VictorSP(Constants.RIGHT_DRIVE_MOTOR_1_DEVICE_NUMBER);
-  rightDrive2=new VictorSP(Constants.RIGHT_DRIVE_MOTOR_2_DEVICE_NUMBER);
-  rightDrive3=new VictorSP(Constants.RIGHT_DRIVE_MOTOR_3_DEVICE_NUMBER);
-  
-  leftDrive2.setInverted(true);
-  rightDrive2.setInverted(true);
-
-  public static final DriveBase driveBase = new DriveBase(new SpeedControllerGroup(leftDrive1, leftDrive2, leftDrive3),
-      new SpeedControllerGroup(rightDrive1, rightDrive2, rightDrive3), Constants.LEFT_DRIVE_ENCODER_PORT_A,
-      Constants.LEFT_DRIVE_ENCODER_PORT_B, Constants.RIGHT_DRIVE_ENCODER_PORT_A, Constants.RIGHT_DRIVE_ENCODER_PORT_B,
-      Constants.LEFT_SHIFTER_PORT, Constants.RIGHT_SHIFTER_PORT);
-
   EnhancedJoystick leftJoystick = new EnhancedJoystick(Constants.LEFT_JOYSTICK_PORT);
   EnhancedJoystick rightJoystick = new EnhancedJoystick(Constants.RIGHT_JOYSTICK_PORT);
   XboxController manipulator = new XboxController(Constants.MANIPULATOR_PORT);
+
+  public static final DriveBase driveBase = new DriveBase(new VictorSP(Constants.LEFT_DRIVE_MOTOR_0_DEVICE_NUMBER),
+      new VictorSP(Constants.LEFT_DRIVE_MOTOR_1_DEVICE_NUMBER),
+      new VictorSP(Constants.LEFT_DRIVE_MOTOR_2_DEVICE_NUMBER),
+      new VictorSP(Constants.RIGHT_DRIVE_MOTOR_0_DEVICE_NUMBER),
+      new VictorSP(Constants.RIGHT_DRIVE_MOTOR_1_DEVICE_NUMBER),
+      new VictorSP(Constants.RIGHT_DRIVE_MOTOR_2_DEVICE_NUMBER), Constants.LEFT_DRIVE_ENCODER_PORT_A,
+      Constants.LEFT_DRIVE_ENCODER_PORT_B, Constants.RIGHT_DRIVE_ENCODER_PORT_A, Constants.RIGHT_DRIVE_ENCODER_PORT_B,
+      Constants.LEFT_SHIFTER_PORT, Constants.RIGHT_SHIFTER_PORT);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.

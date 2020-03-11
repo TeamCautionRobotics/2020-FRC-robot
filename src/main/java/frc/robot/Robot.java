@@ -62,7 +62,7 @@ public class Robot extends TimedRobot {
     shifterToggleRunner = new ButtonToggleRunner(() -> leftJoystick.getRawButton(3), driveBase::toggleHighGear);
     intakeDeployerToggleRunner = new ButtonToggleRunner(() -> manipulator.getButton(Button.A),
         harvester::toggleDeployer);
-    winchLockToggleRunner = new ButtonToggleRunner(() -> manipulator.getButton(Button.X), climb::toggleLock);
+    winchLockToggleRunner = new ButtonToggleRunner(() -> manipulator.getButton(Button.Y), climb::toggleLock);
   }
 
   @Override
@@ -86,11 +86,19 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
+    /*
+     * make a toggle with the sensor as the input. count 4 balls then ignore the
+     * fifth Regarding the first 4, nudge them
+     */
+
     driveBase.drive(-leftJoystick.getY(), -rightJoystick.getY());
 
     if (leftJoystick.getTrigger()) {
-      harvester.intakeMotorControl(0.6);
-      ballTransfer.moveBalls(0.6);
+      harvester.intakeMotorControl(0.5);
+      ballTransfer.moveBalls(0.5);
+    } else if (leftJoystick.getRawButton(2)) {
+      harvester.intakeMotorControl(-0.5);
+      ballTransfer.moveBalls(-0.5);
     } else {
       harvester.intakeMotorControl(manipulator.getAxis(Axis.LEFT_Y));
       ballTransfer.moveBalls(manipulator.getAxis(Axis.RIGHT_Y));
@@ -118,26 +126,32 @@ public class Robot extends TimedRobot {
     // Indexer motor
     if (rightJoystick.getRawButton(3)) {
       ballChucker9000.moveIndexer(0.75);
+    } else if (rightJoystick.getRawButton(2)) {
+      ballChucker9000.moveIndexer(-0.75);
     } else {
       ballChucker9000.moveIndexer(0);
     }
 
     if (manipulator.getButton(Button.X)) {
       climb.runWinch(0.5);
+    } else if (manipulator.getButton(Button.B)) {
+      climb.runWinch(-0.5);
     } else {
       climb.runWinch(0);
     }
 
     if (manipulator.getAxis(Axis.RIGHT_TRIGGER) >= 0.1) {
-      climb.moveArms(0.5 * manipulator.getAxis(Axis.RIGHT_TRIGGER));
+      climb.moveArm(0.7 * manipulator.getAxis(Axis.RIGHT_TRIGGER));
     } else {
-      climb.moveArms(0.1 * -manipulator.getAxis(Axis.LEFT_TRIGGER));
+      climb.moveArm(-manipulator.getAxis(Axis.LEFT_TRIGGER));
     }
 
     shifterToggleRunner.update();
     intakeDeployerToggleRunner.update();
     winchLockToggleRunner.update();
   }
+
+  ButtonToggleRunner testWinchLockToggleRunner = new ButtonToggleRunner(() -> rightJoystick.getTrigger(), climb::toggleLock);
 
   @Override
   public void testPeriodic() {

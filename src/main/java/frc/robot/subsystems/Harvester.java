@@ -6,20 +6,32 @@ import edu.wpi.first.wpilibj.Solenoid;
 
 public class Harvester extends SubsystemBase {
 
+    private final boolean deployerState = false;
     // ESC declarations
     private final VictorSP intakeMotor; 
 
     // Piston declarations
-    private final Solenoid deployPistion;
+    private final Solenoid deployPiston;
 
-
-    // class initializer
+    // Class initializer
     public Harvester(int intakeMotorPort, int deployPistonPort) {
         intakeMotor = new VictorSP(intakeMotorPort);
-        deployPistion = new Solenoid(deployPistonPort);
+        deployPiston = new Solenoid(deployPistonPort);
     }
 
-    // Setters
+    // Setters for Piston
+    public void deployIntake(boolean deployed) {
+        deployPiston.set(deployed);
+        deployerState = deployed;
+      }
+    
+      public boolean getDeployerState() {
+        return deployerState;
+      }
+    
+      public void changeDeployerState() {
+        deployIntake(!deployerState);
+      }
 
     /**
      * 
@@ -29,8 +41,4 @@ public class Harvester extends SubsystemBase {
         intakeMotor.set(power);
     }
 
-    // Piston
-    public void delpoyIntake(boolean deployed) {
-        deployPistion.set(deployed);
-    }
 }

@@ -38,7 +38,4 @@ public final class Constants {
 
 	public static final int LEFT_SHIFTER_PORT = 4;
 	public static final int RIGHT_SHIFTER_PORT = 3;
-
-	// Joystick Buttons
-	public static final int LEFT_JOYSTICK_SHIFTER_BUTTON = 0;
 }

@@ -39,9 +39,9 @@ public class RobotContainer {
       new WPI_VictorSPX(Constants.LEFT_DRIVE_MOTOR_2_DEVICE_NUMBER),
       new WPI_TalonSRX(Constants.RIGHT_DRIVE_MOTOR_0_DEVICE_NUMBER),
       new WPI_VictorSPX(Constants.RIGHT_DRIVE_MOTOR_1_DEVICE_NUMBER),
-      new WPI_VictorSPX(Constants.RIGHT_DRIVE_MOTOR_2_DEVICE_NUMBER), Constants.LEFT_DRIVE_ENCODER_PORT_A,
-      Constants.LEFT_DRIVE_ENCODER_PORT_B, Constants.RIGHT_DRIVE_ENCODER_PORT_A, Constants.RIGHT_DRIVE_ENCODER_PORT_B,
-      Constants.LEFT_SHIFTER_PORT, Constants.RIGHT_SHIFTER_PORT);
+      new WPI_VictorSPX(Constants.RIGHT_DRIVE_MOTOR_2_DEVICE_NUMBER), Constants.LEFT_SHIFTER_PORT,
+      Constants.RIGHT_SHIFTER_PORT, Constants.LEFT_DRIVE_ENCODER_PORT_A, Constants.LEFT_DRIVE_ENCODER_PORT_B,
+      Constants.RIGHT_DRIVE_ENCODER_PORT_A, Constants.RIGHT_DRIVE_ENCODER_PORT_B);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -60,7 +60,7 @@ public class RobotContainer {
    * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(leftJoystick, 0).toggleWhenPressed(new ToggleShifter(driveBase));
+    new JoystickButton(leftJoystick, 4).toggleWhenPressed(new ToggleShifter(driveBase));
   }
 
   /**

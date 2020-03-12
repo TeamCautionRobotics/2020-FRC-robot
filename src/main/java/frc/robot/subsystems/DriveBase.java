@@ -26,8 +26,8 @@ public class DriveBase extends SubsystemBase {
   public double courseHeading;
 
   public DriveBase(SpeedController leftDriveMotor0, SpeedController leftDriveMotor1, SpeedController leftDriveMotor2,
-      SpeedController rightDriveMotor0, SpeedController rightDriveMotor1, SpeedController rightDriveMotor2, int leftA,
-      int leftB, int rightA, int rightB, int leftShifterPort, int rightShifterPort) {
+      SpeedController rightDriveMotor0, SpeedController rightDriveMotor1, SpeedController rightDriveMotor2,
+      int leftShifterPort, int rightShifterPort, int leftA, int leftB, int rightA, int rightB) {
     leftDriveMotor1.setInverted(true);
     rightDriveMotor0.setInverted(true);
     rightDriveMotor2.setInverted(true);

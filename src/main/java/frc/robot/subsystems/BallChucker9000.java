@@ -20,13 +20,28 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.VictorSP;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class BallChucker9000 extends SubsystemBase {
+
+    // Limelight
+    private final NetworkTable limelightData = NetworkTableInstance.getDefault().getTable("limelight");
+
+    private NetworkTableEntry tx = limelightData.getEntry("tx"); // X Offset from crosshair
+    private NetworkTableEntry ta = limelightData.getEntry("ta"); // Target's size
+    private NetworkTableEntry tv = limelightData.getEntry("tv"); // targets available
+
+    private boolean autoAim = true;
+    private double targetXOffset;
+    private double targetSize;
+    private boolean targetAvailable;
 
     // ESC declarations
     private final VictorSP rotatorMotor;
@@ -48,7 +63,7 @@ public class BallChucker9000 extends SubsystemBase {
     public BallChucker9000(int flywheelMotorPort, int rotatorMotorPort, int indexerMotorPort, int rotatorEncoderChannelA, 
                             int rotatorEncoderChannelB, int flywheelEncoderChannelA, int flywheelEncoderChannelB, 
                             int indexerPistonPort, int rotatorAtZeroSwitchPort) {
-    
+
         // ESCs
         flywheelMotor = new VictorSP(flywheelMotorPort);
         rotatorMotor = new VictorSP(rotatorMotorPort);
@@ -68,13 +83,32 @@ public class BallChucker9000 extends SubsystemBase {
 
     }
 
-    // Reset the encoder to zero when called
-    // The offset value may be a nonzero value, see line 45
+    // Reset the encoder to zero, read Limelight data
     @Override
     public void periodic() {
         if (getRotatorAtZeroSwitch()) {
             rotatorEncoder.reset();
         }
+
+        targetXOffset = tx.getDouble(0.0);
+        targetSize = ta.getDouble(0.0);
+        targetAvailable = tv.getBoolean(false);
+
+        if (autoAim) { // Automatically aim if enabled
+            if (targetAvailable) { // If we see a target (Lock state)
+                // Negative targetXOffset rotates left, positive rotates right
+
+
+            } else { // If we don't see a target (Search state)
+                // Rotate back and forth until we find a target
+
+
+            }
+        }
+
+        SmartDashboard.putNumber("Limelight X Offset", targetXOffset);
+        SmartDashboard.putNumber("Limelight Target Area", targetSize);
+        SmartDashboard.putBoolean("Limelight Target Available", targetAvailable);
     }
 
     // Setters
@@ -95,6 +129,10 @@ public class BallChucker9000 extends SubsystemBase {
     // Pistons
     public void indexerPistonOut(boolean state) {
         indexerPiston.set(state);
+    }
+
+    public void enableAutomaticAim(boolean state) {
+        autoAim = state;
     }
 
 

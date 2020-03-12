@@ -8,7 +8,6 @@
 package frc.robot.commands;
 
 import frc.robot.subsystems.BallChucker9000;
-import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
@@ -17,7 +16,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class BallChucker9000RotateLeft extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final BallChucker9000 BallChucker9000Subsystem;
-  private final PIDController pidController;
 
   /**
    * Creates a new ExampleCommand.
@@ -25,8 +23,6 @@ public class BallChucker9000RotateLeft extends CommandBase {
    * @param subsystem The subsystem used by this command.
    */
   public BallChucker9000RotateLeft(BallChucker9000 subsystem) {
-    pidController = new PIDController(0, 0, 0);
-
     BallChucker9000Subsystem = subsystem;
     addRequirements(BallChucker9000Subsystem);
   }
@@ -34,7 +30,7 @@ public class BallChucker9000RotateLeft extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    
+    BallChucker9000Subsystem.rotatorMotorControl(-0.1);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -45,6 +41,7 @@ public class BallChucker9000RotateLeft extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    BallChucker9000Subsystem.rotatorMotorControl(0.0);
   }
 
   // Returns true when the command should end.

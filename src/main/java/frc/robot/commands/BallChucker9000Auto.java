@@ -11,16 +11,12 @@ import frc.robot.subsystems.BallChucker9000;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class BallChucker9000Auto extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final BallChucker9000 BallChucker9000Subsystem;
-
-  private final PIDController rotatorPID;
-  private final PIDController flywheelPID;
 
   private final NetworkTable limelightData = NetworkTableInstance.getDefault().getTable("limelight");
 
@@ -42,10 +38,6 @@ public class BallChucker9000Auto extends CommandBase {
   public BallChucker9000Auto(BallChucker9000 subsystem) {
     BallChucker9000Subsystem = subsystem;
     addRequirements(BallChucker9000Subsystem);
-
-    // PID Controllers
-    rotatorPID = new PIDController(0, 0, 0);
-    flywheelPID = new PIDController(0, 0, 0);
   }
 
   @Override

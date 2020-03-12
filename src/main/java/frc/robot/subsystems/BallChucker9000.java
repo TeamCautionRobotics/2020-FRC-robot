@@ -20,28 +20,17 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.VictorSP;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.controller.PIDController;
 
 public class BallChucker9000 extends SubsystemBase {
 
-    // Limelight
-    private final NetworkTable limelightData = NetworkTableInstance.getDefault().getTable("limelight");
-
-    private NetworkTableEntry tx = limelightData.getEntry("tx"); // X Offset from crosshair
-    private NetworkTableEntry ta = limelightData.getEntry("ta"); // Target's size
-    private NetworkTableEntry tv = limelightData.getEntry("tv"); // targets available
-
-    private boolean autoAim = true;
-    private double targetXOffset;
-    private double targetSize;
-    private boolean targetAvailable;
+    // PID
+    private final PIDController rotatorPID;
+    private final PIDController flywheelPID;
 
     // ESC declarations
     private final VictorSP rotatorMotor;
@@ -60,14 +49,22 @@ public class BallChucker9000 extends SubsystemBase {
 
 
     // Class initializer
-    public BallChucker9000(int flywheelMotorPort, int rotatorMotorPort, int indexerMotorPort, int rotatorEncoderChannelA, 
-                            int rotatorEncoderChannelB, int flywheelEncoderChannelA, int flywheelEncoderChannelB, 
-                            int indexerPistonPort, int rotatorAtZeroSwitchPort) {
+    public BallChucker9000(VictorSP rotatorController, VictorSP flywheelController, VictorSP indexerController,
+                            int rotatorEncoderChannelA, int rotatorEncoderChannelB, int flywheelEncoderChannelA,
+                            int flywheelEncoderChannelB, int indexerPistonPort, int rotatorAtZeroSwitchPort) {
+
+        // public BallChucker9000(int flywheelMotorPort, int rotatorMotorPort, int indexerMotorPort, int rotatorEncoderChannelA, 
+        // int rotatorEncoderChannelB, int flywheelEncoderChannelA, int flywheelEncoderChannelB, 
+        // int indexerPistonPort, int rotatorAtZeroSwitchPort) {
+
+        // PID
+        rotatorPID = new PIDController(0.5, 0, 0.5);
+        flywheelPID = new PIDController(0.5, 0, 0.5);
 
         // ESCs
-        flywheelMotor = new VictorSP(flywheelMotorPort);
-        rotatorMotor = new VictorSP(rotatorMotorPort);
-        indexerMotor = new VictorSP(indexerMotorPort);
+        flywheelMotor = rotatorController;
+        rotatorMotor = flywheelController;
+        indexerMotor = indexerController;
 
         // Encoders
         rotatorEncoder = new Encoder(rotatorEncoderChannelA, rotatorEncoderChannelB);
@@ -89,37 +86,29 @@ public class BallChucker9000 extends SubsystemBase {
         if (getRotatorAtZeroSwitch()) {
             rotatorEncoder.reset();
         }
-
-        targetXOffset = tx.getDouble(0.0);
-        targetSize = ta.getDouble(0.0);
-        targetAvailable = tv.getBoolean(false);
-
-        if (autoAim) { // Automatically aim if enabled
-            if (targetAvailable) { // If we see a target (Lock state)
-                // Negative targetXOffset rotates left, positive rotates right
-
-
-            } else { // If we don't see a target (Search state)
-                // Rotate back and forth until we find a target
-
-
-            }
-        }
-
-        SmartDashboard.putNumber("Limelight X Offset", targetXOffset);
-        SmartDashboard.putNumber("Limelight Target Area", targetSize);
-        SmartDashboard.putBoolean("Limelight Target Available", targetAvailable);
     }
 
     // Setters
 
     // ESC
     public void rotatorMotorControl(double power) {
-        rotatorMotor.set(power);
+        if (getRotatorAtZeroSwitch()) { // Only set power if the limit switch isn't pressed
+            rotatorMotor.set(power);
+        } else {
+            rotatorMotor.set(0.0);
+        }
+    }
+
+    public void rotatorPIDControl(double setPoint) {
+        rotatorMotorControl(rotatorPID.calculate(getRotatorDistance(), setPoint));
     }
 
     public void flywheelMotorControl(double power) {
         flywheelMotor.set(power);
+    }
+
+    public void flywheelPIDControl(double velocity) {
+        flywheelMotorControl(flywheelPID.calculate(getFlywheelSpeed(), velocity));
     }
 
     public void indexerMotorControl(double power) {
@@ -131,14 +120,14 @@ public class BallChucker9000 extends SubsystemBase {
         indexerPiston.set(state);
     }
 
-    public void enableAutomaticAim(boolean state) {
-        autoAim = state;
-    }
-
 
     // Getters
-    public double getFlywheelEncoder() {
+    public double getFlywheelSpeed() {
         return flywheelEncoder.getRate();
+    }
+
+    public double getRotatorDistance() {
+        return rotatorEncoder.getDistance();
     }
 
     // Limit switch 

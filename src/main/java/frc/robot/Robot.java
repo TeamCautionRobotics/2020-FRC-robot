@@ -46,13 +46,15 @@ public class Robot extends TimedRobot {
     // motors are 0 indexed here
     WPI_VictorSPX leftDriveMotor1 = new WPI_VictorSPX(11);
     leftDriveMotor1.setInverted(true);
-    WPI_VictorSPX rightDriveMotor1 = new WPI_VictorSPX(21);
-    rightDriveMotor1.setInverted(true);
+    WPI_TalonSRX rightDriveMotor0 = new WPI_TalonSRX(20);
+    rightDriveMotor0.setInverted(true);
+    WPI_VictorSPX rightDriveMotor2 = new WPI_VictorSPX(22);
+    rightDriveMotor2.setInverted(true);
 
     SpeedControllerGroup leftDriveGroup = new SpeedControllerGroup(new WPI_TalonSRX(10), leftDriveMotor1,
         new WPI_VictorSPX(12));
-    SpeedControllerGroup rightDriveGroup = new SpeedControllerGroup(new WPI_TalonSRX(20), rightDriveMotor1,
-        new WPI_VictorSPX(22));
+    SpeedControllerGroup rightDriveGroup = new SpeedControllerGroup(rightDriveMotor0, new WPI_VictorSPX(21),
+        rightDriveMotor2);
 
     VictorSP harvesterMotor = new VictorSP(5);
     harvesterMotor.setInverted(true);

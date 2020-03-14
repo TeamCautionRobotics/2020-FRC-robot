@@ -9,7 +9,7 @@ public class BallChucker9000Shoot extends CommandBase {
   private final BallChucker9000 BallChucker9000Subsystem;
 
   /**
-   * Creates a new BallChucker9000Shoot.
+   * Creates a new BallChucker9000Index.
    *
    * @param subsystem The subsystem used by this command.
    */
@@ -21,16 +21,16 @@ public class BallChucker9000Shoot extends CommandBase {
 
   @Override
   public void initialize() {
-    
+    BallChucker9000Subsystem.indexerMotorControl(1);
   }
 
   @Override
   public void execute() {
-    
   }
 
   @Override
   public void end(boolean interrupted) {
+    BallChucker9000Subsystem.indexerMotorControl(0);
   }
 
   @Override

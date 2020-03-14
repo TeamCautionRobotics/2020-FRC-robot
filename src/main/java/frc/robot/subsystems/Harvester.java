@@ -13,9 +13,9 @@ public class Harvester extends SubsystemBase {
     private final Solenoid deployPiston;
 
     // class initializer
-    public Harvester(int intakeMotorPort, int deployPistonPort) {
-        intakeMotor = new VictorSP(intakeMotorPort);
-        deployPiston = new Solenoid(deployPistonPort);
+    public Harvester(VictorSP intakeMotor, Solenoid deployPiston) {
+        this.intakeMotor = intakeMotor;
+        this.deployPiston = deployPiston;
     }
 
     // Setters

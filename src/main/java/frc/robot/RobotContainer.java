@@ -19,6 +19,8 @@ import frc.robot.subsystems.Harvester;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj.VictorSP;
+import edu.wpi.first.wpilibj.Solenoid;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -35,7 +37,11 @@ public class RobotContainer {
       Constants.RIGHT_DRIVE_ENCODER_PORT_B, Constants.SHIFTER_PORT);
 
 
-  public static final Harvester harvester = new Harvester(Constants.INTAKE_MOTOR_PORT, Constants.DEPLOY_PISTON_PORT);
+
+  private static final VictorSP intakeMotor = new VictorSP(Constants.INTAKE_MOTOR_PORT);
+  private static final Solenoid deployPiston = new Solenoid(Constants.DEPLOY_PISTON_PORT);
+
+  public static final Harvester harvester = new Harvester(intakeMotor, deployPiston);
 
   EnhancedJoystick leftJoystick = new EnhancedJoystick(Constants.LEFT_JOYSTICK_PORT);
   EnhancedJoystick rightJoystick = new EnhancedJoystick(Constants.RIGHT_JOYSTICK_PORT);

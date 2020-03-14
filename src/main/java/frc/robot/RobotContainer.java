@@ -27,12 +27,28 @@ public class RobotContainer {
   private final BallChucker9000 BallChucker9000Subsystem;
   private final BallChucker9000AutoRotate BallChucker9000AutoRotateCommand;
 
+  private final WPI_VictorSPX rotatorMotor;
+  private final VictorSP leftFlywheelMotor;
+  private final VictorSP rightFlywheelMotor;
+  private final WPI_VictorSPX indexerMotor;
+
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
+
+    rotatorMotor = new WPI_VictorSPX(4);
+    leftFlywheelMotor = new VictorSP(0);
+    rightFlywheelMotor = new VictorSP(1);
+    indexerMotor = new WPI_VictorSPX(31);
+
+    rotatorMotor.setInverted(true);
+    leftFlywheelMotor.setInverted(true);
+    rightFlywheelMotor.setInverted(true);
+    indexerMotor.setInverted(true);
+
     BallChucker9000Subsystem = new BallChucker9000(new WPI_VictorSPX(4), new VictorSP(0), new VictorSP(1),
                                new WPI_VictorSPX(31), 0, 1, 7, 8, 2);
 

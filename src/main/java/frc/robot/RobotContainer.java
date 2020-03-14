@@ -50,7 +50,7 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
 
-    driveBase.setDefaultCommand(new TankDrive(driveBase, () -> leftJoystick.getY(), () -> rightJoystick.getY()));
+    driveBase.setDefaultCommand(new TankDrive(driveBase, () -> -leftJoystick.getY(), () -> -rightJoystick.getY()));
   }
 
   /**
@@ -60,7 +60,7 @@ public class RobotContainer {
    * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(leftJoystick, 4).toggleWhenPressed(new ToggleShifter(driveBase));
+    new JoystickButton(leftJoystick, 4).toggleWhenActive(new ToggleShifter(driveBase));
   }
 
   /**

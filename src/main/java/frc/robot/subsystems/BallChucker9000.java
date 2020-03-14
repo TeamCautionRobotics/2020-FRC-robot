@@ -64,7 +64,6 @@ public class BallChucker9000 extends SubsystemBase {
 
         // Limit switches
         rotatorAtZeroSwitch = new DigitalInput(rotatorAtZeroSwitchPort);
-
     }
 
     // Reset the encoder to zero when called
@@ -104,5 +103,4 @@ public class BallChucker9000 extends SubsystemBase {
     public boolean getRotatorAtZeroSwitch() {
         return !rotatorAtZeroSwitch.get();
     }
-
 }

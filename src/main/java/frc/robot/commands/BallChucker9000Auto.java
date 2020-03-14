@@ -1,10 +1,3 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018-2019 FIRST. All Rights Reserved.                        */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package frc.robot.commands;
 
 import frc.robot.subsystems.BallChucker9000;
@@ -62,17 +55,9 @@ public class BallChucker9000Auto extends CommandBase {
 
       if (targetAvailable) { // If a target is detected (Lock state)
 
-        // BASIC NON-PID ROTATOR CONTROL
-
-        if (0.5 > targetXOffset && targetXOffset > -0.5) { // If we're within 0.5* of target, stop
-          BallChucker9000Subsystem.rotatorMotorControl(0.0);
-        } else if (targetXOffset > 0.0) { // If the target is to the right, move right
-          BallChucker9000Subsystem.rotatorMotorControl(0.1);
-        } else if (targetXOffset < 0.0) { // If the target is to the left, move left
-          BallChucker9000Subsystem.rotatorMotorControl(-0.1);
-        } else { // We should never get here, but if we do, stop the motor as a failsafe
-          BallChucker9000Subsystem.rotatorMotorControl(0.0);
-        }
+        BallChucker9000Subsystem.rotatorPIDControl(targetXOffset);
+        
+        BallChucker9000Subsystem.flywheelPIDControl(targetSize);
 
         // Use the targetSize value to calculate the flywheel's speed with a PID controller
 

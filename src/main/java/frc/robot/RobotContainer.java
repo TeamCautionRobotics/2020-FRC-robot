@@ -8,10 +8,14 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.commands.BallChucker9000Auto;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.subsystems.BallChucker9000;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -25,7 +29,7 @@ public class RobotContainer {
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
-
+  private final BallChucker9000 BallChucker9000Subsystem;
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -33,6 +37,8 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
+    BallChucker9000Subsystem = new BallChucker9000(new WPI_VictorSPX(4), new VictorSP(0), new VictorSP(1),
+                               new WPI_VictorSPX(31), 5, 6, 7, 8, 9);
   }
 
   /**
@@ -52,6 +58,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    return new BallChucker9000Auto(BallChucker9000Subsystem);
   }
 }

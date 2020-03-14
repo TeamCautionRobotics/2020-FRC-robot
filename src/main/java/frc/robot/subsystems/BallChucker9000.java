@@ -22,8 +22,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.VictorSP;
+import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.controller.PIDController;
 
 public class BallChucker9000 extends SubsystemBase {
@@ -33,47 +32,47 @@ public class BallChucker9000 extends SubsystemBase {
     private final PIDController flywheelPID;
 
     // ESC declarations
-    private final VictorSP rotatorMotor;
-    private final VictorSP flywheelMotor;
-    private final VictorSP indexerMotor;
+    private final SpeedController rotatorMotor;
+    private final SpeedController rightFlywheelMotor;
+    private final SpeedController leftFlywheelMotor;
+    private final SpeedController indexerMotor;
     
     // Encoder declarations
     private final Encoder rotatorEncoder;
     private final Encoder flywheelEncoder;
 
     // Piston declarations
-    private final Solenoid indexerPiston;
+    // private final Solenoid indexerPiston;
 
     // Limit switches
     private final DigitalInput rotatorAtZeroSwitch;
 
 
     // Class initializer
-    public BallChucker9000(VictorSP rotatorController, VictorSP flywheelController, VictorSP indexerController,
-                            int rotatorEncoderChannelA, int rotatorEncoderChannelB, int flywheelEncoderChannelA,
-                            int flywheelEncoderChannelB, int indexerPistonPort, int rotatorAtZeroSwitchPort) {
-
-        // public BallChucker9000(int flywheelMotorPort, int rotatorMotorPort, int indexerMotorPort, int rotatorEncoderChannelA, 
-        // int rotatorEncoderChannelB, int flywheelEncoderChannelA, int flywheelEncoderChannelB, 
-        // int indexerPistonPort, int rotatorAtZeroSwitchPort) {
+    public BallChucker9000(SpeedController rotatorController, SpeedController leftFlywheelController, SpeedController rightFlywheelController, 
+                            SpeedController indexerController, int rotatorEncoderChannelA, int rotatorEncoderChannelB, int flywheelEncoderChannelA,
+                            int flywheelEncoderChannelB, int rotatorAtZeroSwitchPort) {
 
         // PID
         rotatorPID = new PIDController(0.5, 0, 0.5);
         flywheelPID = new PIDController(0.5, 0, 0.5);
 
         // ESCs
-        flywheelMotor = rotatorController;
-        rotatorMotor = flywheelController;
+        leftFlywheelMotor = leftFlywheelController;
+        rightFlywheelMotor = rightFlywheelController;
+        rotatorMotor = rotatorController;
         indexerMotor = indexerController;
+
+        leftFlywheelMotor.setInverted(true);
+        rightFlywheelMotor.setInverted(true);
+        rotatorMotor.setInverted(true);
+        indexerMotor.setInverted(true);
 
         // Encoders
         rotatorEncoder = new Encoder(rotatorEncoderChannelA, rotatorEncoderChannelB);
         flywheelEncoder = new Encoder(flywheelEncoderChannelA, flywheelEncoderChannelB);
-        rotatorEncoder.setDistancePerPulse(1.0/1024.0);
+        rotatorEncoder.setDistancePerPulse(15.0 * 360.0 / (50.0 * 124.0 * 1024.0));
         flywheelEncoder.setDistancePerPulse(1.0/1024.0);
-
-        // Piston
-        indexerPiston = new Solenoid(indexerPistonPort);
 
         //Limit switches
         rotatorAtZeroSwitch = new DigitalInput(rotatorAtZeroSwitchPort);
@@ -104,7 +103,8 @@ public class BallChucker9000 extends SubsystemBase {
     }
 
     public void flywheelMotorControl(double power) {
-        flywheelMotor.set(power);
+        rightFlywheelMotor.set(power);
+        leftFlywheelMotor.set(power);
     }
 
     public void flywheelPIDControl(double velocity) {
@@ -113,11 +113,6 @@ public class BallChucker9000 extends SubsystemBase {
 
     public void indexerMotorControl(double power) {
         indexerMotor.set(power);
-    }
-
-    // Pistons
-    public void indexerPistonOut(boolean state) {
-        indexerPiston.set(state);
     }
 
 

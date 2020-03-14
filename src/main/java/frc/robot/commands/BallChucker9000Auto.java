@@ -23,7 +23,8 @@ public class BallChucker9000Auto extends CommandBase {
   private double targetSize;
   private boolean targetAvailable;
 
-  private double initialRotatorPositon;
+  private double rotatorPosition;
+  private double rotatorDestination;
 
   /**
    * Creates command to make the BallChucker9000 automatically target
@@ -56,17 +57,59 @@ public class BallChucker9000Auto extends CommandBase {
       SmartDashboard.putBoolean("Limelight Target Available", targetAvailable);
 
       if (targetAvailable) { // If a target is detected (Lock state)
+        
+        // get the encoder
+        rotatorPosition = BallChucker9000Subsystem.getRotatorDistance();
 
-        // Get the position we detect the target at as an offset
-        initialRotatorPositon = BallChucker9000Subsystem.getRotatorDistance();
+        // Set the destnation to the current position to bypass the 
+        // search check the first time it runs
+        rotatorDestination = Math.round(rotatorPosition);
 
         // Move the rotator to the detected position including offset
-        BallChucker9000Subsystem.rotatorPIDControl(targetXOffset + initialRotatorPositon);
+        BallChucker9000Subsystem.rotatorPIDControl(targetXOffset + rotatorPosition);
 
       } else { // If no target is detected (Search state)
 
-        // Do nothing for now
+        // get the encoder and round it
+        rotatorPosition = Math.round(BallChucker9000Subsystem.getRotatorDistance());
+        
+        if (rotatorDestination == rotatorPosition) { // If we've reached our intended destination, check how we move
 
+          if (rotatorPosition >= 180) {
+
+            // Rotator is at max right rotation, go to max left rotation
+            BallChucker9000Subsystem.rotatorPIDControl(0);
+            rotatorDestination = 0;
+
+          } else if (rotatorPosition >= 90) {
+
+            // Rotator is above or equal to center, go to max right rotation
+            BallChucker9000Subsystem.rotatorPIDControl(180);
+            rotatorDestination = 180;
+
+          } else if (rotatorPosition <= 0) {
+
+            // Rotator is at max left rotation, go to max right rotation
+            BallChucker9000Subsystem.rotatorPIDControl(180);
+            rotatorDestination = 180;
+
+          } else if (rotatorPosition < 90) {
+
+            // Rotator is below center, go to max left rotation
+            BallChucker9000Subsystem.rotatorPIDControl(0);
+            rotatorDestination = 0;
+
+          } else {
+
+            // Uh oh! We exceeeded max rotation. Hopefully we didn't break anything!
+            // (go to center)
+            BallChucker9000Subsystem.rotatorPIDControl(90);
+            rotatorDestination = 0;
+
+          } 
+
+        }
+        
       }
 
   }
@@ -75,7 +118,6 @@ public class BallChucker9000Auto extends CommandBase {
   public void end(boolean interrupted) {
     BallChucker9000Subsystem.rotatorPIDControl(0); // Reset to resting position
     ledMode.setNumber(1); // Turn the LEDs off
-
   }
 
   @Override

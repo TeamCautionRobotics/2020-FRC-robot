@@ -122,7 +122,7 @@ public class BallChucker9000 extends SubsystemBase {
     }
 
     public double getRotatorDistance() {
-        return rotatorEncoder.getDistance();
+        return rotatorEncoder.getDistance() + 120;
     }
 
     // Limit switch 

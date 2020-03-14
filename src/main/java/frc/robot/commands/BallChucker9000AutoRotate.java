@@ -81,19 +81,19 @@ public class BallChucker9000AutoRotate extends CommandBase {
             BallChucker9000Subsystem.rotatorPIDControl(0);
             rotatorDestination = 0;
 
-          } else if (rotatorPosition >= 90) {
+          } else if (rotatorPosition >= 0) {
 
             // Rotator is above or equal to center, go to max right rotation
             BallChucker9000Subsystem.rotatorPIDControl(180);
             rotatorDestination = 180;
 
-          } else if (rotatorPosition <= 0) {
+          } else if (rotatorPosition <= -180) {
 
             // Rotator is at max left rotation, go to max right rotation
             BallChucker9000Subsystem.rotatorPIDControl(180);
             rotatorDestination = 180;
 
-          } else if (rotatorPosition < 90) {
+          } else if (rotatorPosition < 0) {
 
             // Rotator is below center, go to max left rotation
             BallChucker9000Subsystem.rotatorPIDControl(0);

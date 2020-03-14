@@ -34,7 +34,7 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
     BallChucker9000Subsystem = new BallChucker9000(new WPI_VictorSPX(4), new VictorSP(0), new VictorSP(1),
-                               new WPI_VictorSPX(31), 5, 6, 7, 8, 9);
+                               new WPI_VictorSPX(31), 0, 1, 7, 8, 2);
 
     BallChucker9000AutoRotateCommand = new BallChucker9000AutoRotate(BallChucker9000Subsystem);
   }

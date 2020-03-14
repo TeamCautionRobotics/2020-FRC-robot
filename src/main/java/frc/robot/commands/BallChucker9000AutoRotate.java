@@ -103,7 +103,7 @@ public class BallChucker9000AutoRotate extends CommandBase {
 
             // Uh oh! Hopefully we didn't break anything!
             // (go to center)
-            BallChucker9000Subsystem.rotatorPIDControl(90);
+            BallChucker9000Subsystem.rotatorPIDControl(0);
             rotatorDestination = 0;
 
           } 

@@ -13,12 +13,12 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
-import frc.robot.commands.ToggleIntake;
+import frc.robot.commands.ToggleReaper;
 import frc.robot.commands.TankDrive;
 import frc.robot.commands.ToggleShifter;
 import frc.robot.misc2020.EnhancedJoystick;
 import frc.robot.subsystems.DriveBase;
-import frc.robot.subsystems.Harvester;
+import frc.robot.subsystems.Reaper;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -35,17 +35,7 @@ import edu.wpi.first.wpilibj.Solenoid;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
-  public static final DriveBase driveBase = new DriveBase(Constants.LEFT_DRIVE_MOTOR_PORT, Constants.RIGHT_DRIVE_MOTOR_PORT,
-      Constants.LEFT_DRIVE_ENCODER_PORT_A, Constants.LEFT_DRIVE_ENCODER_PORT_B, Constants.RIGHT_DRIVE_ENCODER_PORT_A,
-      Constants.RIGHT_DRIVE_ENCODER_PORT_B, Constants.SHIFTER_PORT);
-
-
-
-  private static final VictorSP intakeMotor = new VictorSP(Constants.INTAKE_MOTOR_PORT);
-  private static final Solenoid deployPiston = new Solenoid(Constants.DEPLOY_PISTON_PORT);
-
-  public static final Harvester harvester = new Harvester(intakeMotor, deployPiston);
-
+  private static final VictorSP intakeMotor = new VictorSP(Constants.REAPER_MOTOR_PORT);
   
   EnhancedJoystick leftJoystick = new EnhancedJoystick(Constants.LEFT_JOYSTICK_PORT);
   EnhancedJoystick rightJoystick = new EnhancedJoystick(Constants.RIGHT_JOYSTICK_PORT);
@@ -60,7 +50,7 @@ public class RobotContainer {
   Constants.RIGHT_SHIFTER_PORT, Constants.LEFT_DRIVE_ENCODER_PORT_A, Constants.LEFT_DRIVE_ENCODER_PORT_B,
   Constants.RIGHT_DRIVE_ENCODER_PORT_A, Constants.RIGHT_DRIVE_ENCODER_PORT_B);
 
-  public static final Harvester harvester = new Harvester(Constants.INTAKE_MOTOR_PORT, Constants.DEPLOY_PISTON_PORT);
+  public static final Reaper reaper = new Reaper(intakeMotor, Constants.REAPER_PORT_PISTON_PORT, Constants.REAPER_STARBOARD_PISTON_PORT);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -82,7 +72,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
     new JoystickButton(leftJoystick, 4).toggleWhenPressed(new ToggleShifter(driveBase));
     new JoystickButton(manipulator, Button.kA.value)
-        .toggleWhenPressed(new ToggleIntake(harvester));
+        .toggleWhenPressed(new ToggleReaper(reaper));
   }
 
   /**

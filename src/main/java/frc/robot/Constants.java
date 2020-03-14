@@ -39,6 +39,7 @@ public final class Constants {
 	public static final int LEFT_SHIFTER_PORT = 4;
 	public static final int RIGHT_SHIFTER_PORT = 3;
 
-	public static final int INTAKE_MOTOR_PORT = 5;
-	public static final int DEPLOY_PISTON_PORT = 2;
+	public static final int REAPER_MOTOR_PORT = 5;
+	public static final int REAPER_PORT_PISTON_PORT = 2;
+	public static final int REAPER_STARBOARD_PISTON_PORT = 0;
 }

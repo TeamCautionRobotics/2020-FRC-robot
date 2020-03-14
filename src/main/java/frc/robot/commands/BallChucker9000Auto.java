@@ -73,8 +73,7 @@ public class BallChucker9000Auto extends CommandBase {
 
   @Override
   public void end(boolean interrupted) {
-    // Reset the shooter to a resting postion (+/- 90*) ?
-
+    BallChucker9000Subsystem.rotatorPIDControl(0); // Reset to resting position
     ledMode.setNumber(1); // Turn the LEDs off
 
   }

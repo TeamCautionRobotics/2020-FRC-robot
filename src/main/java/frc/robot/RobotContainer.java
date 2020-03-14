@@ -10,7 +10,6 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.BallChucker9000Auto;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.BallChucker9000;
 import frc.robot.subsystems.ExampleSubsystem;

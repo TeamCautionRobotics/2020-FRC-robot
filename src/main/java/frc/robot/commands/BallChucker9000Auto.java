@@ -23,6 +23,8 @@ public class BallChucker9000Auto extends CommandBase {
   private double targetSize;
   private boolean targetAvailable;
 
+  private double initialRotatorPositon;
+
   /**
    * Creates command to make the BallChucker9000 automatically target
    *
@@ -55,11 +57,11 @@ public class BallChucker9000Auto extends CommandBase {
 
       if (targetAvailable) { // If a target is detected (Lock state)
 
-        BallChucker9000Subsystem.rotatorPIDControl(targetXOffset);
-        
-        BallChucker9000Subsystem.flywheelPIDControl(targetSize);
+        // Get the position we detect the target at as an offset
+        initialRotatorPositon = BallChucker9000Subsystem.getRotatorDistance();
 
-        // Use the targetSize value to calculate the flywheel's speed with a PID controller
+        // Move the rotator to the detected position including offset
+        BallChucker9000Subsystem.rotatorPIDControl(targetXOffset + initialRotatorPositon);
 
       } else { // If no target is detected (Search state)
 

@@ -12,8 +12,10 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import frc.robot.commands.ToggleReaper;
+import frc.robot.commands.RunReaper;
 import frc.robot.commands.TankDrive;
 import frc.robot.commands.ToggleShifter;
 import frc.robot.misc2020.EnhancedJoystick;
@@ -60,7 +62,7 @@ public class RobotContainer {
     configureButtonBindings();
 
     driveBase.setDefaultCommand(new TankDrive(driveBase, () -> leftJoystick.getY(), () -> rightJoystick.getY()));
-  
+    reaper.setDefaultCommand(new RunReaper(reaper, () -> manipulator.getY(Hand.kRight)));
   }
 
   /**
@@ -71,6 +73,7 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     new JoystickButton(leftJoystick, 4).toggleWhenPressed(new ToggleShifter(driveBase));
+
     new JoystickButton(manipulator, Button.kA.value)
         .toggleWhenPressed(new ToggleReaper(reaper));
   }

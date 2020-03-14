@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.Reaper;
 
 public class ToggleReaper extends InstantCommand {
-    public ToggleReaper(Reaper harvester) {
-        super(() -> harvester.toggleReaperDeployer(), harvester);
+    public ToggleReaper(Reaper reaper) {
+        super(() -> reaper.toggleReaperDeployer(), reaper);
     }
 }

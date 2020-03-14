@@ -103,8 +103,8 @@ public class BallChucker9000 extends SubsystemBase {
     }
 
     public void flywheelMotorControl(double power) {
-        rightFlywheelMotor.set(power);
-        leftFlywheelMotor.set(power);
+        rightFlywheelMotor.set(0.1);
+        leftFlywheelMotor.set(0.1);
     }
 
     public void flywheelPIDControl(double velocity) {

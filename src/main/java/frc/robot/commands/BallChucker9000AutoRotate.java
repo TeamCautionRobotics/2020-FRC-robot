@@ -75,7 +75,7 @@ public class BallChucker9000AutoRotate extends CommandBase {
         
         if (rotatorDestination == rotatorPosition) { // If we've reached our intended destination, check how we move
 
-          if (rotatorPosition >= 180) {
+          if (rotatorPosition >= 120) {
 
             // Rotator is at max right rotation, go to max left rotation
             BallChucker9000Subsystem.rotatorPIDControl(0);
@@ -84,14 +84,14 @@ public class BallChucker9000AutoRotate extends CommandBase {
           } else if (rotatorPosition >= 0) {
 
             // Rotator is above or equal to center, go to max right rotation
-            BallChucker9000Subsystem.rotatorPIDControl(180);
-            rotatorDestination = 180;
+            BallChucker9000Subsystem.rotatorPIDControl(120);
+            rotatorDestination = 120;
 
-          } else if (rotatorPosition <= -180) {
+          } else if (rotatorPosition <= -120) {
 
             // Rotator is at max left rotation, go to max right rotation
-            BallChucker9000Subsystem.rotatorPIDControl(180);
-            rotatorDestination = 180;
+            BallChucker9000Subsystem.rotatorPIDControl(120);
+            rotatorDestination = 120;
 
           } else if (rotatorPosition < 0) {
 

@@ -81,10 +81,10 @@ public class Robot extends TimedRobot {
 
     timer = new Timer();
 
-    shifterToggleRunner = new ButtonToggleRunner(() -> leftJoystick.getRawButton(3), driveBase::toggleHighGear);
-    intakeDeployerToggleRunner = new ButtonToggleRunner(() -> manipulator.getButton(Button.A),
+    shifterToggleRunner = new ButtonToggleRunner(() -> leftJoystick.getRawButton(4), driveBase::toggleHighGear);
+    intakeDeployerToggleRunner = new ButtonToggleRunner(() -> manipulator.getButton(Button.B),
         harvester::toggleDeployer);
-    winchLockToggleRunner = new ButtonToggleRunner(() -> manipulator.getButton(Button.Y), climb::toggleLock);
+    winchLockToggleRunner = new ButtonToggleRunner(() -> manipulator.getButton(Button.X), climb::toggleLock);
   }
 
   @Override
@@ -154,18 +154,18 @@ public class Robot extends TimedRobot {
       ballChucker9000.moveIndexer(0);
     }
 
-    if (manipulator.getButton(Button.X)) {
-      climb.runWinch(0.5);
-    } else if (manipulator.getButton(Button.B)) {
-      climb.runWinch(-0.5);
+    if (manipulator.getAxis(Axis.RIGHT_TRIGGER) >= 0.1) {
+      climb.runWinch(0.5 * manipulator.getAxis(Axis.RIGHT_TRIGGER));
     } else {
-      climb.runWinch(0);
+      climb.runWinch(-0.5 * manipulator.getAxis(Axis.LEFT_TRIGGER));
     }
 
-    if (manipulator.getAxis(Axis.RIGHT_TRIGGER) >= 0.1) {
-      climb.moveArm(0.7 * manipulator.getAxis(Axis.RIGHT_TRIGGER));
+    if (leftJoystick.getRawButton(3)) {
+      climb.moveArm(0.7);
+    } else if (leftJoystick.getRawButton(2)) {
+      climb.moveArm(-1);
     } else {
-      climb.moveArm(-manipulator.getAxis(Axis.LEFT_TRIGGER));
+      climb.moveArm(0);
     }
 
     shifterToggleRunner.update();

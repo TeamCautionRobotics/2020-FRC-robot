@@ -7,7 +7,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class BallChucker9000Auto extends CommandBase {
+public class BallChucker9000AutoRotate extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final BallChucker9000 BallChucker9000Subsystem;
 
@@ -31,7 +31,7 @@ public class BallChucker9000Auto extends CommandBase {
    *
    * @param subsystem The subsystem used by this command.
    */
-  public BallChucker9000Auto(BallChucker9000 subsystem) {
+  public BallChucker9000AutoRotate(BallChucker9000 subsystem) {
     BallChucker9000Subsystem = subsystem;
     addRequirements(BallChucker9000Subsystem);
   }
@@ -101,7 +101,7 @@ public class BallChucker9000Auto extends CommandBase {
 
           } else {
 
-            // Uh oh! We exceeeded max rotation. Hopefully we didn't break anything!
+            // Uh oh! Hopefully we didn't break anything!
             // (go to center)
             BallChucker9000Subsystem.rotatorPIDControl(90);
             rotatorDestination = 0;

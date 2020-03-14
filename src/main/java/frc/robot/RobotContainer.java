@@ -37,29 +37,38 @@ import edu.wpi.first.wpilibj.Solenoid;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
-  private static final VictorSP intakeMotor = new VictorSP(Constants.REAPER_MOTOR_PORT);
-  
-  EnhancedJoystick leftJoystick = new EnhancedJoystick(Constants.LEFT_JOYSTICK_PORT);
-  EnhancedJoystick rightJoystick = new EnhancedJoystick(Constants.RIGHT_JOYSTICK_PORT);
-  XboxController manipulator = new XboxController(Constants.MANIPULATOR_PORT);
-  
-  public static final DriveBase driveBase = new DriveBase(new WPI_TalonSRX(Constants.LEFT_DRIVE_MOTOR_0_DEVICE_NUMBER),
-  new WPI_VictorSPX(Constants.LEFT_DRIVE_MOTOR_1_DEVICE_NUMBER),
-  new WPI_VictorSPX(Constants.LEFT_DRIVE_MOTOR_2_DEVICE_NUMBER),
-  new WPI_TalonSRX(Constants.RIGHT_DRIVE_MOTOR_0_DEVICE_NUMBER),
-  new WPI_VictorSPX(Constants.RIGHT_DRIVE_MOTOR_1_DEVICE_NUMBER),
-  new WPI_VictorSPX(Constants.RIGHT_DRIVE_MOTOR_2_DEVICE_NUMBER), Constants.LEFT_SHIFTER_PORT,
-  Constants.RIGHT_SHIFTER_PORT, Constants.LEFT_DRIVE_ENCODER_PORT_A, Constants.LEFT_DRIVE_ENCODER_PORT_B,
-  Constants.RIGHT_DRIVE_ENCODER_PORT_A, Constants.RIGHT_DRIVE_ENCODER_PORT_B);
+  EnhancedJoystick leftJoystick;
+  EnhancedJoystick rightJoystick;
+  XboxController manipulator;
 
-  public static final Reaper reaper = new Reaper(intakeMotor, Constants.REAPER_PORT_PISTON_PORT, Constants.REAPER_STARBOARD_PISTON_PORT);
+  public final DriveBase driveBase;
 
+  public final Reaper reaper;
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
+
+    // Initialization things
+    leftJoystick = new EnhancedJoystick(Constants.LEFT_JOYSTICK_PORT);
+    rightJoystick = new EnhancedJoystick(Constants.RIGHT_JOYSTICK_PORT);
+    manipulator = new XboxController(Constants.MANIPULATOR_PORT);
+
+    final VictorSP reaperMotor;
+    reaperMotor = new VictorSP(Constants.REAPER_MOTOR_PORT);
+    reaperMotor.setInverted(true);
+
+    reaper = new Reaper(reaperMotor, Constants.REAPER_PORT_PISTON_PORT, Constants.REAPER_STARBOARD_PISTON_PORT);
+    driveBase = new DriveBase(new WPI_TalonSRX(Constants.LEFT_DRIVE_MOTOR_0_DEVICE_NUMBER),
+        new WPI_VictorSPX(Constants.LEFT_DRIVE_MOTOR_1_DEVICE_NUMBER),
+        new WPI_VictorSPX(Constants.LEFT_DRIVE_MOTOR_2_DEVICE_NUMBER),
+        new WPI_TalonSRX(Constants.RIGHT_DRIVE_MOTOR_0_DEVICE_NUMBER),
+        new WPI_VictorSPX(Constants.RIGHT_DRIVE_MOTOR_1_DEVICE_NUMBER),
+        new WPI_VictorSPX(Constants.RIGHT_DRIVE_MOTOR_2_DEVICE_NUMBER), Constants.LEFT_SHIFTER_PORT,
+        Constants.RIGHT_SHIFTER_PORT, Constants.LEFT_DRIVE_ENCODER_PORT_A, Constants.LEFT_DRIVE_ENCODER_PORT_B,
+        Constants.RIGHT_DRIVE_ENCODER_PORT_A, Constants.RIGHT_DRIVE_ENCODER_PORT_B);
 
     driveBase.setDefaultCommand(new TankDrive(driveBase, () -> leftJoystick.getY(), () -> rightJoystick.getY()));
     reaper.setDefaultCommand(new RunReaper(reaper, () -> manipulator.getY(Hand.kRight)));
@@ -74,8 +83,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
     new JoystickButton(leftJoystick, 4).toggleWhenPressed(new ToggleShifter(driveBase));
 
-    new JoystickButton(manipulator, Button.kA.value)
-        .toggleWhenPressed(new ToggleReaper(reaper));
+    new JoystickButton(manipulator, Button.kA.value).toggleWhenPressed(new ToggleReaper(reaper));
   }
 
   /**

@@ -74,11 +74,11 @@ public class Robot extends TimedRobot {
     WPI_VictorSPX armMotor = new WPI_VictorSPX(32);
     armMotor.setInverted(true);
 
-    driveBase = new DriveBase(leftDriveGroup, rightDriveGroup, 4, 3, 0, 1, 2, 3);
+    driveBase = new DriveBase(leftDriveGroup, rightDriveGroup, 4, 3, 5, 6, 2, 9);
     harvester = new Harvester(harvesterMotor, 2, 0);
     ballTransfer = new BallTransfer(ballTransfterMotor);
-    ballChucker9000 = new BallChucker9000(leftFlywheelMotor, rightFlywheelMotor, rotatorMotor, indexerMotor, 5, 6, 7, 8,
-        9);
+    ballChucker9000 = new BallChucker9000(leftFlywheelMotor, rightFlywheelMotor, rotatorMotor, indexerMotor, 0, 1, 7, 8,
+        3);
     climb = new Climb(winchMotor, armMotor, 1, 10);
 
     timer = new Timer();

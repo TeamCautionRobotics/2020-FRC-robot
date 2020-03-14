@@ -21,7 +21,7 @@ public class BallChucker9000Index extends CommandBase {
 
   @Override
   public void initialize() {
-    BallChucker9000Subsystem.rotatorMotorControl(1);
+    BallChucker9000Subsystem.indexerMotorControl(1);
   }
 
   @Override

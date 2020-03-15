@@ -189,9 +189,9 @@ public class Robot extends TimedRobot {
       }
     } else {
       if (leftJoystick.getRawButton(3)) {
-        climb.moveArm(0.7);
+        climb.moveArm(1);
       } else if (leftJoystick.getRawButton(2)) {
-        climb.moveArm(-1);
+        climb.moveArm(-0.5);
       } else {
         climb.moveArm(0);
       }

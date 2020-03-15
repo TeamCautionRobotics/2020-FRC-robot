@@ -40,7 +40,7 @@ public class Climb {
     }
 
     public void moveArm(double power) {
-        armMotor.set(power);
+        armMotor.set(0.7 * power);
     }
 
     /**

@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.VictorSP;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.misc2020.ButtonToggleRunner;
 import frc.misc2020.EnhancedJoystick;
 import frc.misc2020.Gamepad;
@@ -71,6 +72,7 @@ public class Robot extends TimedRobot {
     indexerMotor.setInverted(true);
 
     WPI_VictorSPX winchMotor = new WPI_VictorSPX(30);
+    winchMotor.setInverted(true);
     WPI_VictorSPX armMotor = new WPI_VictorSPX(32);
     armMotor.setInverted(true);
 
@@ -83,14 +85,15 @@ public class Robot extends TimedRobot {
 
     timer = new Timer();
 
-    shifterToggleRunner = new ButtonToggleRunner(() -> leftJoystick.getRawButton(3), driveBase::toggleHighGear);
-    intakeDeployerToggleRunner = new ButtonToggleRunner(() -> manipulator.getButton(Button.A),
+    shifterToggleRunner = new ButtonToggleRunner(() -> leftJoystick.getRawButton(4), driveBase::toggleHighGear);
+    intakeDeployerToggleRunner = new ButtonToggleRunner(() -> manipulator.getButton(Button.B),
         harvester::toggleDeployer);
-    winchLockToggleRunner = new ButtonToggleRunner(() -> manipulator.getButton(Button.Y), climb::toggleLock);
+    winchLockToggleRunner = new ButtonToggleRunner(() -> manipulator.getButton(Button.X), climb::toggleLock);
   }
 
   @Override
   public void robotPeriodic() {
+    SmartDashboard.putBoolean("In high gear: ", driveBase.getShifterState());
   }
 
   @Override
@@ -101,8 +104,11 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousPeriodic() {
-    if (timer.get() < 1) {
-      driveBase.drive(0.5, 0.5);
+    driveBase.useHighGear(false);
+    if (timer.get() < 0.5) {
+      driveBase.drive(0);
+    } else if (timer.get() < 2.3) {
+      driveBase.drive(0.8, 0.8);
     } else {
       driveBase.drive(0, 0);
     }
@@ -115,17 +121,14 @@ public class Robot extends TimedRobot {
      * fifth Regarding the first 4, nudge them
      */
 
-    driveBase.drive(-leftJoystick.getY(), -rightJoystick.getY());
+    driveBase.arcadeDrive(-rightJoystick.getY(), leftJoystick.getX());
 
     if (leftJoystick.getTrigger()) {
-      harvester.intakeMotorControl(0.5);
-      ballTransfer.moveBalls(0.5);
-    } else if (leftJoystick.getRawButton(2)) {
-      harvester.intakeMotorControl(-0.7);
-      ballTransfer.moveBalls(-0.5);
+      harvester.intakeMotorControl(0.7);
+      ballTransfer.moveBalls(1);
     } else {
       harvester.intakeMotorControl(0.7 * manipulator.getAxis(Axis.LEFT_Y));
-      ballTransfer.moveBalls(0.7 * manipulator.getAxis(Axis.RIGHT_Y));
+      ballTransfer.moveBalls(manipulator.getAxis(Axis.RIGHT_Y));
     }
 
     // Check the limit switch every loop
@@ -156,18 +159,18 @@ public class Robot extends TimedRobot {
       ballChucker9000.moveIndexer(0);
     }
 
-    if (manipulator.getButton(Button.X)) {
-      climb.runWinch(0.5);
-    } else if (manipulator.getButton(Button.B)) {
-      climb.runWinch(-0.5);
+    if (manipulator.getAxis(Axis.RIGHT_TRIGGER) >= 0.1) {
+      climb.runWinch(0.5 * manipulator.getAxis(Axis.RIGHT_TRIGGER));
     } else {
-      climb.runWinch(0);
+      climb.runWinch(-0.5 * manipulator.getAxis(Axis.LEFT_TRIGGER));
     }
 
-    if (manipulator.getAxis(Axis.RIGHT_TRIGGER) >= 0.1) {
-      climb.moveArm(0.7 * manipulator.getAxis(Axis.RIGHT_TRIGGER));
+    if (leftJoystick.getRawButton(3)) {
+      climb.moveArm(0.7);
+    } else if (leftJoystick.getRawButton(2)) {
+      climb.moveArm(-1);
     } else {
-      climb.moveArm(-manipulator.getAxis(Axis.LEFT_TRIGGER));
+      climb.moveArm(0);
     }
 
     shifterToggleRunner.update();

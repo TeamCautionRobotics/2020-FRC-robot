@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.VictorSP;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.misc2020.ButtonToggleRunner;
 import frc.misc2020.EnhancedJoystick;
 import frc.misc2020.Gamepad;
@@ -91,6 +92,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
+    SmartDashboard.putBoolean("In high gear: ", driveBase.getShifterState());
   }
 
   @Override

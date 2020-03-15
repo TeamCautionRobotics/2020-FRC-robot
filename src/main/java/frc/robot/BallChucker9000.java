@@ -76,7 +76,7 @@ public class BallChucker9000 {
      * @param power positive is counter clockwise
      */
     public void moveRotator(double power) {
-        rotatorMotor.set(power);
+        rotatorMotor.set(0.1 * power);
     }
 
     public void moveFlywheel(double power) {

@@ -143,9 +143,11 @@ public class Robot extends TimedRobot {
 
     // Replace with limelight stuff at some point
     if (manipulator.getButton(Button.RIGHT_BUMPER)) {
-      ballChucker9000.moveRotator(ballChucker9000.getRotatorEncoder() >= 270 ? 0 : 0.1);
+      // ballChucker9000.moveRotator(ballChucker9000.getRotatorEncoder() >= 270 ? 0 : 0.5);
+      ballChucker9000.moveRotator(0.5);
     } else if (manipulator.getButton(Button.LEFT_BUMPER)) {
-      ballChucker9000.moveRotator(ballChucker9000.getRotatorEncoder() <= 0 ? 0 : -0.1);
+      // ballChucker9000.moveRotator(ballChucker9000.getRotatorEncoder() <= 0 ? 0 : -0.5);
+      ballChucker9000.moveRotator(-0.5);
     } else {
       ballChucker9000.moveRotator(0);
     }

@@ -101,8 +101,11 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousPeriodic() {
-    if (timer.get() < 1) {
-      driveBase.drive(0.5, 0.5);
+    driveBase.useHighGear(false);
+    if (timer.get() < 0.5) {
+      driveBase.drive(0);
+    } else if (timer.get() < 2.3) {
+      driveBase.drive(0.8, 0.8);
     } else {
       driveBase.drive(0, 0);
     }

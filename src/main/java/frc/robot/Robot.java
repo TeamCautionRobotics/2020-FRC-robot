@@ -72,6 +72,7 @@ public class Robot extends TimedRobot {
     indexerMotor.setInverted(true);
 
     WPI_VictorSPX winchMotor = new WPI_VictorSPX(30);
+    winchMotor.setInverted(true);
     WPI_VictorSPX armMotor = new WPI_VictorSPX(32);
     armMotor.setInverted(true);
 
@@ -123,14 +124,11 @@ public class Robot extends TimedRobot {
     driveBase.drive(-leftJoystick.getY(), -rightJoystick.getY());
 
     if (leftJoystick.getTrigger()) {
-      harvester.intakeMotorControl(0.5);
-      ballTransfer.moveBalls(0.5);
-    } else if (leftJoystick.getRawButton(2)) {
-      harvester.intakeMotorControl(-0.7);
-      ballTransfer.moveBalls(-0.5);
+      harvester.intakeMotorControl(0.7);
+      ballTransfer.moveBalls(1);
     } else {
       harvester.intakeMotorControl(0.7 * manipulator.getAxis(Axis.LEFT_Y));
-      ballTransfer.moveBalls(0.7 * manipulator.getAxis(Axis.RIGHT_Y));
+      ballTransfer.moveBalls(manipulator.getAxis(Axis.RIGHT_Y));
     }
 
     // Check the limit switch every loop

@@ -65,12 +65,12 @@ public class DriveBase extends DifferentialDrive {
         rightShifter.set(highGear);
     }
 
-    public boolean shifterEngaged() {
+    public boolean getShifterState() {
         return leftShifter.get();
     }
 
     public void toggleHighGear() {
-        useHighGear(!shifterEngaged());
+        useHighGear(!getShifterState());
     }
 
     public void resetGyro() {

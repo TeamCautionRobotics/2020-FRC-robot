@@ -121,7 +121,7 @@ public class Robot extends TimedRobot {
      * fifth Regarding the first 4, nudge them
      */
 
-    driveBase.drive(-leftJoystick.getY(), -rightJoystick.getY());
+    driveBase.arcadeDrive(-rightJoystick.getY(), leftJoystick.getX());
 
     if (leftJoystick.getTrigger()) {
       harvester.intakeMotorControl(0.7);

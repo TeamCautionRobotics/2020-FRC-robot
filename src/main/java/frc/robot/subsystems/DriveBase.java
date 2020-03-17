@@ -2,13 +2,13 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 
-public class DriveBase extends SubsystemBase {
+public class DriveBase extends DifferentialDrive implements Subsystem {
 
   private final SpeedControllerGroup leftDrive;
   private final SpeedControllerGroup rightDrive;
@@ -25,14 +25,11 @@ public class DriveBase extends SubsystemBase {
   private double heading;
   public double courseHeading;
 
-  public DriveBase(SpeedController leftDriveMotor0, SpeedController leftDriveMotor1, SpeedController leftDriveMotor2,
-      SpeedController rightDriveMotor0, SpeedController rightDriveMotor1, SpeedController rightDriveMotor2,
-      int leftShifterPort, int rightShifterPort, int leftA, int leftB, int rightA, int rightB) {
-    leftDriveMotor1.setInverted(true);
-    rightDriveMotor0.setInverted(true);
-    rightDriveMotor2.setInverted(true);
-    leftDrive = new SpeedControllerGroup(leftDriveMotor0, leftDriveMotor1, leftDriveMotor2);
-    rightDrive = new SpeedControllerGroup(rightDriveMotor0, rightDriveMotor1, rightDriveMotor2);
+  public DriveBase(SpeedControllerGroup leftDrive, SpeedControllerGroup rightDrive, int leftShifterPort,
+      int rightShifterPort, int leftA, int leftB, int rightA, int rightB) {
+    super(leftDrive, rightDrive);
+    this.leftDrive = leftDrive;
+    this.rightDrive = rightDrive;
 
     leftShifter = new Solenoid(leftShifterPort);
     rightShifter = new Solenoid(rightShifterPort);
@@ -67,28 +64,6 @@ public class DriveBase extends SubsystemBase {
    */
   public void setRightPower(double power) {
     rightDrive.set(power);
-  }
-
-  /**
-   * The front of the robot is the climb side. The back of the robot is the intake
-   * side.
-   * 
-   * @param leftPower positive moves the left side of the robot forward
-   * @param leftPower positive moves the right side of the robot forward
-   */
-  public void drive(double leftPower, double rightPower) {
-    setLeftPower(leftPower);
-    setRightPower(rightPower);
-  }
-
-  /**
-   * The front of the robot is the climb side. The back of the robot is the intake
-   * side.
-   * 
-   * @param power positive moves the robot forward
-   */
-  public void drive(double power) {
-    drive(power, power);
   }
 
   /**

@@ -11,12 +11,12 @@ import frc.robot.subsystems.DriveBase;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
-public class UseHighGearCommand extends InstantCommand {
-    public UseHighGearCommand(DriveBase driveBase, boolean highGear) {
-        super(() -> driveBase.useHighGear(highGear), driveBase);
+public class SetHighGearCommand extends InstantCommand {
+    public SetHighGearCommand(DriveBase driveBase, boolean highGear) {
+        super(() -> driveBase.setHighGear(highGear), driveBase);
     }
 
-    public UseHighGearCommand(DriveBase driveBase) {
+    public SetHighGearCommand(DriveBase driveBase) {
         this(driveBase, true);
     }
 }

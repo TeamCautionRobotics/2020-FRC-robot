@@ -13,8 +13,8 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.ToggleShifter;
 import frc.robot.commands.ArcadeDriveCommand;
+import frc.robot.commands.ToggleShifterCommand;
 import frc.robot.misc2020.EnhancedJoystick;
 import frc.robot.subsystems.DriveBase;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -74,7 +74,7 @@ public class RobotContainer {
    * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(leftJoystick, 4).toggleWhenActive(new ToggleShifter(driveBase));
+    new JoystickButton(leftJoystick, 4).toggleWhenActive(new ToggleShifterCommand(driveBase));
   }
 
   /**

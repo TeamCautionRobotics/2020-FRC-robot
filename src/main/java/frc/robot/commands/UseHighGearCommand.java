@@ -8,10 +8,15 @@
 package frc.robot.commands;
 
 import frc.robot.subsystems.DriveBase;
+
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
-public class ToggleShifter extends InstantCommand {
-    public ToggleShifter(DriveBase driveBase) {
-        super(() -> driveBase.toggleShifterState(), driveBase);
+public class UseHighGearCommand extends InstantCommand {
+    public UseHighGearCommand(DriveBase driveBase, boolean highGear) {
+        super(() -> driveBase.useHighGear(highGear), driveBase);
+    }
+
+    public UseHighGearCommand(DriveBase driveBase) {
+        this(driveBase, true);
     }
 }

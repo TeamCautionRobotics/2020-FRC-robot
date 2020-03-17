@@ -46,13 +46,13 @@ public class RobotContainer {
     rightJoystick = new EnhancedJoystick(Constants.RIGHT_JOYSTICK_PORT);
     manipulator = new Gamepad(Constants.MANIPULATOR_PORT);
 
-    WPI_TalonSRX leftDrive0 = new WPI_TalonSRX(Constants.LEFT_DRIVE_MOTOR_0_DEVICE_NUMBER);
-    WPI_VictorSPX leftDrive1 = new WPI_VictorSPX(Constants.LEFT_DRIVE_MOTOR_1_DEVICE_NUMBER);
-    WPI_VictorSPX leftDrive2 = new WPI_VictorSPX(Constants.LEFT_DRIVE_MOTOR_2_DEVICE_NUMBER);
+    WPI_TalonSRX leftDrive0 = new WPI_TalonSRX(Constants.LEFT_DRIVE_MOTOR_0_CAN_ID);
+    WPI_VictorSPX leftDrive1 = new WPI_VictorSPX(Constants.LEFT_DRIVE_MOTOR_1_CAN_ID);
+    WPI_VictorSPX leftDrive2 = new WPI_VictorSPX(Constants.LEFT_DRIVE_MOTOR_2_CAN_ID);
 
-    WPI_TalonSRX rightDrive0 = new WPI_TalonSRX(Constants.RIGHT_DRIVE_MOTOR_0_DEVICE_NUMBER);
-    WPI_VictorSPX rightDrive1 = new WPI_VictorSPX(Constants.RIGHT_DRIVE_MOTOR_1_DEVICE_NUMBER);
-    WPI_VictorSPX rightDrive2 = new WPI_VictorSPX(Constants.RIGHT_DRIVE_MOTOR_2_DEVICE_NUMBER);
+    WPI_TalonSRX rightDrive0 = new WPI_TalonSRX(Constants.RIGHT_DRIVE_MOTOR_0_CAN_ID);
+    WPI_VictorSPX rightDrive1 = new WPI_VictorSPX(Constants.RIGHT_DRIVE_MOTOR_1_CAN_ID);
+    WPI_VictorSPX rightDrive2 = new WPI_VictorSPX(Constants.RIGHT_DRIVE_MOTOR_2_CAN_ID);
 
     leftDrive0.setInverted(true);
     leftDrive2.setInverted(true);

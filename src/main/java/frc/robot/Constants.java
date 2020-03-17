@@ -23,13 +23,13 @@ public final class Constants {
 	public static final int RIGHT_JOYSTICK_PORT = 1;
 	public static final int MANIPULATOR_PORT = 2;
 
-	public static final int LEFT_DRIVE_MOTOR_0_DEVICE_NUMBER = 10;
-	public static final int LEFT_DRIVE_MOTOR_1_DEVICE_NUMBER = 11;
-	public static final int LEFT_DRIVE_MOTOR_2_DEVICE_NUMBER = 12;
+	public static final int LEFT_DRIVE_MOTOR_0_CAN_ID = 10;
+	public static final int LEFT_DRIVE_MOTOR_1_CAN_ID = 11;
+	public static final int LEFT_DRIVE_MOTOR_2_CAN_ID = 12;
 
-	public static final int RIGHT_DRIVE_MOTOR_0_DEVICE_NUMBER = 20;
-	public static final int RIGHT_DRIVE_MOTOR_1_DEVICE_NUMBER = 21;
-	public static final int RIGHT_DRIVE_MOTOR_2_DEVICE_NUMBER = 22;
+	public static final int RIGHT_DRIVE_MOTOR_0_CAN_ID = 20;
+	public static final int RIGHT_DRIVE_MOTOR_1_CAN_ID = 21;
+	public static final int RIGHT_DRIVE_MOTOR_2_CAN_ID = 22;
 
 	public static final int LEFT_DRIVE_ENCODER_PORT_A = 0;
 	public static final int LEFT_DRIVE_ENCODER_PORT_B = 1;

@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ArcadeDriveCommand;
 import frc.robot.commands.ToggleShifterCommand;
 import frc.robot.misc2020.EnhancedJoystick;
+import frc.robot.misc2020.Gamepad;
 import frc.robot.subsystems.DriveBase;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -33,7 +34,7 @@ public class RobotContainer {
 
   EnhancedJoystick leftJoystick;
   EnhancedJoystick rightJoystick;
-  XboxController manipulator;
+  Gamepad manipulator;
 
   DriveBase driveBase;
 
@@ -43,7 +44,7 @@ public class RobotContainer {
   public RobotContainer() {
     leftJoystick = new EnhancedJoystick(Constants.LEFT_JOYSTICK_PORT);
     rightJoystick = new EnhancedJoystick(Constants.RIGHT_JOYSTICK_PORT);
-    manipulator = new XboxController(Constants.MANIPULATOR_PORT);
+    manipulator = new Gamepad(Constants.MANIPULATOR_PORT);
 
     WPI_TalonSRX leftDrive0 = new WPI_TalonSRX(Constants.LEFT_DRIVE_MOTOR_0_DEVICE_NUMBER);
     WPI_VictorSPX leftDrive1 = new WPI_VictorSPX(Constants.LEFT_DRIVE_MOTOR_1_DEVICE_NUMBER);
@@ -64,7 +65,7 @@ public class RobotContainer {
 
     configureButtonBindings();
 
-    driveBase.setDefaultCommand(new ArcadeDriveCommand(driveBase, () -> -leftJoystick.getY(), () -> -rightJoystick.getY()));
+    driveBase.setDefaultCommand(new ArcadeDriveCommand(driveBase, () -> leftJoystick.getX(), () -> -rightJoystick.getY()));
   }
 
   /**

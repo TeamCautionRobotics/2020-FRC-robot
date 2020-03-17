@@ -69,7 +69,7 @@ public class DriveBase extends DifferentialDrive implements Subsystem {
   /**
    * @param boolean highGear is positive when the robot is in high gear
    */
-  public void useHighGear(boolean highGear) {
+  public void setHighGear(boolean highGear) {
     leftShifter.set(highGear);
     rightShifter.set(highGear);
   }
@@ -79,10 +79,6 @@ public class DriveBase extends DifferentialDrive implements Subsystem {
    */
   public boolean getShifterState() {
     return leftShifter.get();
-  }
-
-  public void toggleShifterState() {
-    useHighGear(!getShifterState());
   }
 
   public void resetGyro() {

@@ -73,10 +73,11 @@ public class BallChucker9000 {
 
     /**
      * 
-     * @param power positive is counter clockwise
+     * @param power positive is counter clockwise, scaled down by a factor of 10
      */
     public void moveRotator(double power) {
-        rotatorMotor.set(0.1 * power);
+        power = 0.1 * Math.copySign(Math.min(Math.abs(power), 1), power);
+        rotatorMotor.set(power);
     }
 
     public void moveFlywheel(double power) {

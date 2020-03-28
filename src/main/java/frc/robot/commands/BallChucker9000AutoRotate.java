@@ -23,7 +23,7 @@ public class BallChucker9000AutoRotate extends CommandBase {
   private double targetSize;
   private boolean targetAvailable;
 
-  private double rotatorPosition;
+  private double rotatorAngle;
   private double rotatorDestination;
 
   /**
@@ -59,41 +59,41 @@ public class BallChucker9000AutoRotate extends CommandBase {
       if (targetAvailable) { // If a target is detected (Lock state)
         
         // get the encoder
-        rotatorPosition = BallChucker9000Subsystem.getRotatorDistance();
+        rotatorAngle = BallChucker9000Subsystem.getRotatorDistance();
 
         // Set the destnation to the current position to bypass the 
         // search check the first time it runs
-        rotatorDestination = Math.round(rotatorPosition);
+        rotatorDestination = Math.round(rotatorAngle);
 
         // Move the rotator to the detected position including offset
-        BallChucker9000Subsystem.rotatorPIDControl(targetXOffset + rotatorPosition);
+        BallChucker9000Subsystem.rotatorPIDControl(targetXOffset + rotatorAngle);
 
       } else { // If no target is detected (Search state)
 
         // get the encoder and round it
-        rotatorPosition = Math.round(BallChucker9000Subsystem.getRotatorDistance());
+        rotatorAngle = Math.round(BallChucker9000Subsystem.getRotatorDistance());
         
-        if (rotatorDestination == rotatorPosition) { // If we've reached our intended destination, check how we move
+        if (rotatorDestination == rotatorAngle) { // If we've reached our intended destination, check how we move
 
-          if (rotatorPosition >= 120) {
+          if (rotatorAngle >= 120) {
 
             // Rotator is at max right rotation, go to max left rotation
             BallChucker9000Subsystem.rotatorPIDControl(0);
             rotatorDestination = 0;
 
-          } else if (rotatorPosition >= 0) {
+          } else if (rotatorAngle >= 0) {
 
             // Rotator is above or equal to center, go to max right rotation
             BallChucker9000Subsystem.rotatorPIDControl(120);
             rotatorDestination = 120;
 
-          } else if (rotatorPosition <= -120) {
+          } else if (rotatorAngle <= -120) {
 
             // Rotator is at max left rotation, go to max right rotation
             BallChucker9000Subsystem.rotatorPIDControl(120);
             rotatorDestination = 120;
 
-          } else if (rotatorPosition < 0) {
+          } else if (rotatorAngle < 0) {
 
             // Rotator is below center, go to max left rotation
             BallChucker9000Subsystem.rotatorPIDControl(0);

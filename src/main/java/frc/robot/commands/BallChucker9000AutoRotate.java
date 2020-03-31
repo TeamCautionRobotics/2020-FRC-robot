@@ -59,7 +59,7 @@ public class BallChucker9000AutoRotate extends CommandBase {
       if (targetAvailable) { // If a target is detected (Lock state)
         
         // get the encoder
-        rotatorAngle = BallChucker9000Subsystem.getRotatorDistance();
+        rotatorAngle = BallChucker9000Subsystem.getRotatorAngle();
 
         // Set the destnation to the current position to bypass the 
         // search check the first time it runs
@@ -71,7 +71,7 @@ public class BallChucker9000AutoRotate extends CommandBase {
       } else { // If no target is detected (Search state)
 
         // get the encoder and round it
-        rotatorAngle = Math.round(BallChucker9000Subsystem.getRotatorDistance());
+        rotatorAngle = Math.round(BallChucker9000Subsystem.getRotatorAngle());
         
         if (rotatorDestination == rotatorAngle) { // If we've reached our intended destination, check how we move
 

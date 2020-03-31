@@ -99,7 +99,7 @@ public class BallChucker9000 extends SubsystemBase {
     }
 
     public void rotatorPIDControl(double setPoint) {
-        rotatorMotorControl(rotatorPID.calculate(getRotatorDistance(), setPoint));
+        rotatorMotorControl(rotatorPID.calculate(getRotatorAngle(), setPoint));
     }
 
     public void flywheelMotorControl(double power) {
@@ -121,7 +121,7 @@ public class BallChucker9000 extends SubsystemBase {
         return flywheelEncoder.getRate();
     }
 
-    public double getRotatorDistance() {
+    public double getRotatorAngle() {
         return rotatorEncoder.getDistance() + 120;
     }
 

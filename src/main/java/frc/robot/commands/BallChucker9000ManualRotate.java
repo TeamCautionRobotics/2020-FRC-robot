@@ -30,7 +30,7 @@ public class BallChucker9000ManualRotate extends InstantCommand {
   public void execute() {
 
     // Prevent rotating if we're at rotational limits or the switch is pressed
-    rotatorPosition = BallChucker9000Subsystem.getRotatorDistance();
+    rotatorPosition = BallChucker9000Subsystem.getRotatorAngle();
     if (rotatorPosition <= -120.0 || rotatorPosition >= 120.0 || !BallChucker9000Subsystem.getRotatorAtZeroSwitch()) {
       BallChucker9000Subsystem.rotatorMotorControl(0);
     } else {

@@ -49,8 +49,8 @@ public class BallChucker9000 extends SubsystemBase {
 
 
     // Class initializer
-    public BallChucker9000(SpeedController rotatorController, SpeedController leftFlywheelController, SpeedController rightFlywheelController, 
-                            SpeedController indexerController, int rotatorEncoderChannelA, int rotatorEncoderChannelB, int flywheelEncoderChannelA,
+    public BallChucker9000(SpeedController rotatorMotor, SpeedController leftFlywheelMotor, SpeedController rightFlywheelMotor, 
+                            SpeedController indexerMotor, int rotatorEncoderChannelA, int rotatorEncoderChannelB, int flywheelEncoderChannelA,
                             int flywheelEncoderChannelB, int rotatorAtZeroSwitchPort) {
 
         // PID
@@ -58,15 +58,15 @@ public class BallChucker9000 extends SubsystemBase {
         flywheelPID = new PIDController(0.5, 0, 0.5);
 
         // ESCs
-        leftFlywheelMotor = leftFlywheelController;
-        rightFlywheelMotor = rightFlywheelController;
-        rotatorMotor = rotatorController;
-        indexerMotor = indexerController;
+        this.leftFlywheelMotor = leftFlywheelMotor;
+        this.rightFlywheelMotor = rightFlywheelMotor;
+        this.rotatorMotor = rotatorMotor;
+        this.indexerMotor = indexerMotor;
 
-        leftFlywheelMotor.setInverted(true);
-        rightFlywheelMotor.setInverted(true);
-        rotatorMotor.setInverted(true);
-        indexerMotor.setInverted(true);
+        this.leftFlywheelMotor.setInverted(true);
+        this.rightFlywheelMotor.setInverted(true);
+        this.rotatorMotor.setInverted(true);
+        this.indexerMotor.setInverted(true);
 
         // Encoders
         rotatorEncoder = new Encoder(rotatorEncoderChannelA, rotatorEncoderChannelB);
@@ -92,9 +92,9 @@ public class BallChucker9000 extends SubsystemBase {
     // ESC
     public void rotatorMotorControl(double power) {
         if (getRotatorAtZeroSwitch()) { // Only set power if the limit switch isn't pressed
-            rotatorMotor.set(power);
+            this.rotatorMotor.set(power);
         } else {
-            rotatorMotor.set(0.0);
+            this.rotatorMotor.set(0.0);
         }
     }
 
@@ -103,8 +103,8 @@ public class BallChucker9000 extends SubsystemBase {
     }
 
     public void flywheelMotorControl(double power) {
-        rightFlywheelMotor.set(0.1);
-        leftFlywheelMotor.set(0.1);
+        this.rightFlywheelMotor.set(0.1);
+        this.leftFlywheelMotor.set(0.1);
     }
 
     public void flywheelPIDControl(double velocity) {
@@ -112,7 +112,7 @@ public class BallChucker9000 extends SubsystemBase {
     }
 
     public void indexerMotorControl(double power) {
-        indexerMotor.set(power);
+        this.indexerMotor.set(power);
     }
 
 

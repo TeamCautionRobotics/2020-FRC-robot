@@ -2,47 +2,58 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.VictorSP;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 
-public class DriveBase {
+public class DriveBase extends DifferentialDrive {
 
-    private final VictorSP driveLeft;
-    private final VictorSP driveRight;
-    private final Solenoid shifter;
+    private final SpeedControllerGroup driveLeft;
+    private final SpeedControllerGroup driveRight;
+
+    private final Solenoid leftShifter;
+    private final Solenoid rightShifter;
 
     private final Encoder leftEncoder;
     private final Encoder rightEncoder;
-
-    private final ADXRS450_Gyro gyro;
 
     private boolean usingLeftEncoder = false;
 
     private double heading;
     public double courseHeading;
 
-    public DriveBase(int left, int right, int leftA, int leftB, int rightA, int rightB, int shifterChannel) {
-        driveLeft = new VictorSP(left);
-        driveRight = new VictorSP(right);
+    /**
+     * 
+     * @param driveLeft           positive moves forward. the front of the robot is
+     *                            opposite the intake.
+     * @param driveRight
+     * @param leftShifterChannel
+     * @param rightShifterChannel
+     * @param leftA
+     * @param leftB
+     * @param rightA
+     * @param rightB
+     */
+    public DriveBase(SpeedControllerGroup driveLeft, SpeedControllerGroup driveRight, int leftShifterChannel,
+            int rightShifterChannel, int leftA, int leftB, int rightA, int rightB) {
+        super(driveLeft, driveRight);
+        this.driveLeft = driveLeft;
+        this.driveRight = driveRight;
+
+        leftShifter = new Solenoid(leftShifterChannel);
+        rightShifter = new Solenoid(rightShifterChannel);
 
         leftEncoder = new Encoder(leftA, leftB, false, EncodingType.k4X);
         rightEncoder = new Encoder(rightA, rightB, true, EncodingType.k4X);
 
         leftEncoder.setDistancePerPulse((4 * Math.PI) / 1024.0);
         rightEncoder.setDistancePerPulse((4 * Math.PI) / 1024.0);
-
-        shifter = new Solenoid(shifterChannel);
-
-        gyro = new ADXRS450_Gyro();
-        gyro.calibrate();
-        heading = gyro.getAngle();
-        courseHeading = heading;
     }
 
     public void drive(double leftPower, double rightPower) {
         driveLeft.set(leftPower);
-        driveRight.set(-rightPower);
+        driveRight.set(rightPower);
     }
 
     public void drive(double power) {
@@ -50,15 +61,24 @@ public class DriveBase {
     }
 
     public void useHighGear(boolean highGear) {
-        shifter.set(highGear);
+        leftShifter.set(highGear);
+        rightShifter.set(highGear);
+    }
+
+    public boolean getShifterState() {
+        return leftShifter.get();
+    }
+
+    public void toggleHighGear() {
+        useHighGear(!getShifterState());
     }
 
     public void resetGyro() {
-        gyro.reset();
+        // TODO: NOPE
     }
 
     public double getGyroAngle() {
-        return gyro.getAngle();
+        return 0;
     }
 
     public void resetEncoders() {

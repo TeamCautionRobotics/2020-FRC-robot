@@ -1,21 +1,28 @@
 package frc.robot;
 
-import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.SpeedController;
 
 public class Harvester {
 
     // ESC declarations
-    private final VictorSP intakeMotor; 
+    private final SpeedController intakeMotor;
 
     // Piston declarations
-    private final Solenoid deployerPiston;
+    private final Solenoid portDeployerPiston;
+    private final Solenoid starboardDeployerPiston;
 
-
-    // class initializer
-    public Harvester(int intakeMotorPort, int deployPistonPort) {
-        intakeMotor = new VictorSP(intakeMotorPort);
-        deployerPiston = new Solenoid(deployPistonPort);
+    /**
+     * 
+     * @param intakeMotor
+     * @param portDeployPistonPort        This is the left piston, relative to the
+     *                                    front being the climb side of the robot
+     * @param starboardDeployerPistonPort This is the right piston.
+     */
+    public Harvester(SpeedController intakeMotor, int portDeployPistonPort, int starboardDeployerPistonPort) {
+        this.intakeMotor = intakeMotor;
+        portDeployerPiston = new Solenoid(portDeployPistonPort);
+        starboardDeployerPiston = new Solenoid(starboardDeployerPistonPort);
     }
 
     // Setters
@@ -28,8 +35,17 @@ public class Harvester {
         intakeMotor.set(power);
     }
 
-    // Piston
-    public void delpoyIntake(boolean deployed) {
-        deployerPiston.set(deployed);
+    // Pistons
+    public void deployIntake(boolean deployed) {
+        portDeployerPiston.set(deployed);
+        starboardDeployerPiston.set(deployed);
+    }
+
+    public boolean deployerDeployed() {
+        return portDeployerPiston.get();
+    }
+
+    public void toggleDeployer() {
+        deployIntake(!deployerDeployed());
     }
 }

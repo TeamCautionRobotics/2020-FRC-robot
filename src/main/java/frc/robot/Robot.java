@@ -7,8 +7,15 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.Timer;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.VictorSP;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.misc2020.ButtonToggleRunner;
 import frc.misc2020.EnhancedJoystick;
 import frc.misc2020.Gamepad;
 import frc.misc2020.Gamepad.Axis;
@@ -27,23 +34,66 @@ public class Robot extends TimedRobot {
 
   Timer timer;
 
+  ButtonToggleRunner shifterToggleRunner;
+  ButtonToggleRunner intakeDeployerToggleRunner;
+  ButtonToggleRunner winchLockToggleRunner;
+
   @Override
   public void robotInit() {
     leftJoystick = new EnhancedJoystick(0);
     rightJoystick = new EnhancedJoystick(1);
     manipulator = new Gamepad(2);
 
-    driveBase = new DriveBase(0, 1, 0, 1, 2, 3, 0);
-    harvester = new Harvester(2, 1);
-    ballTransfer = new BallTransfer(3);
-    ballChucker9000 = new BallChucker9000(4, 5, 6, 4, 5, 6, 7, 2, 8);
-    climb = new Climb(7, 8, 9);
+    // motors are 0 indexed here
+    WPI_VictorSPX leftDriveMotor1 = new WPI_VictorSPX(11);
+    leftDriveMotor1.setInverted(true);
+    WPI_TalonSRX rightDriveMotor0 = new WPI_TalonSRX(20);
+    rightDriveMotor0.setInverted(true);
+    WPI_VictorSPX rightDriveMotor2 = new WPI_VictorSPX(22);
+    rightDriveMotor2.setInverted(true);
+
+    SpeedControllerGroup leftDriveGroup = new SpeedControllerGroup(new WPI_TalonSRX(10), leftDriveMotor1,
+        new WPI_VictorSPX(12));
+    SpeedControllerGroup rightDriveGroup = new SpeedControllerGroup(rightDriveMotor0, new WPI_VictorSPX(21),
+        rightDriveMotor2);
+
+    VictorSP harvesterMotor = new VictorSP(5);
+    harvesterMotor.setInverted(true);
+    VictorSP ballTransfterMotor = new VictorSP(3);
+    ballTransfterMotor.setInverted(true);
+
+    VictorSP leftFlywheelMotor = new VictorSP(0);
+    leftFlywheelMotor.setInverted(true);
+    VictorSP rightFlywheelMotor = new VictorSP(1);
+    rightFlywheelMotor.setInverted(true);
+    WPI_VictorSPX rotatorMotor = new WPI_VictorSPX(4);
+    rotatorMotor.setInverted(true);
+    WPI_VictorSPX indexerMotor = new WPI_VictorSPX(31);
+    indexerMotor.setInverted(true);
+
+    WPI_VictorSPX winchMotor = new WPI_VictorSPX(30);
+    winchMotor.setInverted(true);
+    WPI_VictorSPX armMotor = new WPI_VictorSPX(32);
+    armMotor.setInverted(true);
+
+    driveBase = new DriveBase(leftDriveGroup, rightDriveGroup, 4, 3, 5, 6, 9, 3);
+    harvester = new Harvester(harvesterMotor, 2, 0);
+    ballTransfer = new BallTransfer(ballTransfterMotor);
+    ballChucker9000 = new BallChucker9000(leftFlywheelMotor, rightFlywheelMotor, rotatorMotor, indexerMotor, 0, 1, 7, 8,
+        2);
+    climb = new Climb(winchMotor, armMotor, 1, 10);
 
     timer = new Timer();
+
+    shifterToggleRunner = new ButtonToggleRunner(() -> leftJoystick.getRawButton(4), driveBase::toggleHighGear);
+    intakeDeployerToggleRunner = new ButtonToggleRunner(() -> manipulator.getButton(Button.B),
+        harvester::toggleDeployer);
+    winchLockToggleRunner = new ButtonToggleRunner(() -> manipulator.getButton(Button.X), climb::toggleLock);
   }
 
   @Override
   public void robotPeriodic() {
+    SmartDashboard.putBoolean("In high gear: ", driveBase.getShifterState());
   }
 
   @Override
@@ -54,67 +104,102 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousPeriodic() {
-    if (timer.get() < 1) {
-      driveBase.drive(0.5, 0.5);
-    }
-
-    else {
+    driveBase.useHighGear(false);
+    if (timer.get() < 0.5) {
+      driveBase.drive(0);
+    } else if (timer.get() < 2.3) {
+      driveBase.drive(0.8, 0.8);
+    } else {
       driveBase.drive(0, 0);
     }
   }
 
   @Override
   public void teleopPeriodic() {
+    /*
+     * make a toggle with the sensor as the input. count 4 balls then ignore the
+     * fifth Regarding the first 4, nudge them
+     */
+
+    driveBase.arcadeDrive(-rightJoystick.getY(), leftJoystick.getX());
+
+    if (leftJoystick.getTrigger()) {
+      harvester.intakeMotorControl(0.7);
+      ballTransfer.moveBalls(1);
+    } else {
+      harvester.intakeMotorControl(0.7 * manipulator.getAxis(Axis.LEFT_Y));
+      ballTransfer.moveBalls(manipulator.getAxis(Axis.RIGHT_Y));
+    }
+
     // Check the limit switch every loop
     ballChucker9000.update();
 
     // This needs some PID!
     if (rightJoystick.getTrigger()) {
-      ballChucker9000.flywheelMotorControl(1);
+      ballChucker9000.moveFlywheel(1);
     } else {
-      ballChucker9000.flywheelMotorControl(0);
+      ballChucker9000.moveFlywheel(0);
     }
 
     // Replace with limelight stuff at some point
-    if (rightJoystick.getRawButton(2)) {
-      ballChucker9000.rotatorMotorControl(1);
-    } else if (rightJoystick.getRawButton(3)) {
-      ballChucker9000.rotatorMotorControl(-1);
+    if (manipulator.getButton(Button.RIGHT_BUMPER)) {
+      // ballChucker9000.moveRotator(ballChucker9000.getRotatorEncoder() >= 270 ? 0 : 0.5);
+      ballChucker9000.moveRotator(0.5);
+    } else if (manipulator.getButton(Button.LEFT_BUMPER)) {
+      // ballChucker9000.moveRotator(ballChucker9000.getRotatorEncoder() <= 0 ? 0 : -0.5);
+      ballChucker9000.moveRotator(-0.5);
     } else {
-      ballChucker9000.rotatorMotorControl(0);
+      ballChucker9000.moveRotator(0);
     }
 
     // Indexer motor
-    if (leftJoystick.getTrigger()) {
-      ballChucker9000.indexerMotorControl(0.75);
+    if (rightJoystick.getRawButton(3)) {
+      ballChucker9000.moveIndexer(0.75);
+    } else if (rightJoystick.getRawButton(2)) {
+      ballChucker9000.moveIndexer(-0.75);
     } else {
-      ballChucker9000.indexerMotorControl(0);
+      ballChucker9000.moveIndexer(0);
     }
 
-    // Indexer piston
-    if (leftJoystick.getRawButton(1)) {
-      ballChucker9000.indexerPistonOut(true);
+    if (manipulator.getAxis(Axis.RIGHT_TRIGGER) >= 0.1) {
+      climb.runWinch(0.5 * manipulator.getAxis(Axis.RIGHT_TRIGGER));
     } else {
-      ballChucker9000.indexerPistonOut(false);
+      climb.runWinch(-0.5 * manipulator.getAxis(Axis.LEFT_TRIGGER));
     }
 
-    driveBase.drive(leftJoystick.getY(), rightJoystick.getY());
-
-    harvester.intakeMotorControl(manipulator.getAxis(Axis.LEFT_Y));
-    harvester.delpoyIntake(manipulator.getButton(Button.A));
-
-    ballTransfer.moveBalls(manipulator.getAxis(Axis.RIGHT_TRIGGER));
-
-    if (manipulator.getButton(Button.X)) {
-      climb.runWinch(1);
+    if (leftJoystick.getRawButton(3)) {
+      climb.moveArm(0.7);
+    } else if (leftJoystick.getRawButton(2)) {
+      climb.moveArm(-1);
     } else {
-      climb.runWinch(0);
+      climb.moveArm(0);
     }
 
-    climb.moveArms(manipulator.getAxis(Axis.RIGHT_Y));
+    shifterToggleRunner.update();
+    intakeDeployerToggleRunner.update();
+    winchLockToggleRunner.update();
+  }
+
+  ButtonToggleRunner testWinchLockToggleRunner;
+
+  @Override
+  public void testInit() {
+    testWinchLockToggleRunner = new ButtonToggleRunner(() -> rightJoystick.getTrigger(), climb::toggleLock);
   }
 
   @Override
   public void testPeriodic() {
+    driveBase.arcadeDrive(leftJoystick.getY(), leftJoystick.getX());
+    climb.moveArm(rightJoystick.getY());
+
+    if (rightJoystick.getRawButton(3)) {
+      climb.runWinch(0.5);
+    } else if (rightJoystick.getRawButton(2)) {
+      climb.runWinch(-0.5);
+    } else {
+      climb.runWinch(0);
+    }
+
+    testWinchLockToggleRunner.update();
   }
 }

@@ -52,7 +52,7 @@ public class BallChuckerFlywheel extends SubsystemBase {
     }
 
     public void setSpeed(double speed) {
-        pidSetpoint = speed;
+        pidSetpoint = MathUtil.clamp(speed, 0, 20000);
     }
 
     public void stop() {

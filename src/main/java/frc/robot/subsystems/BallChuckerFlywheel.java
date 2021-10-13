@@ -17,6 +17,11 @@ public class BallChuckerFlywheel extends SubsystemBase {
     private double pidSetpoint = 500.0;  // default to 500 rpm
     private double pidResult;
 
+    // TODO: put us (editable) on smartdashboard
+    public double pidP = 0.5;
+    public double pidI = 0.5;
+    public double pidD = 0.5;
+
     public BallChuckerFlywheel(SpeedControllerGroup flywheelMotorsObj, Encoder flywheelEncoderObj) {
 
         this.flywheelMotors = flywheelMotorsObj;

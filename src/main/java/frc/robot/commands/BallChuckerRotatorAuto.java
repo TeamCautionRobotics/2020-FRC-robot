@@ -70,13 +70,17 @@ public class BallChuckerRotatorAuto extends CommandBase {
       // set position for pid
       // if pid is in range, turn it off
       // if we're too far out, re-enable, reset and set target position
-      if (ballChucker.getPidAtSetpoint()) {
-        ballChucker.enablePid(false);
-        ballChucker.stop();
-      } else {
-        ballChucker.enablePid(true);
-        ballChucker.setRotatorPosition(targetAngle);
-      }
+
+      // if (ballChucker.getPidAtSetpoint()) {
+      //   ballChucker.enablePid(false);
+      //   ballChucker.stop();
+      // } else {
+      //   ballChucker.enablePid(true);
+      //   ballChucker.setRotatorPosition(targetAngle);
+      // }
+
+      ballChucker.setRotatorPosition(targetAngle);
+
 
     } else {  // no target mode
 

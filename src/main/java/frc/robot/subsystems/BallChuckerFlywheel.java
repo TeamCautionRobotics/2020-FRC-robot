@@ -28,6 +28,7 @@ public class BallChuckerFlywheel extends SubsystemBase {
         this.flywheelEncoder = flywheelEncoderObj;
 
         flywheelPid = new PIDController(0.5, 0.5, 0.5);
+        flywheelPid.setTolerance(100);  /// 100 rpm error
 
         // TODO: confirm this distanceperpulse (should be correct)
         flywheelEncoder.setDistancePerPulse(1.0/1024.0);
@@ -62,6 +63,10 @@ public class BallChuckerFlywheel extends SubsystemBase {
 
     public double getEncoderRate() {
         return flywheelEncoder.getRate();
+    }
+
+    public boolean getPidAtSetpoint() {
+        return flywheelPid.atSetpoint();
     }
 
     @Override

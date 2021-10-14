@@ -14,13 +14,13 @@ public class BallChuckerFlywheel extends SubsystemBase {
     private PIDController flywheelPid;
 
     private boolean pidActive = false;
-    private double pidSetpoint = 500.0;  // default to 500 rpm
+    private double pidSetpoint = 500.0 / 60.0;  // default to 500 rpm
     private double pidResult;
 
     // TODO: put us (editable) on smartdashboard
     public double pidP = 0.5;
-    public double pidI = 0.5;
-    public double pidD = 0.5;
+    public double pidI = 0.8;
+    public double pidD = 0.0;
 
     public BallChuckerFlywheel(SpeedControllerGroup flywheelMotorsObj, Encoder flywheelEncoderObj) {
 
@@ -28,7 +28,7 @@ public class BallChuckerFlywheel extends SubsystemBase {
         this.flywheelEncoder = flywheelEncoderObj;
 
         flywheelPid = new PIDController(pidP, pidI, pidD);
-        flywheelPid.setTolerance(100);  /// 100 rpm error
+        flywheelPid.setTolerance(100.0/60.0);  /// 100 rpm error
 
         flywheelEncoder.setDistancePerPulse(1.0/1024.0);
 
@@ -40,7 +40,7 @@ public class BallChuckerFlywheel extends SubsystemBase {
             flywheelMotors.set(power);
         }
     }
-
+    
     public void enablePid(boolean enable) {
  
         // reset to prevent wackiness from a pid that hasn't been getting
@@ -52,8 +52,12 @@ public class BallChuckerFlywheel extends SubsystemBase {
     }
 
     public void setSpeed(double speed) {
+
         // max flywheel speed is 11000 rpm
-        pidSetpoint = MathUtil.clamp(speed, 0, 11000);
+        speed = MathUtil.clamp(speed, 0.0, 11000.0);
+
+        // rpm to rps
+        pidSetpoint = speed / 60.0;
     }
 
     public void stop() {
@@ -62,7 +66,7 @@ public class BallChuckerFlywheel extends SubsystemBase {
         flywheelMotors.stopMotor();
     }
 
-    public double getRpm() {
+    public double getSpeed() {
         return flywheelEncoder.getRate();
     }
 
@@ -74,7 +78,7 @@ public class BallChuckerFlywheel extends SubsystemBase {
     public void periodic() {
 
         // always calculate the pid result - wackiness may ensue if this does not happen
-        pidResult = flywheelPid.calculate(this.getRpm(), pidSetpoint);
+        pidResult = flywheelPid.calculate(this.getSpeed(), pidSetpoint);
 
         if (pidActive) {
 

@@ -41,7 +41,8 @@ public class BallChuckerRotator extends SubsystemBase {
         rotatorPid.setTolerance(3.0);
 
         // TODO: set proper distanceperpulse - should be 1 revolution = 360 degrees
-        rotatorEncoder.setDistancePerPulse(1.0 / 1024.0);
+        // JUST NEED GEAR RATIO 
+        rotatorEncoder.setDistancePerPulse(360.0 / 1024.0);
 
         // home up before use
         this.fullReset();
@@ -51,9 +52,9 @@ public class BallChuckerRotator extends SubsystemBase {
     public void fullReset() {
         // Slowly turn rotator until we hit the switch
 
-        this.setRotatorMotor(resetMovePwr);
+        rotatorMotor.set(resetMovePwr);
         if (this.getRotatorSwitch()) {
-            this.setRotatorMotor(0.0);
+            rotatorMotor.set(0.0);
         }
         // Then reset
         rotatorEncoder.reset();

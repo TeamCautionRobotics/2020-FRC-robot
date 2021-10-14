@@ -27,10 +27,9 @@ public class BallChuckerFlywheel extends SubsystemBase {
         this.flywheelMotors = flywheelMotorsObj;
         this.flywheelEncoder = flywheelEncoderObj;
 
-        flywheelPid = new PIDController(0.5, 0.5, 0.5);
+        flywheelPid = new PIDController(pidP, pidI, pidD);
         flywheelPid.setTolerance(100);  /// 100 rpm error
 
-        // TODO: confirm this distanceperpulse (should be correct)
         flywheelEncoder.setDistancePerPulse(1.0/1024.0);
 
     }
@@ -53,15 +52,17 @@ public class BallChuckerFlywheel extends SubsystemBase {
     }
 
     public void setSpeed(double speed) {
-        pidSetpoint = MathUtil.clamp(speed, 0, 20000);
+        // max flywheel speed is 11000 rpm
+        pidSetpoint = MathUtil.clamp(speed, 0, 11000);
     }
 
     public void stop() {
+        pidActive = false;
         flywheelMotors.set(0);
         flywheelMotors.stopMotor();
     }
 
-    public double getEncoderRate() {
+    public double getRpm() {
         return flywheelEncoder.getRate();
     }
 
@@ -73,7 +74,7 @@ public class BallChuckerFlywheel extends SubsystemBase {
     public void periodic() {
 
         // always calculate the pid result - wackiness may ensue if this does not happen
-        pidResult = flywheelPid.calculate(this.getEncoderRate(), pidSetpoint);
+        pidResult = flywheelPid.calculate(this.getRpm(), pidSetpoint);
 
         if (pidActive) {
 

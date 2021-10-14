@@ -20,9 +20,13 @@ public class BallChuckerFlywheelAuto extends CommandBase {
   private double h1 = 0.0;  // Distance between camera lens and ground
 
   private double h2 = 2.5;  // Distance between center of target and ground
-  private double distance;
+
+  // TODO: put me on smartdashboard
+  public double distance;
 
   private double desiredRpm;
+
+  private boolean locked = false;
 
   /**
    * Creates a new BallChuckerFlywheelAuto
@@ -30,10 +34,11 @@ public class BallChuckerFlywheelAuto extends CommandBase {
    * @param subsystem The subsystem used by this command.
    * @param limelightObj Pass an instance of LimelightData. 
    */
-  public BallChuckerFlywheelAuto(BallChuckerFlywheel subsystem, LimelightData limelightObj) {
+  public BallChuckerFlywheelAuto(BallChuckerFlywheel subsystem, LimelightData limelightObj, boolean lockedObj) {
 
     this.ballChucker = subsystem;
     this.limelight = limelightObj;
+    this.locked = lockedObj;
 
     addRequirements(subsystem);
   }
@@ -63,6 +68,12 @@ public class BallChuckerFlywheelAuto extends CommandBase {
       desiredRpm = 0.0;
 
       ballChucker.setSpeed(desiredRpm);
+
+      if (ballChucker.getPidAtSetpoint()) {
+        locked = true;
+      } else {
+        locked = false;
+      }
 
     } else {  // no target, set half speed
       ballChucker.setSpeed(5500.0);

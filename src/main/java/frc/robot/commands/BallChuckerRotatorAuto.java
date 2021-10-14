@@ -13,6 +13,8 @@ public class BallChuckerRotatorAuto extends CommandBase {
   private double tV;  // target valid
   private double tX;  // target x offset
 
+  private boolean locked = false;
+
   private boolean searchDir = false;
   private double currentAngle;
   private double targetAngle;
@@ -23,10 +25,13 @@ public class BallChuckerRotatorAuto extends CommandBase {
    *
    * @param subsystem The subsystem used by this command.
    * @param limelightObj Pass an instance of LimelightData.
+   * @param lockedObj Pass a boolean to track if we're locked on target
    */
-  public BallChuckerRotatorAuto(BallChuckerRotator subsystem, LimelightData limelightObj) {
+  public BallChuckerRotatorAuto(BallChuckerRotator subsystem, LimelightData limelightObj, boolean lockedObj) {
     ballChucker = subsystem;
     this.limelight = limelightObj;
+
+    this.locked = lockedObj;
 
     addRequirements(subsystem);
   }
@@ -66,21 +71,14 @@ public class BallChuckerRotatorAuto extends CommandBase {
 
       currentAngle = ballChucker.getEncoderDistance();
       targetAngle = currentAngle + tX;
-
-      // set position for pid
-      // if pid is in range, turn it off
-      // if we're too far out, re-enable, reset and set target position
-
-      // if (ballChucker.getPidAtSetpoint()) {
-      //   ballChucker.enablePid(false);
-      //   ballChucker.stop();
-      // } else {
-      //   ballChucker.enablePid(true);
-      //   ballChucker.setRotatorPosition(targetAngle);
-      // }
-
       ballChucker.setRotatorPosition(targetAngle);
 
+      // Are we locked?
+      if (-0.5 < tX && tX < 0.5) {
+        locked = true;
+      } else {
+        locked = false;
+      }
 
     } else {  // no target mode
 
@@ -88,9 +86,9 @@ public class BallChuckerRotatorAuto extends CommandBase {
 
       // search between 15 and 165 deg
       if (searchDir) {
-        ballChucker.setRotatorPosition(165);
+        ballChucker.setRotatorPosition(160);
       } else {
-        ballChucker.setRotatorPosition(15);
+        ballChucker.setRotatorPosition(20);
       }
 
       // reverse the search dir if we're at the setpoint

@@ -84,7 +84,7 @@ public class BallChuckerRotatorAuto extends CommandBase {
 
     } else {  // no target mode
 
-      // TODO: modify PID for a slower response here
+      // TODO: SATURDAY - modify PID for a slower response here
 
       // search between 15 and 165 deg
       if (searchDir) {

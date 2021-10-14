@@ -30,7 +30,7 @@ public class BallChuckerFlywheel extends SubsystemBase {
         flywheelPid = new PIDController(pidP, pidI, pidD);
         flywheelPid.setTolerance(100.0/60.0);  /// 100 rpm error
 
-        flywheelEncoder.setDistancePerPulse(1.0/1024.0);
+        flywheelEncoder.setDistancePerPulse((3.0/5.0)/1024.0);
 
     }
 

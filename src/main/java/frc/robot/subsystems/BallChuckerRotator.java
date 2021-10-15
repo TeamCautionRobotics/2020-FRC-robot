@@ -39,10 +39,8 @@ public class BallChuckerRotator extends SubsystemBase {
         rotatorPid.setIntegratorRange(0, 0);
         // set tolerance to 3 deg error
         rotatorPid.setTolerance(3.0);
-
-        // TODO: set proper distanceperpulse - should be 1 revolution = 360 degrees
-        // JUST NEED GEAR RATIO 
-        rotatorEncoder.setDistancePerPulse(360.0 / 1024.0);
+ 
+        rotatorEncoder.setDistancePerPulse(360.0 / ((124.0 / 18.0) * (50.0 * 1024.0)));
 
         // home up before use
         this.fullReset();

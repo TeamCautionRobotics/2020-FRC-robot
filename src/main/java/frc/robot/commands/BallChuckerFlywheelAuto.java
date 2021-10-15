@@ -15,7 +15,7 @@ public class BallChuckerFlywheelAuto extends CommandBase {
 
   // TODO: SATURDAY - set us!
   // Distance measurement calculation vars
-  // Angles in deg, distance in meters
+  // Angles in deg, distance in feet
   private double a1 = 0.0;  // Angle between ground and camera lens
   private double h1 = 0.0;  // Distance between camera lens and ground
 

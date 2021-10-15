@@ -42,4 +42,25 @@ public final class Constants {
 	public static final int REAPER_MOTOR_PORT = 5;
 	public static final int REAPER_PORT_PISTON_PORT = 2;
 	public static final int REAPER_STARBOARD_PISTON_PORT = 0;
+
+	public static final int WINCH_MOTOR_DEVICE_NUMBER = 30;
+	public static final int ARM_MOTOR_DEVICE_NUMBER = 32;
+	public static final int WINCH_LOCK_PISTON_PORT = 1;
+	public static final int ARM_ENCODER_PORT_A = 10;
+	public static final int ARM_ENCODER_PORT_B = 11;
+	public static final int ARM_LIMIT_SWITCH_PORT = 12;
+
+	public static final int INDEXER_MOTOR_DEVICE_ID = 31;
+
+	public static final int LEFT_FLYWHEEL_MOTOR_PORT = 0;
+	public static final int RIGHT_FLYWHEEL_MOTOR_PORT = 1;
+	public static final int FLYWHEEL_ENCODER_PORT_A = 7;
+	public static final int FLYWHEEL_ENCODER_PORT_B = 8;
+
+	public static final int ROTATOR_MOTOR_DEVICE_ID = 4;
+	public static final int ROTATOR_ENCODER_PORT_A = 0;
+	public static final int ROTATOR_ENCODER_PORT_B = 1;
+	public static final int ROTATOR_LIMIT_SWITCH_PORT = 2;
+
+	public static final int BALL_TRANSFER_MOTOR_PORT = 3;
 }

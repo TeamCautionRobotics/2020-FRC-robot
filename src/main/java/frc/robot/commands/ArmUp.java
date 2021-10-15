@@ -32,6 +32,7 @@ public class ArmUp extends CommandBase {
 
   @Override
   public void end(boolean interrupted) {
+    subsystem.moveArmPID(0);
   }
 
   @Override

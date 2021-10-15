@@ -1,7 +1,6 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedController;
@@ -27,18 +26,20 @@ public class DriveBase extends SubsystemBase {
 
   public DriveBase(SpeedController leftDriveMotor0, SpeedController leftDriveMotor1, SpeedController leftDriveMotor2,
       SpeedController rightDriveMotor0, SpeedController rightDriveMotor1, SpeedController rightDriveMotor2,
-      int leftShifterPort, int rightShifterPort, int leftA, int leftB, int rightA, int rightB) {
+      Solenoid leftShifter, Solenoid rightShifter, Encoder leftEncoder, Encoder rightEncoder) {
+  
     leftDriveMotor1.setInverted(true);
     rightDriveMotor0.setInverted(true);
     rightDriveMotor2.setInverted(true);
     leftDrive = new SpeedControllerGroup(leftDriveMotor0, leftDriveMotor1, leftDriveMotor2);
     rightDrive = new SpeedControllerGroup(rightDriveMotor0, rightDriveMotor1, rightDriveMotor2);
 
-    leftShifter = new Solenoid(leftShifterPort);
-    rightShifter = new Solenoid(rightShifterPort);
+    this.leftShifter = leftShifter;
+    this.rightShifter = rightShifter;
 
-    leftEncoder = new Encoder(leftA, leftB, false, EncodingType.k4X);
-    rightEncoder = new Encoder(rightA, rightB, true, EncodingType.k4X);
+    // EncodingType.k4X
+    this.leftEncoder = leftEncoder;
+    this.rightEncoder = rightEncoder;
 
     leftEncoder.setDistancePerPulse((4 * Math.PI) / 1024.0);
     rightEncoder.setDistancePerPulse((4 * Math.PI) / 1024.0);

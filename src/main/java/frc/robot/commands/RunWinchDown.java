@@ -3,7 +3,6 @@ package frc.robot.commands;
 import frc.robot.subsystems.ClimbSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-
 public class RunWinchDown extends CommandBase {
   @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
 

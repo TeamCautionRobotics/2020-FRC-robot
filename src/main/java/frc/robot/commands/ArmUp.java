@@ -3,9 +3,6 @@ package frc.robot.commands;
 import frc.robot.subsystems.ClimbSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-/**
- * An example command that uses an example subsystem.
- */
 public class ArmUp extends CommandBase {
   @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
 

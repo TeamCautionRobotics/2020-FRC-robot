@@ -19,7 +19,7 @@ public class BallChuckerFlywheelAuto extends CommandBase {
   private double a1 = 0.0;  // Angle between ground and camera lens
   private double h1 = 0.0;  // Distance between camera lens and ground
 
-  private double h2 = 2.5;  // Distance between center of target and ground
+  private double h2 = 8.2021;  // Distance between center of target and ground
 
   // TODO: put me on smartdashboard
   public double distance;
@@ -61,7 +61,7 @@ public class BallChuckerFlywheelAuto extends CommandBase {
 
     if (tV == 1) {  // if we have a target
 
-      // Distance in meters
+      // Distance in feet
       distance = (h2 - h1) / Math.tan(a1 + tY);
 
       // TODO: SATURDAY - find the equation for this

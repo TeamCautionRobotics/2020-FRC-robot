@@ -19,6 +19,7 @@ import frc.robot.commands.RunReaper;
 import frc.robot.commands.TankDrive;
 import frc.robot.commands.ToggleShifter;
 import frc.robot.misc2020.EnhancedJoystick;
+import frc.robot.misc2020.LimelightData;
 import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.Reaper;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -55,6 +56,8 @@ public class RobotContainer {
     leftJoystick = new EnhancedJoystick(Constants.LEFT_JOYSTICK_PORT);
     rightJoystick = new EnhancedJoystick(Constants.RIGHT_JOYSTICK_PORT);
     manipulator = new XboxController(Constants.MANIPULATOR_PORT);
+
+    final LimelightData limelightData;
 
     final VictorSP reaperMotor;
     reaperMotor = new VictorSP(Constants.REAPER_MOTOR_PORT);

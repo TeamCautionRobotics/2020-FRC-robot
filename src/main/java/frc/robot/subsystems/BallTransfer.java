@@ -1,14 +1,14 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.VictorSP;
+import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class BallTransfer extends SubsystemBase {
 
-    private final VictorSP beltMotor;
+    private final SpeedController beltMotor;
 
-    public BallTransfer(int beltMotorPort) {
-        beltMotor = new VictorSP(beltMotorPort);
+    public BallTransfer(SpeedController beltMotor) {
+        this.beltMotor = beltMotor;
     }
 
     /**

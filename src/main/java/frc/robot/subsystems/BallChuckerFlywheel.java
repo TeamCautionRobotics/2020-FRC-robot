@@ -1,12 +1,17 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpiutil.math.MathUtil;
 
 public class BallChuckerFlywheel extends SubsystemBase {
+
+    private final SpeedController leftFlywheelMotor;
+    private final SpeedController rightFlywheelMotor;
 
     private final SpeedControllerGroup flywheelMotors;
     private final Encoder flywheelEncoder;
@@ -17,14 +22,18 @@ public class BallChuckerFlywheel extends SubsystemBase {
     private double pidSetpoint = 500.0 / 60.0;  // default to 500 rpm
     private double pidResult;
 
-    // TODO: put us (editable) on smartdashboard
     public double pidP = 0.5;
     public double pidI = 0.8;
     public double pidD = 0.0;
 
-    public BallChuckerFlywheel(SpeedControllerGroup flywheelMotorsObj, Encoder flywheelEncoderObj) {
+    public BallChuckerFlywheel(SpeedController leftFlywheelMotor, SpeedController rightFlywheelMotor, Encoder flywheelEncoderObj) {
 
-        this.flywheelMotors = flywheelMotorsObj;
+        this.leftFlywheelMotor = leftFlywheelMotor;
+        this.rightFlywheelMotor = rightFlywheelMotor;
+        this.leftFlywheelMotor.setInverted(true);
+        this.rightFlywheelMotor.setInverted(true);
+        this.flywheelMotors = new SpeedControllerGroup(this.leftFlywheelMotor, this.rightFlywheelMotor);
+        
         this.flywheelEncoder = flywheelEncoderObj;
 
         flywheelPid = new PIDController(pidP, pidI, pidD);
@@ -89,5 +98,11 @@ public class BallChuckerFlywheel extends SubsystemBase {
             flywheelMotors.set(pidResult);
 
         }
+
+        SmartDashboard.putNumber("flywheel pid P", pidP);
+        SmartDashboard.putNumber("flywheel pid I", pidI);
+        SmartDashboard.putNumber("flywheel pid D", pidD);
+        SmartDashboard.putNumber("flywheel pid setpoint (rps)", pidSetpoint);
+        SmartDashboard.putNumber("flywheel actual speed (rps)", getSpeed());
     }
 }

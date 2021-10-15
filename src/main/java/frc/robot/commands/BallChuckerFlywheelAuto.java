@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.misc2020.LimelightData;
 import frc.robot.subsystems.BallChuckerFlywheel;
@@ -21,7 +22,6 @@ public class BallChuckerFlywheelAuto extends CommandBase {
 
   private double h2 = 8.2021;  // Distance between center of target and ground
 
-  // TODO: put me on smartdashboard
   public double distance;
 
   private double desiredRpm;
@@ -78,6 +78,9 @@ public class BallChuckerFlywheelAuto extends CommandBase {
     } else {  // no target, set half speed
       ballChucker.setSpeed(5500.0);
     }
+
+    SmartDashboard.putNumber("limelight measured dist.", distance);
+    SmartDashboard.putBoolean("limelight locked", locked);
 
   }
 

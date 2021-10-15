@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpiutil.math.MathUtil;
 
@@ -19,7 +20,6 @@ public class BallChuckerRotator extends SubsystemBase {
     private double pidSetpoint = 90.0;
     private double pidResult;
 
-    // TODO: put us (editable) on smartdash
     // remove & hardcode when initial setup done
     public double resetMovePwr = 0.1;
     public double pidP = 0.7;
@@ -27,6 +27,7 @@ public class BallChuckerRotator extends SubsystemBase {
     public double pidD = 0.25;
     public double rotatorMovementLimitLow = 10.0;
     public double rotatorMovementLimitHigh = 170.0;
+    public boolean forceDisablePid = true;
 
     public BallChuckerRotator(SpeedController rotatorMotorObj, Encoder rotatorEncoderObj, DigitalInput rotatorSwitchObj) {
 
@@ -39,10 +40,8 @@ public class BallChuckerRotator extends SubsystemBase {
         rotatorPid.setIntegratorRange(0, 0);
         // set tolerance to 3 deg error
         rotatorPid.setTolerance(3.0);
-
-        // TODO: set proper distanceperpulse - should be 1 revolution = 360 degrees
-        // JUST NEED GEAR RATIO 
-        rotatorEncoder.setDistancePerPulse(360.0 / 1024.0);
+ 
+        rotatorEncoder.setDistancePerPulse(360.0 / ((124.0 / 18.0) * (50.0 * 1024.0)));
 
         // home up before use
         this.fullReset();
@@ -114,7 +113,6 @@ public class BallChuckerRotator extends SubsystemBase {
         return rotatorEncoder.getRate();
     }
 
-    // TODO: put me on smartdash!
     public double getEncoderDistance() {
         return rotatorEncoder.getDistance();
     }
@@ -130,7 +128,9 @@ public class BallChuckerRotator extends SubsystemBase {
         // -------------------------------------------------------------------------
         // SAFETY WHILE ENCODER IS NOT PROPERLY CALIBRATED!!!!!!
         // DO NOT REMOVE THE LINE BELOW UNTIL IT IS VERIFIED TO BE GOOD!!!!!!!!!!!
-        pidActive = false;
+        if (forceDisablePid) {
+            pidActive = false;
+        }
         // DAMAGE MAY RESULT!
         // -------------------------------------------------------------------------
 
@@ -146,5 +146,15 @@ public class BallChuckerRotator extends SubsystemBase {
             // set the motor with the clamped pid result
             rotatorMotor.set(pidResult);
         }
+
+        SmartDashboard.putNumber("Rotator Reset Movement Power", resetMovePwr);
+        SmartDashboard.putNumber("Rotator P", pidP);
+        SmartDashboard.putNumber("Rotator I", pidI);
+        SmartDashboard.putNumber("Rotator D", pidD);
+        SmartDashboard.putNumber("Rotator Limit Low", rotatorMovementLimitLow);
+        SmartDashboard.putNumber("Rotator Limit High", rotatorMovementLimitHigh);
+        SmartDashboard.putNumber("Rotator getDistance()", getEncoderDistance());
+        SmartDashboard.putBoolean("Force Disable PID", forceDisablePid);
+
     }
 } 

@@ -20,7 +20,6 @@ public class BallChuckerRotator extends SubsystemBase {
     private double pidSetpoint = 90.0;
     private double pidResult;
 
-    // TODO: put us (editable) on smartdash
     // remove & hardcode when initial setup done
     public double resetMovePwr = 0.1;
     public double pidP = 0.7;
@@ -114,7 +113,6 @@ public class BallChuckerRotator extends SubsystemBase {
         return rotatorEncoder.getRate();
     }
 
-    // TODO: put me on smartdash!
     public double getEncoderDistance() {
         return rotatorEncoder.getDistance();
     }
@@ -155,6 +153,7 @@ public class BallChuckerRotator extends SubsystemBase {
         SmartDashboard.putNumber("Rotator D", pidD);
         SmartDashboard.putNumber("Rotator Limit Low", rotatorMovementLimitLow);
         SmartDashboard.putNumber("Rotator Limit High", rotatorMovementLimitHigh);
+        SmartDashboard.putNumber("Rotator getDistance()", getEncoderDistance());
         SmartDashboard.putBoolean("Force Disable PID", forceDisablePid);
 
     }

@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.XboxController.Button;
 import frc.robot.commands.ToggleReaper;
 import frc.robot.commands.ArmDown;
 import frc.robot.commands.ArmUp;
+import frc.robot.commands.Autonomous;
 import frc.robot.commands.BallChuckerFlywheelAuto;
 import frc.robot.commands.BallChuckerRotatorAuto;
 import frc.robot.commands.ElevateBalls;
@@ -168,6 +169,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return new InstantCommand();
+    return new Autonomous(driveBase, ballChuckerIndexer, ballTransfer, rotatorLocked, flywheelLocked);
   }
 }

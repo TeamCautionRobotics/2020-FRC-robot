@@ -22,6 +22,7 @@ import frc.robot.commands.ArmUp;
 import frc.robot.commands.BallChuckerFlywheelAuto;
 import frc.robot.commands.BallChuckerRotatorAuto;
 import frc.robot.commands.ElevateBalls;
+import frc.robot.commands.BallChuckerFlywheelManual;
 import frc.robot.commands.LockWinch;
 import frc.robot.commands.RunIndexer;
 import frc.robot.commands.RunReaper;
@@ -44,7 +45,6 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -133,7 +133,7 @@ public class RobotContainer {
     
     driveBase.setDefaultCommand(new TankDrive(driveBase, () -> leftJoystick.getY(), () -> rightJoystick.getY()));
     reaper.setDefaultCommand(new RunReaper(reaper, () -> manipulator.getY(Hand.kRight)));
-    ballChuckerFlywheel.setDefaultCommand(new BallChuckerFlywheelAuto(ballChuckerFlywheel, limelightData, flywheelLocked));
+    ballChuckerFlywheel.setDefaultCommand(new BallChuckerFlywheelManual(ballChuckerFlywheel));
     ballChuckerRotator.setDefaultCommand(new BallChuckerRotatorAuto(ballChuckerRotator, limelightData, rotatorLocked));
   }
 

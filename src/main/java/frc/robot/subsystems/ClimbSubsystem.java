@@ -38,6 +38,9 @@ public class ClimbSubsystem extends SubsystemBase {
 
     armPidController = new PIDController(0.1, 0.01, 0.1);
 
+    // start at 0
+    armPidController.setSetpoint(0);
+
   }
 
   public void runWinch(double power) {

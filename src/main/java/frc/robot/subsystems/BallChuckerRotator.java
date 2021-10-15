@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpiutil.math.MathUtil;
 
@@ -27,6 +28,7 @@ public class BallChuckerRotator extends SubsystemBase {
     public double pidD = 0.25;
     public double rotatorMovementLimitLow = 10.0;
     public double rotatorMovementLimitHigh = 170.0;
+    public boolean forceDisablePid = true;
 
     public BallChuckerRotator(SpeedController rotatorMotorObj, Encoder rotatorEncoderObj, DigitalInput rotatorSwitchObj) {
 
@@ -128,7 +130,9 @@ public class BallChuckerRotator extends SubsystemBase {
         // -------------------------------------------------------------------------
         // SAFETY WHILE ENCODER IS NOT PROPERLY CALIBRATED!!!!!!
         // DO NOT REMOVE THE LINE BELOW UNTIL IT IS VERIFIED TO BE GOOD!!!!!!!!!!!
-        pidActive = false;
+        if (forceDisablePid) {
+            pidActive = false;
+        }
         // DAMAGE MAY RESULT!
         // -------------------------------------------------------------------------
 
@@ -144,5 +148,14 @@ public class BallChuckerRotator extends SubsystemBase {
             // set the motor with the clamped pid result
             rotatorMotor.set(pidResult);
         }
+
+        SmartDashboard.putNumber("Rotator Reset Movement Power", resetMovePwr);
+        SmartDashboard.putNumber("Rotator P", pidP);
+        SmartDashboard.putNumber("Rotator I", pidI);
+        SmartDashboard.putNumber("Rotator D", pidD);
+        SmartDashboard.putNumber("Rotator Limit Low", rotatorMovementLimitLow);
+        SmartDashboard.putNumber("Rotator Limit High", rotatorMovementLimitHigh);
+        SmartDashboard.putBoolean("Force Disable PID", forceDisablePid);
+
     }
 } 

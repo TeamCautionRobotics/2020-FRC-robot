@@ -25,6 +25,7 @@ public class BallChuckerFlywheel extends SubsystemBase {
     public BallChuckerFlywheel(SpeedControllerGroup flywheelMotorsObj, Encoder flywheelEncoderObj) {
 
         this.flywheelMotors = flywheelMotorsObj;
+        this.flywheelMotors.setInverted(true);
         this.flywheelEncoder = flywheelEncoderObj;
 
         flywheelPid = new PIDController(pidP, pidI, pidD);

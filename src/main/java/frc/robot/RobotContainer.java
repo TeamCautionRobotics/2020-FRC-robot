@@ -116,9 +116,8 @@ public class RobotContainer {
         new DigitalInput(Constants.ARM_LIMIT_SWITCH_PORT));
 
     ballChuckerFlywheel = new BallChuckerFlywheel(
-        new SpeedControllerGroup(
-          new VictorSP(Constants.LEFT_FLYWHEEL_MOTOR_PORT),
-          new VictorSP(Constants.RIGHT_FLYWHEEL_MOTOR_PORT)),
+        new VictorSP(Constants.LEFT_FLYWHEEL_MOTOR_PORT),
+        new VictorSP(Constants.RIGHT_FLYWHEEL_MOTOR_PORT),
         new Encoder(Constants.FLYWHEEL_ENCODER_PORT_A, Constants.FLYWHEEL_ENCODER_PORT_B));
 
     ballChuckerRotator = new BallChuckerRotator(

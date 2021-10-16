@@ -61,6 +61,7 @@ public class Autonomous extends CommandBase {
         shootBallTimer.start();
       }
 
+      driveBase.drive(0);
       indexer.setPower(0.7);
       elevator.moveBalls(0.7);
 
@@ -72,6 +73,7 @@ public class Autonomous extends CommandBase {
 
     } else if (rotatorLocked && !flywheelLocked && !ballsShot) {  // flywheel has slowed, wait for it to spin up again
       
+      driveBase.drive(0);
       indexer.setPower(0);
       elevator.moveBalls(0);
 

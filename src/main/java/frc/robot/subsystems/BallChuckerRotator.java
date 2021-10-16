@@ -95,6 +95,10 @@ public class BallChuckerRotator extends SubsystemBase {
             rotatorPid.reset();
         }
         pidActive = enable;
+        // stop motor when pid disabled
+        if (!enable) {
+            rotatorMotor.set(0);
+        }
     }
 
     // Sets rotator pid postion

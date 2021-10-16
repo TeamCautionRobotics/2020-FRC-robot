@@ -36,10 +36,11 @@ public class BallChuckerRotator extends SubsystemBase {
         this.rotatorSwitch = rotatorSwitchObj;
 
         PIDController rotatorPid = new PIDController(pidP, pidI, pidD);
+
         // set tolerance to 3 deg error
         rotatorPid.setTolerance(3.0);
  
-        rotatorEncoder.setDistancePerPulse(360.0 / ((124.0 / 15.0) * (1024.0)));
+        rotatorEncoder.setDistancePerPulse(360.0 / ((124.0 / 15.0) * (50.0 * 1024.0)));
 
         // home up before use
         this.fullReset();

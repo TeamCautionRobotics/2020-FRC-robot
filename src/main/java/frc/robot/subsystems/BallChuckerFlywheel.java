@@ -19,7 +19,7 @@ public class BallChuckerFlywheel extends SubsystemBase {
     private PIDController flywheelPid;
 
     private boolean pidActive = false;
-    private double pidSetpoint = 500.0 / 60.0;  // default to 500 rpm
+    private double pidSetpoint = 0.0;
     private double pidResult;
 
     public double pidP = 0.1;
@@ -61,12 +61,8 @@ public class BallChuckerFlywheel extends SubsystemBase {
     }
 
     public void setSpeed(double speed) {
-
         // max flywheel speed is 11000 rpm
-        speed = MathUtil.clamp(speed, 0.0, 11000.0);
-
-        // rpm to rps
-        pidSetpoint = speed / 60.0;
+        pidSetpoint = MathUtil.clamp(speed, 0.0, 183.333333);
     }
 
     public void stop() {

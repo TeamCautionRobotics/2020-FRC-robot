@@ -54,8 +54,8 @@ public final class Constants {
 
 	public static final int LEFT_FLYWHEEL_MOTOR_PORT = 0;
 	public static final int RIGHT_FLYWHEEL_MOTOR_PORT = 1;
-	public static final int FLYWHEEL_ENCODER_PORT_A = 3;
-	public static final int FLYWHEEL_ENCODER_PORT_B = 2;
+	public static final int FLYWHEEL_ENCODER_PORT_A = 2;
+	public static final int FLYWHEEL_ENCODER_PORT_B = 3;
 
 	public static final int ROTATOR_MOTOR_PORT = 4;
 	public static final int ROTATOR_ENCODER_PORT_A = 4;

@@ -1,6 +1,5 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.BallChuckerFlywheel;
 
@@ -8,13 +7,12 @@ import frc.robot.subsystems.BallChuckerFlywheel;
 public class BallChuckerFlywheelManual extends CommandBase {
 
     private final BallChuckerFlywheel ballChucker;
-    public double desiredRpm = 5000.0;
+    public double desiredRpm = 83.33333;  // 5000 rpm
 
     public BallChuckerFlywheelManual(BallChuckerFlywheel ballChucker) {
         this.ballChucker = ballChucker;
 
         addRequirements(ballChucker);
-
     }
 
     @Override
@@ -25,9 +23,6 @@ public class BallChuckerFlywheelManual extends CommandBase {
     @Override
     public void execute() {
         ballChucker.setSpeed(desiredRpm);
-
-        SmartDashboard.putNumber("flywheel actual rps", ballChucker.getSpeed());
-        SmartDashboard.putNumber("flywheel desired rps", desiredRpm / 60.0);
     }
 
     @Override

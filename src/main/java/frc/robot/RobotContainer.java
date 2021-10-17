@@ -78,9 +78,6 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    // Configure the button bindings
-    configureButtonBindings();
-
     // Initialization things
     leftJoystick = new EnhancedJoystick(Constants.LEFT_JOYSTICK_PORT);
     rightJoystick = new EnhancedJoystick(Constants.RIGHT_JOYSTICK_PORT);
@@ -122,7 +119,7 @@ public class RobotContainer {
         new Encoder(Constants.FLYWHEEL_ENCODER_PORT_A, Constants.FLYWHEEL_ENCODER_PORT_B));
 
     ballChuckerRotator = new BallChuckerRotator(
-        new WPI_VictorSPX(Constants.ROTATOR_MOTOR_DEVICE_ID),
+        new VictorSP(Constants.ROTATOR_MOTOR_PORT),
         new Encoder(Constants.ROTATOR_ENCODER_PORT_A, Constants.ROTATOR_ENCODER_PORT_B),
         new DigitalInput(Constants.ROTATOR_LIMIT_SWITCH_PORT));
 
@@ -132,10 +129,16 @@ public class RobotContainer {
     ballTransfer = new BallTransfer(
         new VictorSP(Constants.BALL_TRANSFER_MOTOR_PORT));
     
-    driveBase.setDefaultCommand(new TankDrive(driveBase, () -> leftJoystick.getY(), () -> rightJoystick.getY()));
+    driveBase.setDefaultCommand(new TankDrive(driveBase, () -> -leftJoystick.getY(), () -> -rightJoystick.getY()));
     reaper.setDefaultCommand(new RunReaper(reaper, () -> manipulator.getY(Hand.kRight)));
     ballChuckerFlywheel.setDefaultCommand(new BallChuckerFlywheelManual(ballChuckerFlywheel));
     ballChuckerRotator.setDefaultCommand(new BallChuckerRotatorAuto(ballChuckerRotator, limelightData, rotatorLocked));
+
+    // Configure the button bindings
+    configureButtonBindings();
+
+
+    climb.lock(false);
   }
 
   /**
@@ -147,10 +150,10 @@ public class RobotContainer {
   private void configureButtonBindings() {
     new JoystickButton(leftJoystick, 4).toggleWhenPressed(new ToggleShifter(driveBase));
 
-    new JoystickButton(leftJoystick, 1).toggleWhenPressed(new RunReaper(reaper, () -> 0.7));
+    new JoystickButton(leftJoystick, 1).whileHeld(new RunReaper(reaper, () -> 0.7));
     new JoystickButton(manipulator, Button.kA.value).toggleWhenPressed(new ToggleReaper(reaper));
 
-    new JoystickButton(leftJoystick, 1).whileHeld(new ElevateBalls(ballTransfer, () -> 0.75));
+    new JoystickButton(leftJoystick, 1).whileHeld(new ElevateBalls(ballTransfer, () -> -1));
 
     new JoystickButton(rightJoystick, 1).whileHeld(new RunIndexer(ballChuckerIndexer, () -> 0.75));
 

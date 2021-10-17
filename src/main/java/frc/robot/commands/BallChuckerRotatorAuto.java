@@ -44,12 +44,6 @@ public class BallChuckerRotatorAuto extends CommandBase {
     // enable the pid
     ballChucker.enablePid(true);
 
-    // center up
-    ballChucker.setRotatorPosition(90.0);
-    while (!ballChucker.getPidAtSetpoint()) {
-      ballChucker.setRotatorPosition(90.0);
-    }
-
   }
 
   @Override
@@ -84,12 +78,12 @@ public class BallChuckerRotatorAuto extends CommandBase {
 
       // TODO: SATURDAY - modify PID for a slower response here
 
-      // search between 15 and 165 deg
-      if (searchDir) {
-        ballChucker.setRotatorPosition(160);
-      } else {
-        ballChucker.setRotatorPosition(20);
-      }
+      // // search between 15 and 165 deg
+      // if (searchDir) {
+      //   ballChucker.setRotatorPosition(110);
+      // } else {
+      //   ballChucker.setRotatorPosition(10);
+      // }
 
       // reverse the search dir if we're at the setpoint
       if (ballChucker.getPidAtSetpoint()) {

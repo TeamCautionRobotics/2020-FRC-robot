@@ -8,10 +8,13 @@ import frc.robot.subsystems.BallChuckerFlywheel;
 public class BallChuckerFlywheelManual extends CommandBase {
 
     private final BallChuckerFlywheel ballChucker;
-    public double desiredRpm = 0.0;
+    public double desiredRpm = 5000.0;
 
     public BallChuckerFlywheelManual(BallChuckerFlywheel ballChucker) {
         this.ballChucker = ballChucker;
+
+        addRequirements(ballChucker);
+
     }
 
     @Override
@@ -21,8 +24,10 @@ public class BallChuckerFlywheelManual extends CommandBase {
 
     @Override
     public void execute() {
-        SmartDashboard.putNumber("manual flywheel rpm target", desiredRpm);
         ballChucker.setSpeed(desiredRpm);
+
+        SmartDashboard.putNumber("flywheel actual rps", ballChucker.getSpeed());
+        SmartDashboard.putNumber("flywheel desired rps", desiredRpm / 60.0);
     }
 
     @Override

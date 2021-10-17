@@ -26,6 +26,7 @@ public class RunWinchUp extends CommandBase {
 
   @Override
   public void end(boolean interrupted) {
+    subsystem.runWinch(0);
   }
 
   @Override

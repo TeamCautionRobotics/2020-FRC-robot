@@ -22,8 +22,8 @@ public class BallChuckerFlywheel extends SubsystemBase {
     private double pidSetpoint = 500.0 / 60.0;  // default to 500 rpm
     private double pidResult;
 
-    public double pidP = 0.5;
-    public double pidI = 0.8;
+    public double pidP = 0.1;
+    public double pidI = 0.0;
     public double pidD = 0.0;
 
     public BallChuckerFlywheel(SpeedController leftFlywheelMotor, SpeedController rightFlywheelMotor, Encoder flywheelEncoderObj) {
@@ -104,5 +104,7 @@ public class BallChuckerFlywheel extends SubsystemBase {
         SmartDashboard.putNumber("flywheel pid D", pidD);
         SmartDashboard.putNumber("flywheel pid setpoint (rps)", pidSetpoint);
         SmartDashboard.putNumber("flywheel actual speed (rps)", getSpeed());
+
+        SmartDashboard.putNumber("flywheel powa", pidResult);
     }
 }

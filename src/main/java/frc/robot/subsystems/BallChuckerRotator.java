@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpiutil.math.MathUtil;
+import frc.robot.misc2020.LimelightData;
 
 public class BallChuckerRotator extends SubsystemBase {
 
@@ -17,17 +18,19 @@ public class BallChuckerRotator extends SubsystemBase {
     private PIDController rotatorPid;
 
     private boolean pidActive = false;
-    private double pidSetpoint = 90.0;
+    private double pidSetpoint;
     private double pidResult;
 
     // remove & hardcode when initial setup done
-    public double resetMovePwr = 0.1;
-    public double pidP = 0.7;
-    public double pidI = 0.0;
-    public double pidD = 0.25;
-    public double rotatorMovementLimitLow = 10.0;
-    public double rotatorMovementLimitHigh = 170.0;
-    public boolean forceDisablePid = true;
+    public double resetMovePwr = -0.1;
+    public double pidP = 0.04;
+    public double pidI = 0.031;
+    public double pidD = 0.0012;
+    public double rotatorMovementLimitLow = 0.0;
+    public double rotatorMovementLimitHigh = 120.0;
+    public boolean forceDisablePid = false;
+
+    private boolean homingSwitchHit = false;
 
     public BallChuckerRotator(SpeedController rotatorMotorObj, Encoder rotatorEncoderObj, DigitalInput rotatorSwitchObj) {
 
@@ -35,12 +38,16 @@ public class BallChuckerRotator extends SubsystemBase {
         this.rotatorEncoder = rotatorEncoderObj;
         this.rotatorSwitch = rotatorSwitchObj;
 
-        PIDController rotatorPid = new PIDController(pidP, pidI, pidD);
+        this.rotatorMotor.setInverted(true);
+
+        rotatorPid = new PIDController(pidP, pidI, pidD);
+        rotatorPid.setIntegratorRange(-0.001, 0.001);
 
         // set tolerance to 3 deg error
-        rotatorPid.setTolerance(3.0);
+        rotatorPid.setTolerance(2.0);
  
         rotatorEncoder.setDistancePerPulse(360.0 / ((124.0 / 15.0) * (50.0 * 1024.0)));
+        rotatorEncoder.setReverseDirection(true);
 
         // home up before use
         this.fullReset();
@@ -51,17 +58,20 @@ public class BallChuckerRotator extends SubsystemBase {
         // Slowly turn rotator until we hit the switch
 
         rotatorMotor.set(resetMovePwr);
+
         if (this.getRotatorSwitch()) {
             rotatorMotor.set(0.0);
+            homingSwitchHit = true;
+
+            // Then reset
+            rotatorEncoder.reset();
+            rotatorPid.reset();
+
+            // send rotator to center
+            pidSetpoint = 45.0;
+            pidActive = true;
+
         }
-        // Then reset
-        rotatorEncoder.reset();
-        rotatorPid.reset();
-
-        // send rotator to center
-        pidSetpoint = 90.0;
-        pidActive = true;
-
     }
 
     // Directly sets rotator power
@@ -72,14 +82,15 @@ public class BallChuckerRotator extends SubsystemBase {
 
             // prevent moving past limit
             if (this.getEncoderDistance() < rotatorMovementLimitLow) {
-                powerCorrected = MathUtil.clamp(power, 0.0, 9999.0);
+                powerCorrected = MathUtil.clamp(power, -1.0, 0.0);
             } else if (this.getEncoderDistance() > rotatorMovementLimitHigh) {
-                powerCorrected = MathUtil.clamp(power, -9999.0, 0.0); 
+                powerCorrected = MathUtil.clamp(power, 0.0, 1.0); 
             } else {
                 powerCorrected = power;
             }
 
             rotatorMotor.set(powerCorrected);
+
         }
     }
 
@@ -128,26 +139,35 @@ public class BallChuckerRotator extends SubsystemBase {
     @Override
     public void periodic() {
 
-        // -------------------------------------------------------------------------
-        // SAFETY WHILE ENCODER IS NOT PROPERLY CALIBRATED!!!!!!
-        // DO NOT REMOVE THE LINE BELOW UNTIL IT IS VERIFIED TO BE GOOD!!!!!!!!!!!
-        if (forceDisablePid) {
-            pidActive = false;
-        }
-        // DAMAGE MAY RESULT!
-        // -------------------------------------------------------------------------
+        // homing routine:
+        if (!homingSwitchHit) {
 
-        // always calculate the pid result - wackiness may ensue if this does not happen
-        pidResult = rotatorPid.calculate(this.getEncoderDistance(), pidSetpoint);
+            fullReset();
 
-        // apply pid power to motor when pid is active
-        if (pidActive) {
+        } else {
 
-            // clamp the pid output range to -1.0/+1.0
-            pidResult = MathUtil.clamp(pidResult, -1.0, 1.0);
+            // -------------------------------------------------------------------------
+            // SAFETY WHILE ENCODER IS NOT PROPERLY CALIBRATED!!!!!!
+            // DO NOT REMOVE THE LINE BELOW UNTIL IT IS VERIFIED TO BE GOOD!!!!!!!!!!!
+            if (forceDisablePid) {
+                pidActive = false;
+            }
+            // DAMAGE MAY RESULT!
+            // -------------------------------------------------------------------------
 
-            // set the motor with the clamped pid result
-            rotatorMotor.set(pidResult);
+            // always calculate the pid result - wackiness may ensue if this does not happen
+            pidResult = rotatorPid.calculate(this.getEncoderDistance(), pidSetpoint);
+
+            // apply pid power to motor when pid is active
+            if (pidActive) {
+
+                // clamp the pid output range to -1.0/+1.0
+                pidResult = MathUtil.clamp(pidResult, -0.5, 0.5);
+
+                // set the motor with the clamped pid result
+                rotatorMotor.set(pidResult);
+            }
+
         }
 
         SmartDashboard.putNumber("Rotator Reset Movement Power", resetMovePwr);
@@ -158,6 +178,9 @@ public class BallChuckerRotator extends SubsystemBase {
         SmartDashboard.putNumber("Rotator Limit High", rotatorMovementLimitHigh);
         SmartDashboard.putNumber("Rotator getDistance()", getEncoderDistance());
         SmartDashboard.putBoolean("Force Disable PID", forceDisablePid);
+
+        SmartDashboard.putNumber("pid rotator setpoint", pidSetpoint);
+        SmartDashboard.putNumber("pid rotator power", pidResult);
 
     }
 } 

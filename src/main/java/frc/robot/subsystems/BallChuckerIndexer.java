@@ -13,6 +13,7 @@ public class BallChuckerIndexer extends SubsystemBase {
   public BallChuckerIndexer(SpeedController indexerMotorObj) {
 
     this.indexerMotor = indexerMotorObj;
+    this.indexerMotor.setInverted(true);
 
   }
 

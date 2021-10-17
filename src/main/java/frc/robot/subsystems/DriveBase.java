@@ -17,7 +17,7 @@ public class DriveBase extends SubsystemBase {
   private final Encoder leftEncoder;
   private final Encoder rightEncoder;
 
-  private final ADXRS450_Gyro gyro;
+  // private final ADXRS450_Gyro gyro;
 
   private boolean usingLeftEncoder = false;
 
@@ -44,10 +44,10 @@ public class DriveBase extends SubsystemBase {
     leftEncoder.setDistancePerPulse((4 * Math.PI) / 1024.0);
     rightEncoder.setDistancePerPulse((4 * Math.PI) / 1024.0);
 
-    gyro = new ADXRS450_Gyro();
-    gyro.calibrate();
-    heading = gyro.getAngle();
-    courseHeading = heading;
+    // gyro = new ADXRS450_Gyro();
+    // gyro.calibrate();
+    // heading = gyro.getAngle();
+    // courseHeading = heading;
   }
 
   /**
@@ -111,13 +111,13 @@ public class DriveBase extends SubsystemBase {
     useHighGear(!getShifterState());
   }
 
-  public void resetGyro() {
-    gyro.reset();
-  }
+  // public void resetGyro() {
+  //   gyro.reset();
+  // }
 
-  public double getGyroAngle() {
-    return gyro.getAngle();
-  }
+  // public double getGyroAngle() {
+  //   return gyro.getAngle();
+  // }
 
   public void resetEncoders() {
     leftEncoder.reset();

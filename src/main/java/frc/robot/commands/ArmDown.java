@@ -24,7 +24,7 @@ public class ArmDown extends CommandBase {
 
   @Override
   public void execute() {
-    subsystem.moveArmPID(-50);
+    subsystem.moveArmPID(-10);
   }
 
   @Override

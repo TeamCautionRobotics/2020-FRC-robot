@@ -11,6 +11,8 @@ public class RunReaper extends CommandBase {
     public RunReaper(Reaper reaper, DoubleSupplier powerSupplier) {
         this.reaper = reaper;
         this.powerSupplier = powerSupplier;
+
+        addRequirements(reaper);
     }
 
     @Override

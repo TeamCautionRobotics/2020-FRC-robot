@@ -1,5 +1,8 @@
 package frc.robot.commands;
 
+import java.util.function.DoubleSupplier;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.BallChuckerFlywheel;
 
@@ -7,22 +10,44 @@ import frc.robot.subsystems.BallChuckerFlywheel;
 public class BallChuckerFlywheelManual extends CommandBase {
 
     private final BallChuckerFlywheel ballChucker;
-    public double desiredRpm = 83.33333;  // 5000 rpm
+    private boolean usePid;
+    private DoubleSupplier powerTarget;
+    public double desiredRps = 0.0; 
 
-    public BallChuckerFlywheelManual(BallChuckerFlywheel ballChucker) {
+    public BallChuckerFlywheelManual(BallChuckerFlywheel ballChucker, boolean usePid, DoubleSupplier powerTarget) {
         this.ballChucker = ballChucker;
+        this.usePid = usePid;
+        this.powerTarget = powerTarget;
 
         addRequirements(ballChucker);
     }
 
     @Override
     public void initialize() {
-        ballChucker.enablePid(true);
+
+        if (usePid) {
+            ballChucker.enablePid(true);
+            SmartDashboard.putNumber("flywheel desired speed (rps)", desiredRps);
+        } else {
+            ballChucker.enablePid(false);
+        }
+
+
     }
 
     @Override
     public void execute() {
-        ballChucker.setSpeed(desiredRpm);
+
+        if (usePid) {
+
+            ballChucker.setSpeed(desiredRps);
+
+            desiredRps = SmartDashboard.getNumber("flywheel desired speed (rps)", 0);
+
+        } else {
+            ballChucker.setSpeed(powerTarget.getAsDouble());
+        }
+
     }
 
     @Override

@@ -22,7 +22,7 @@ public class BallChuckerRotator extends SubsystemBase {
     private double pidResult;
 
     // remove & hardcode when initial setup done
-    public double resetMovePwr = -0.1;
+    public double resetMovePwr = -0.4;
     public double pidP = 0.04;
     public double pidI = 0.031;
     public double pidD = 0.0012;
@@ -68,7 +68,7 @@ public class BallChuckerRotator extends SubsystemBase {
             rotatorPid.reset();
 
             // send rotator to center
-            pidSetpoint = 45.0;
+            pidSetpoint = 62.4;
             pidActive = true;
 
         }
@@ -121,6 +121,18 @@ public class BallChuckerRotator extends SubsystemBase {
     // true if pid has found and reached a target
     public boolean getPidAtSetpoint() {
         return rotatorPid.atSetpoint();
+    }
+
+    public void resetPid() {
+        rotatorPid.reset();
+    }
+
+    public void setPidP(double p) {
+        rotatorPid.setP(p);
+    }
+
+    public void setPidI(double i) {
+        rotatorPid.setI(i);
     }
 
     public double getEncoderRate() {

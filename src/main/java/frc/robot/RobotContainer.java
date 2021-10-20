@@ -131,7 +131,6 @@ public class RobotContainer {
     
     driveBase.setDefaultCommand(new TankDrive(driveBase, () -> -leftJoystick.getY(), () -> -rightJoystick.getY()));
     reaper.setDefaultCommand(new RunReaper(reaper, () -> manipulator.getY(Hand.kRight)));
-    ballChuckerFlywheel.setDefaultCommand(new BallChuckerFlywheelManual(ballChuckerFlywheel));
     ballChuckerRotator.setDefaultCommand(new BallChuckerRotatorAuto(ballChuckerRotator, limelightData, rotatorLocked));
 
     // Configure the button bindings
@@ -156,6 +155,7 @@ public class RobotContainer {
     new JoystickButton(leftJoystick, 1).whileHeld(new ElevateBalls(ballTransfer, () -> -1));
 
     new JoystickButton(rightJoystick, 1).whileHeld(new RunIndexer(ballChuckerIndexer, () -> 0.75));
+    new JoystickButton(rightJoystick, 3).whileHeld(new BallChuckerFlywheelAuto(ballChuckerFlywheel, limelightData, flywheelLocked));
 
     new JoystickButton(manipulator, Button.kY.value).whenHeld(new ArmUp(climb));
     new JoystickButton(manipulator, Button.kX.value).whenHeld(new ArmDown(climb));

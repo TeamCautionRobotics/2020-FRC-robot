@@ -16,14 +16,14 @@ public class BallChuckerFlywheelAuto extends CommandBase {
 
   // TODO: SATURDAY - set us!
   // Distance measurement calculation vars
-  // Angles in deg, distance in feet
-  private double a1 = 17.0;  // Angle between ground and camera lens
-  private double h1 = 2.8541667;  // Distance between camera lens and ground
-  private double h2 = 8.2021;  // Distance between center of target and ground
+  // Angles in deg, distance in inches
+  private double a1 = 10.6;  // Angle between ground and camera lens
+  private double h1 = 34.75;  // Distance between camera lens and ground
+  private double h2 = 98.25-13.5;  // Distance between center of target and ground
 
   public double distance;
 
-  private double desiredRpm;
+  private double desiredRps;
 
   private boolean locked = false;
 
@@ -47,7 +47,7 @@ public class BallChuckerFlywheelAuto extends CommandBase {
 
     // enable pid
     ballChucker.enablePid(true);
-    ballChucker.setSpeed(5500.0);
+    ballChucker.setSpeed(0);
 
   }
 
@@ -60,13 +60,12 @@ public class BallChuckerFlywheelAuto extends CommandBase {
 
     if (tV == 1) {  // if we have a target
 
-      // Distance in feet
-      distance = (h2 - h1) / Math.tan(a1 + tY);
+      // Distance in inch
+      distance = (h2 - h1) / Math.tan(Math.PI*(a1 + tY) / 180.0);
 
-      // TODO: SATURDAY - find the equation for this
-      desiredRpm = 0.0;
+      desiredRps = Math.pow(0.000003516428755144 * distance, 3) - Math.pow(0.0066848566503 * distance, 2) + (0.339064673194 * distance) + 35.678336060798;
 
-      ballChucker.setSpeed(desiredRpm);
+      ballChucker.setSpeed(desiredRps);
 
       if (ballChucker.getPidAtSetpoint()) {
         locked = true;
@@ -75,11 +74,16 @@ public class BallChuckerFlywheelAuto extends CommandBase {
       }
 
     } else {  // no target, set half speed
-      ballChucker.setSpeed(5500.0);
+      ballChucker.setSpeed(0);
     }
 
     SmartDashboard.putNumber("limelight measured dist.", distance);
     SmartDashboard.putBoolean("limelight locked", locked);
+    SmartDashboard.putNumber("angle to taget", Math.PI*(a1 + tY) / 180.0);
+    SmartDashboard.putNumber("1 OVER tan", (1 / Math.tan(Math.PI*(a1 + tY) / 180.0)));
+    SmartDashboard.putNumber("h2", h2);
+    SmartDashboard.putNumber("h2-h1", h2-h1);
+    SmartDashboard.putNumber("another distance", (h2 - h1) / Math.tan(Math.PI*(a1 + tY) / 180.0));
 
   }
 

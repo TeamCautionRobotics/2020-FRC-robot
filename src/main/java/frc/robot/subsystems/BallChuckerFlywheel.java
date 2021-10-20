@@ -22,9 +22,9 @@ public class BallChuckerFlywheel extends SubsystemBase {
     private double pidSetpoint = 0.0;
     private double pidResult;
 
-    public double pidP = 0.1;
-    public double pidI = 0.0;
-    public double pidD = 0.0;
+    public double pidP = 0.006;
+    public double pidI = 0.012;
+    public double pidD = 0.000000;
 
     public BallChuckerFlywheel(SpeedController leftFlywheelMotor, SpeedController rightFlywheelMotor, Encoder flywheelEncoderObj) {
 
@@ -35,9 +35,11 @@ public class BallChuckerFlywheel extends SubsystemBase {
         this.flywheelMotors = new SpeedControllerGroup(this.leftFlywheelMotor, this.rightFlywheelMotor);
         
         this.flywheelEncoder = flywheelEncoderObj;
+        this.flywheelEncoder.setReverseDirection(true);
 
         flywheelPid = new PIDController(pidP, pidI, pidD);
-        flywheelPid.setTolerance(100.0/60.0);  /// 100 rpm error
+        flywheelPid.setTolerance(10.0/60.0); 
+        flywheelPid.setIntegratorRange(-0.7, 0.7);
 
         flywheelEncoder.setDistancePerPulse((3.0/5.0)/1024.0);
 
@@ -98,7 +100,6 @@ public class BallChuckerFlywheel extends SubsystemBase {
         SmartDashboard.putNumber("flywheel pid P", pidP);
         SmartDashboard.putNumber("flywheel pid I", pidI);
         SmartDashboard.putNumber("flywheel pid D", pidD);
-        SmartDashboard.putNumber("flywheel pid setpoint (rps)", pidSetpoint);
         SmartDashboard.putNumber("flywheel actual speed (rps)", getSpeed());
 
         SmartDashboard.putNumber("flywheel powa", pidResult);

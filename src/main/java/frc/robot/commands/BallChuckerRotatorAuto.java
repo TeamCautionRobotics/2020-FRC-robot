@@ -102,10 +102,8 @@ public class BallChuckerRotatorAuto extends CommandBase {
           seekTimerRunning = true;
         }
 
-        // TODO: SATURDAY - modify PID for a slower response here
-
-        ballChucker.setPidP(0.002);
-        ballChucker.setPidI(0.0001);
+        ballChucker.setPidP(0.01);
+        ballChucker.setPidI(0.010);
 
         // search between 15 and 165 deg
 
@@ -116,7 +114,7 @@ public class BallChuckerRotatorAuto extends CommandBase {
         }
 
 
-        if (seekTimer.get() > 1) {
+        if (seekTimer.get() > 1.3) {
           searchDir = !searchDir;
           seekTimer.reset();
         }

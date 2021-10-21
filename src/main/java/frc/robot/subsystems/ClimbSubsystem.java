@@ -35,6 +35,7 @@ public class ClimbSubsystem extends SubsystemBase {
     this.armLimitSwitch = armLimitSwitch;
 
     armMotor.setInverted(true);
+    this.winchMotor.setInverted(true);
 
     armEncoder.setDistancePerPulse(360.0 / (100.0 * 1024.0));
 

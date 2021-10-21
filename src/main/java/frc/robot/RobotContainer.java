@@ -17,11 +17,13 @@ import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import frc.robot.commands.ToggleReaper;
-import frc.robot.commands.ArmDown;
+import frc.robot.commands.ArmAnalogControl;
 import frc.robot.commands.ArmUp;
 import frc.robot.commands.Autonomous;
 import frc.robot.commands.BallChuckerFlywheelAuto;
 import frc.robot.commands.BallChuckerRotatorAuto;
+import frc.robot.commands.BallChuckerRotatorManual;
+import frc.robot.commands.BallChuckerRotatorPark;
 import frc.robot.commands.ElevateBalls;
 import frc.robot.commands.BallChuckerFlywheelManual;
 import frc.robot.commands.LockWinch;
@@ -130,8 +132,8 @@ public class RobotContainer {
         new VictorSP(Constants.BALL_TRANSFER_MOTOR_PORT));
     
     driveBase.setDefaultCommand(new TankDrive(driveBase, () -> -leftJoystick.getY(), () -> -rightJoystick.getY()));
-    reaper.setDefaultCommand(new RunReaper(reaper, () -> manipulator.getY(Hand.kRight)));
     ballChuckerRotator.setDefaultCommand(new BallChuckerRotatorAuto(ballChuckerRotator, limelightData, rotatorLocked));
+    climb.setDefaultCommand(new ArmAnalogControl(climb, () -> -manipulator.getY(Hand.kRight)));
 
     // Configure the button bindings
     configureButtonBindings();
@@ -157,13 +159,18 @@ public class RobotContainer {
     new JoystickButton(rightJoystick, 1).whileHeld(new RunIndexer(ballChuckerIndexer, () -> 0.75));
     new JoystickButton(rightJoystick, 3).whileHeld(new BallChuckerFlywheelAuto(ballChuckerFlywheel, limelightData, flywheelLocked));
 
-    new JoystickButton(manipulator, Button.kY.value).whenHeld(new ArmUp(climb));
-    new JoystickButton(manipulator, Button.kX.value).whenHeld(new ArmDown(climb));
-
     new JoystickButton(manipulator, Button.kStart.value).whenPressed(new LockWinch(climb));
     new JoystickButton(manipulator, Button.kBack.value).whenPressed(new UnlockWinch(climb));
     new JoystickButton(manipulator, Button.kBumperLeft.value).whenHeld(new RunWinchDown(climb));
     new JoystickButton(manipulator, Button.kBumperRight.value).whenHeld(new RunWinchUp(climb));
+
+    // Park rotator for climb
+    new JoystickButton(rightJoystick, 11).toggleWhenPressed(new BallChuckerRotatorPark(ballChuckerRotator));
+
+    // Failsafes
+    new JoystickButton(leftJoystick, 11).toggleWhenPressed(new BallChuckerRotatorManual(ballChuckerRotator, () -> manipulator.getX(Hand.kLeft)));
+    new JoystickButton(leftJoystick, 11).toggleWhenPressed(new BallChuckerFlywheelManual(ballChuckerFlywheel, false, () -> rightJoystick.getZ()));
+
   }
 
   /**

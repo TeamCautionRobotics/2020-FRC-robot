@@ -3,20 +3,23 @@ package frc.robot.commands;
 import frc.robot.subsystems.ClimbSubsystem;
 
 import java.util.function.DoubleSupplier;
-
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class ArmAnalogControl extends CommandBase {
+public class ClimbControl extends CommandBase {
   @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
 
   private final ClimbSubsystem subsystem;
   private DoubleSupplier controlPower;
+  private DoubleSupplier winchDown;
+  private DoubleSupplier winchUp;
 
-  public ArmAnalogControl(ClimbSubsystem subsystem, DoubleSupplier controlPower) {
+  public ClimbControl(ClimbSubsystem subsystem, DoubleSupplier controlPower, DoubleSupplier winchDown, DoubleSupplier winchUp) {
 
     this.subsystem = subsystem;
     this.controlPower = controlPower;
+
+    this.winchDown = winchDown;
+    this.winchUp = winchUp;
 
     addRequirements(subsystem);
   }
@@ -30,8 +33,14 @@ public class ArmAnalogControl extends CommandBase {
 
   @Override
   public void execute() {
-    SmartDashboard.putNumber("arm power", controlPower.getAsDouble());
     subsystem.moveArm(controlPower.getAsDouble());
+
+    if (winchUp.getAsDouble() >= 0.1) {
+      subsystem.runWinch(winchUp.getAsDouble());
+    } else {
+      subsystem.runWinch(-winchDown.getAsDouble());
+    }
+
   }
 
   @Override

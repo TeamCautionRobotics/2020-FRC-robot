@@ -134,10 +134,10 @@ public class DriveBase extends SubsystemBase {
 
   public double getDistance() {
     if (usingLeftEncoder) {
-      return getLeftDistance();
+      return -getLeftDistance();
     } else {
       // default to right encoder
-      return getRightDistance();
+      return -getRightDistance();
     }
   }
 

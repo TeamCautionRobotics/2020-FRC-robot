@@ -22,7 +22,7 @@ public class BallChuckerRotator extends SubsystemBase {
     private double pidResult;
 
     // remove & hardcode when initial setup done
-    public double resetMovePwr = -0.4;
+    public double resetMovePwr = -0.25;  // -0.4
     public double pidP = 0.04;
     public double pidI = 0.031;
     public double pidD = 0.0012;
@@ -178,6 +178,16 @@ public class BallChuckerRotator extends SubsystemBase {
 
                 // set the motor with the clamped pid result
                 rotatorMotor.set(pidResult);
+
+
+            // prevent moving past limit
+            if (this.getEncoderDistance() < rotatorMovementLimitLow) {
+                rotatorMotor.set(MathUtil.clamp(pidResult, 0.0, 1.0));
+            } else if (this.getEncoderDistance() > rotatorMovementLimitHigh) {
+                rotatorMotor.set(MathUtil.clamp(pidResult, -1.0, 0.0)); 
+            } else {
+                rotatorMotor.set(pidResult);
+            }
             }
 
         }

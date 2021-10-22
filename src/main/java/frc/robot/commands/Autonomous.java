@@ -3,7 +3,11 @@ package frc.robot.commands;
 import frc.robot.subsystems.BallChuckerIndexer;
 import frc.robot.subsystems.BallTransfer;
 import frc.robot.subsystems.DriveBase;
+
+import java.util.function.BooleanSupplier;
+
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class Autonomous extends CommandBase {
@@ -13,7 +17,7 @@ public class Autonomous extends CommandBase {
   private final BallChuckerIndexer indexer;
   private final BallTransfer elevator;
 
-  private boolean rotatorLocked;
+  private BooleanSupplier rotatorLocked;
   private boolean flywheelLocked;
 
   private Timer shootBallTimer;
@@ -23,7 +27,7 @@ public class Autonomous extends CommandBase {
 
   private boolean autoDone = false;
 
-  public Autonomous(DriveBase driveBase, BallChuckerIndexer indexer, BallTransfer elevator, boolean rotatorLocked, boolean flywheelLocked) {
+  public Autonomous(DriveBase driveBase, BallChuckerIndexer indexer, BallTransfer elevator, BooleanSupplier rotatorLocked, boolean flywheelLocked) {
 
     this.driveBase = driveBase;
     this.indexer = indexer;
@@ -31,6 +35,8 @@ public class Autonomous extends CommandBase {
 
     this.rotatorLocked = rotatorLocked;
     this.flywheelLocked = flywheelLocked;
+
+    shootBallTimer = new Timer();
 
     addRequirements(driveBase, indexer, elevator);
   }

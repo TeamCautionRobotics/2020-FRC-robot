@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import java.util.function.BooleanSupplier;
+
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -16,6 +18,8 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.XboxController.Button;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ToggleReaper;
 import frc.robot.commands.ClimbControl;
 import frc.robot.commands.ArmUp;
@@ -73,8 +77,11 @@ public class RobotContainer {
 
   public final LimelightData limelightData;
 
-  public boolean rotatorLocked;
+  public BooleanSupplier rotatorLocked;
   public boolean flywheelLocked;
+
+  SendableChooser<Command> m_chooser = new SendableChooser<>();
+  private final Command inFrontOfGoalAuto;
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -95,6 +102,8 @@ public class RobotContainer {
         reaperMotor,
         Constants.REAPER_PORT_PISTON_PORT, 
         Constants.REAPER_STARBOARD_PISTON_PORT);
+
+    SmartDashboard.putData(m_chooser);
 
     driveBase = new DriveBase(
         new WPI_TalonSRX(Constants.LEFT_DRIVE_MOTOR_0_DEVICE_NUMBER),
@@ -134,6 +143,9 @@ public class RobotContainer {
     driveBase.setDefaultCommand(new TankDrive(driveBase, () -> -leftJoystick.getY(), () -> -rightJoystick.getY()));
     ballChuckerRotator.setDefaultCommand(new BallChuckerRotatorAuto(ballChuckerRotator, limelightData, rotatorLocked));
     climb.setDefaultCommand(new ClimbControl(climb, () -> -manipulator.getY(Hand.kRight), () -> manipulator.getRawAxis(2), () -> manipulator.getRawAxis(3)));
+
+    inFrontOfGoalAuto = new Autonomous(driveBase, ballChuckerIndexer, ballTransfer, rotatorLocked, flywheelLocked);
+    m_chooser.setDefaultOption("AUTO: In front of goal", inFrontOfGoalAuto);
 
     // Configure the button bindings
     configureButtonBindings();
@@ -183,6 +195,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return new Autonomous(driveBase, ballChuckerIndexer, ballTransfer, rotatorLocked, flywheelLocked);
+    return m_chooser.getSelected();
   }
 }

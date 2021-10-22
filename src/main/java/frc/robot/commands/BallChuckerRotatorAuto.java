@@ -1,7 +1,11 @@
 package frc.robot.commands;
 
 import frc.robot.subsystems.BallChuckerRotator;
+
+import java.util.function.BooleanSupplier;
+
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.misc2020.LimelightData;
 
@@ -14,7 +18,7 @@ public class BallChuckerRotatorAuto extends CommandBase {
   private double tV;  // target valid
   private double tX;  // target x offset
 
-  private boolean locked = false;
+  public BooleanSupplier locked;
 
   private boolean searchDir = false;
   private double currentAngle;
@@ -36,7 +40,7 @@ public class BallChuckerRotatorAuto extends CommandBase {
    * @param limelightObj Pass an instance of LimelightData.
    * @param lockedObj Pass a boolean to track if we're locked on target
    */
-  public BallChuckerRotatorAuto(BallChuckerRotator subsystem, LimelightData limelightObj, boolean lockedObj) {
+  public BallChuckerRotatorAuto(BallChuckerRotator subsystem, LimelightData limelightObj, BooleanSupplier lockedObj) {
     ballChucker = subsystem;
     this.limelight = limelightObj;
 
@@ -85,12 +89,15 @@ public class BallChuckerRotatorAuto extends CommandBase {
       targetAngle = currentAngle + tX + offsetAngle;
       ballChucker.setRotatorPosition(targetAngle);
 
+      SmartDashboard.putNumber("tX", tX);
       // Are we locked?
-      if (-0.5 < tX && tX < 0.5) {
-        locked = true;
+      if (-6.0 < tX && tX < -3.0) {
+        locked = () -> true;
       } else {
-        locked = false;
+        locked = () -> false;
       }
+
+      SmartDashboard.putBoolean("locked", locked.getAsBoolean());
 
     } else {  // no target mode
 

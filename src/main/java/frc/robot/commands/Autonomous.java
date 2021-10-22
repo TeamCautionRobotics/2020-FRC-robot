@@ -17,7 +17,7 @@ public class Autonomous extends CommandBase {
   private final BallChuckerIndexer indexer;
   private final BallTransfer elevator;
 
-  private BooleanSupplier rotatorLocked;
+  private boolean rotatorLocked;
   private boolean flywheelLocked;
 
   private Timer shootBallTimer;
@@ -27,7 +27,7 @@ public class Autonomous extends CommandBase {
 
   private boolean autoDone = false;
 
-  public Autonomous(DriveBase driveBase, BallChuckerIndexer indexer, BallTransfer elevator, BooleanSupplier rotatorLocked, boolean flywheelLocked) {
+  public Autonomous(DriveBase driveBase, BallChuckerIndexer indexer, BallTransfer elevator, boolean rotatorLocked, boolean flywheelLocked) {
 
     this.driveBase = driveBase;
     this.indexer = indexer;
@@ -55,12 +55,15 @@ public class Autonomous extends CommandBase {
     // stop
     driveBase.drive(0);
     shootBallTimer.reset();
-    autoDone = true;
+    autoDone = false;
 
   }
 
   @Override
   public void execute() {
+
+    SmartDashboard.putBoolean("auto lck", rotatorLocked);
+
 
     // auto flywheel {DISABLED}
     // if (rotatorLocked && flywheelLocked && !ballsShot) {  // locked and balls have not been shot, go time

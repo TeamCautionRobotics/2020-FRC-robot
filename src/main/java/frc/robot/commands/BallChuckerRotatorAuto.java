@@ -18,7 +18,7 @@ public class BallChuckerRotatorAuto extends CommandBase {
   private double tV;  // target valid
   private double tX;  // target x offset
 
-  public BooleanSupplier locked;
+  public boolean locked;
 
   private boolean searchDir = false;
   private double currentAngle;
@@ -40,7 +40,7 @@ public class BallChuckerRotatorAuto extends CommandBase {
    * @param limelightObj Pass an instance of LimelightData.
    * @param lockedObj Pass a boolean to track if we're locked on target
    */
-  public BallChuckerRotatorAuto(BallChuckerRotator subsystem, LimelightData limelightObj, BooleanSupplier lockedObj) {
+  public BallChuckerRotatorAuto(BallChuckerRotator subsystem, LimelightData limelightObj, boolean lockedObj) {
     ballChucker = subsystem;
     this.limelight = limelightObj;
 
@@ -92,12 +92,12 @@ public class BallChuckerRotatorAuto extends CommandBase {
       SmartDashboard.putNumber("tX", tX);
       // Are we locked?
       if (-6.0 < tX && tX < -3.0) {
-        locked = () -> true;
+        locked = true;
       } else {
-        locked = () -> false;
+        locked = false;
       }
 
-      SmartDashboard.putBoolean("locked", locked.getAsBoolean());
+      SmartDashboard.putBoolean("locked", locked);
 
     } else {  // no target mode
 

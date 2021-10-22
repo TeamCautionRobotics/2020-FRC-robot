@@ -8,6 +8,7 @@
 package frc.robot;
 
 import java.util.function.BooleanSupplier;
+import java.util.function.DoubleSupplier;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
@@ -77,7 +78,7 @@ public class RobotContainer {
 
   public final LimelightData limelightData;
 
-  public BooleanSupplier rotatorLocked;
+  public boolean rotatorLocked;
   public boolean flywheelLocked;
 
   SendableChooser<Command> m_chooser = new SendableChooser<>();

@@ -105,9 +105,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-
-    SmartDashboard.putNumber("controller axis 2", m_robotContainer.manipulator.getRawAxis(2));
-
   }
 
   @Override

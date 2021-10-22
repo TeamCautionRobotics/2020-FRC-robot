@@ -55,7 +55,6 @@ public class BallChuckerFlywheelManual extends CommandBase {
 
 
             ballChucker.setPower(correctedPower);
-            SmartDashboard.putNumber("power target flywheel", correctedPower);
         }
 
     }

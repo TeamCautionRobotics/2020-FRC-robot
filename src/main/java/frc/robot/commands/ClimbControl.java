@@ -43,9 +43,6 @@ public class ClimbControl extends CommandBase {
       subsystem.runWinch(-winchDown.getAsDouble());
     }
 
-    SmartDashboard.putNumber("winch up power", winchUp.getAsDouble());
-    SmartDashboard.putNumber("winch down power", winchDown.getAsDouble());
-
   }
 
   @Override

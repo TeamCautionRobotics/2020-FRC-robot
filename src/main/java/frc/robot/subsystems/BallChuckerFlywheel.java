@@ -96,12 +96,5 @@ public class BallChuckerFlywheel extends SubsystemBase {
             flywheelMotors.set(pidResult);
 
         }
-
-        SmartDashboard.putNumber("flywheel pid P", pidP);
-        SmartDashboard.putNumber("flywheel pid I", pidI);
-        SmartDashboard.putNumber("flywheel pid D", pidD);
-        SmartDashboard.putNumber("flywheel actual speed (rps)", getSpeed());
-
-        SmartDashboard.putNumber("flywheel powa", pidResult);
     }
 }

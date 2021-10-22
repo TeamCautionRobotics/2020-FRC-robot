@@ -77,14 +77,6 @@ public class BallChuckerFlywheelAuto extends CommandBase {
       ballChucker.setSpeed(0);
     }
 
-    SmartDashboard.putNumber("limelight measured dist.", distance);
-    SmartDashboard.putBoolean("limelight locked", locked);
-    SmartDashboard.putNumber("angle to taget", Math.PI*(a1 + tY) / 180.0);
-    SmartDashboard.putNumber("1 OVER tan", (1 / Math.tan(Math.PI*(a1 + tY) / 180.0)));
-    SmartDashboard.putNumber("h2", h2);
-    SmartDashboard.putNumber("h2-h1", h2-h1);
-    SmartDashboard.putNumber("another distance", (h2 - h1) / Math.tan(Math.PI*(a1 + tY) / 180.0));
-
   }
 
   @Override

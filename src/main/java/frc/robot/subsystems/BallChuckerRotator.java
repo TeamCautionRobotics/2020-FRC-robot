@@ -182,17 +182,5 @@ public class BallChuckerRotator extends SubsystemBase {
 
         }
 
-        SmartDashboard.putNumber("Rotator Reset Movement Power", resetMovePwr);
-        SmartDashboard.putNumber("Rotator P", pidP);
-        SmartDashboard.putNumber("Rotator I", pidI);
-        SmartDashboard.putNumber("Rotator D", pidD);
-        SmartDashboard.putNumber("Rotator Limit Low", rotatorMovementLimitLow);
-        SmartDashboard.putNumber("Rotator Limit High", rotatorMovementLimitHigh);
-        SmartDashboard.putNumber("Rotator getDistance()", getEncoderDistance());
-        SmartDashboard.putBoolean("Force Disable PID", forceDisablePid);
-
-        SmartDashboard.putNumber("pid rotator setpoint", pidSetpoint);
-        SmartDashboard.putNumber("pid rotator power", pidResult);
-
     }
 } 

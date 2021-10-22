@@ -89,7 +89,6 @@ public class BallChuckerRotatorAuto extends CommandBase {
       targetAngle = currentAngle + tX + offsetAngle;
       ballChucker.setRotatorPosition(targetAngle);
 
-      SmartDashboard.putNumber("tX", tX);
       // Are we locked?
       if (-6.0 < tX && tX < -3.0) {
         locked = true;
@@ -97,7 +96,7 @@ public class BallChuckerRotatorAuto extends CommandBase {
         locked = false;
       }
 
-      SmartDashboard.putBoolean("locked", locked);
+      SmartDashboard.putBoolean("Locked In Command", locked);
 
     } else {  // no target mode
 

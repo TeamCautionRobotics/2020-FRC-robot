@@ -5,6 +5,7 @@ import frc.robot.subsystems.BallTransfer;
 import frc.robot.subsystems.DriveBase;
 
 import java.util.function.BooleanSupplier;
+import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -62,7 +63,7 @@ public class Autonomous extends CommandBase {
   @Override
   public void execute() {
 
-    SmartDashboard.putBoolean("auto lck", rotatorLocked);
+    SmartDashboard.putBoolean("Locked in Auto", rotatorLocked);
 
 
     // auto flywheel {DISABLED}

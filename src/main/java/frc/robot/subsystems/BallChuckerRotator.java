@@ -82,9 +82,9 @@ public class BallChuckerRotator extends SubsystemBase {
 
             // prevent moving past limit
             if (this.getEncoderDistance() < rotatorMovementLimitLow) {
-                powerCorrected = MathUtil.clamp(power, -1.0, 0.0);
+                powerCorrected = MathUtil.clamp(power, 0.0, 1.0);
             } else if (this.getEncoderDistance() > rotatorMovementLimitHigh) {
-                powerCorrected = MathUtil.clamp(power, 0.0, 1.0); 
+                powerCorrected = MathUtil.clamp(power, -1.0, 0.0); 
             } else {
                 powerCorrected = power;
             }

@@ -32,7 +32,12 @@ public class BallChuckerRotatorManual extends CommandBase {
   @Override
   public void execute() {
 
-    ballChucker.setRotatorMotor(inputPower.getAsDouble());
+    if (Math.abs(inputPower.getAsDouble()) > 0.2) {
+      ballChucker.setRotatorMotor(inputPower.getAsDouble() * 0.5);
+    } else {
+      ballChucker.setRotatorMotor(0);
+    }
+
 
   }
 

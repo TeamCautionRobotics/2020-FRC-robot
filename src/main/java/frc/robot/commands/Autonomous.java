@@ -49,42 +49,44 @@ public class Autonomous extends CommandBase {
     // stop
     driveBase.drive(0);
     shootBallTimer.reset();
+    autoDone = true;
 
   }
 
   @Override
   public void execute() {
 
-    if (rotatorLocked && flywheelLocked && !ballsShot) {  // locked and balls have not been shot, go time
-      if (!timerRunning) {
-        timerRunning = true;
-        shootBallTimer.start();
-      }
+    // auto flywheel {DISABLED}
+    // if (rotatorLocked && flywheelLocked && !ballsShot) {  // locked and balls have not been shot, go time
+    //   if (!timerRunning) {
+    //     timerRunning = true;
+    //     shootBallTimer.start();
+    //   }
 
-      driveBase.drive(0);
-      indexer.setPower(0.7);
-      elevator.moveBalls(0.7);
+    //   driveBase.drive(0);
+    //   indexer.setPower(0.7);
+    //   elevator.moveBalls(0.7);
 
-      if (shootBallTimer.get() > 5) {  // shoot for 5s
-        indexer.setPower(0);
-        elevator.moveBalls(0);
-        ballsShot = true;
-      }
+    //   if (shootBallTimer.get() > 5) {  // shoot for 5s
+    //     indexer.setPower(0);
+    //     elevator.moveBalls(0);
+    //     ballsShot = true;
+    //   }
 
-    } else if (rotatorLocked && !flywheelLocked && !ballsShot) {  // flywheel has slowed, wait for it to spin up again
+    // } else if (rotatorLocked && !flywheelLocked && !ballsShot) {  // flywheel has slowed, wait for it to spin up again
       
-      driveBase.drive(0);
-      indexer.setPower(0);
-      elevator.moveBalls(0);
+    //   driveBase.drive(0);
+    //   indexer.setPower(0);
+    //   elevator.moveBalls(0);
 
-    } else if (!rotatorLocked && !ballsShot) {  // no lock and balls haven't been shot, rotate in place until we get lock
-      driveBase.drive(-0.2, 0.2);
-    } else if (ballsShot){  // balls have been shot. stop everything
-      indexer.setPower(0);
-      elevator.moveBalls(0);
-      driveBase.drive(0);
-      autoDone = true;
-    }
+    // } else if (!rotatorLocked && !ballsShot) {  // no lock and balls haven't been shot, rotate in place until we get lock
+    //   driveBase.drive(-0.2, 0.2);
+    // } else if (ballsShot){  // balls have been shot. stop everything
+    //   indexer.setPower(0);
+    //   elevator.moveBalls(0);
+    //   driveBase.drive(0);
+    //   autoDone = true;
+    // }
 
   }
 

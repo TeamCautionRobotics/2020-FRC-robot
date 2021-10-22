@@ -8,6 +8,7 @@ public class LockWinch extends CommandBase {
   @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
 
   private final ClimbSubsystem subsystem;
+  private boolean finished = false;
 
   public LockWinch(ClimbSubsystem subsystem) {
     this.subsystem = subsystem;
@@ -23,6 +24,7 @@ public class LockWinch extends CommandBase {
   public void execute() {
     
     subsystem.lock(true);
+    finished = true;
 
   }
 
@@ -32,6 +34,6 @@ public class LockWinch extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return false;
+    return finished;
   }
 }

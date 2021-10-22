@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ClimbSubsystem extends SubsystemBase {
@@ -21,6 +22,7 @@ public class ClimbSubsystem extends SubsystemBase {
 
   private boolean usingPid = true;
   private double pidOutput;
+
 
   /**
    * Creates a new ArmSubsystem.
@@ -52,6 +54,7 @@ public class ClimbSubsystem extends SubsystemBase {
     } else {
         winchMotor.set(0);
     }
+
 }
 
 public void moveArm(double power) {

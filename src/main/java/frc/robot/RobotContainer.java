@@ -133,7 +133,7 @@ public class RobotContainer {
     
     driveBase.setDefaultCommand(new TankDrive(driveBase, () -> -leftJoystick.getY(), () -> -rightJoystick.getY()));
     ballChuckerRotator.setDefaultCommand(new BallChuckerRotatorAuto(ballChuckerRotator, limelightData, rotatorLocked));
-    climb.setDefaultCommand(new ClimbControl(climb, () -> -manipulator.getY(Hand.kRight), () -> manipulator.getTriggerAxis(Hand.kLeft), () -> manipulator.getTriggerAxis(Hand.kRight)));
+    climb.setDefaultCommand(new ClimbControl(climb, () -> -manipulator.getY(Hand.kRight), () -> manipulator.getRawAxis(2), () -> manipulator.getRawAxis(3)));
 
     // Configure the button bindings
     configureButtonBindings();
@@ -160,7 +160,7 @@ public class RobotContainer {
     new JoystickButton(rightJoystick, 3).whileHeld(new BallChuckerFlywheelAuto(ballChuckerFlywheel, limelightData, flywheelLocked));
     // Failsafes
     new JoystickButton(leftJoystick, 11).toggleWhenPressed(new BallChuckerRotatorManual(ballChuckerRotator, () -> manipulator.getX(Hand.kLeft)));
-    new JoystickButton(leftJoystick, 11).toggleWhenPressed(new BallChuckerFlywheelManual(ballChuckerFlywheel, false, () -> rightJoystick.getZ()));
+    new JoystickButton(leftJoystick, 11).toggleWhenPressed(new BallChuckerFlywheelManual(ballChuckerFlywheel, false, () -> -rightJoystick.getRawAxis(2)));
 
     // MANIPULATOR BINDS:
     //intake piston 

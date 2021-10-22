@@ -13,6 +13,7 @@ public class BallChuckerFlywheelManual extends CommandBase {
     private boolean usePid;
     private DoubleSupplier powerTarget;
     public double desiredRps = 0.0; 
+    private double correctedPower;
 
     public BallChuckerFlywheelManual(BallChuckerFlywheel ballChucker, boolean usePid, DoubleSupplier powerTarget) {
         this.ballChucker = ballChucker;
@@ -45,7 +46,16 @@ public class BallChuckerFlywheelManual extends CommandBase {
             desiredRps = SmartDashboard.getNumber("flywheel desired speed (rps)", 0);
 
         } else {
-            ballChucker.setSpeed(powerTarget.getAsDouble());
+
+            if (powerTarget.getAsDouble() > 0) {
+                correctedPower = (powerTarget.getAsDouble() / 2.0) + 0.5;
+            } else {
+                correctedPower = (1.0 + powerTarget.getAsDouble()) / 2.0;
+            }
+
+
+            ballChucker.setPower(correctedPower);
+            SmartDashboard.putNumber("power target flywheel", correctedPower);
         }
 
     }

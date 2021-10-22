@@ -3,6 +3,8 @@ package frc.robot.commands;
 import frc.robot.subsystems.ClimbSubsystem;
 
 import java.util.function.DoubleSupplier;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class ClimbControl extends CommandBase {
@@ -40,6 +42,9 @@ public class ClimbControl extends CommandBase {
     } else {
       subsystem.runWinch(-winchDown.getAsDouble());
     }
+
+    SmartDashboard.putNumber("winch up power", winchUp.getAsDouble());
+    SmartDashboard.putNumber("winch down power", winchDown.getAsDouble());
 
   }
 

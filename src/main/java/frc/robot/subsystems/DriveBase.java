@@ -41,8 +41,8 @@ public class DriveBase extends SubsystemBase {
     this.leftEncoder = leftEncoder;
     this.rightEncoder = rightEncoder;
 
-    leftEncoder.setDistancePerPulse((4 * Math.PI) / 1024.0);
-    rightEncoder.setDistancePerPulse((4 * Math.PI) / 1024.0);
+    leftEncoder.setDistancePerPulse((6 * Math.PI) / 1024.0);
+    rightEncoder.setDistancePerPulse((6 * Math.PI) / 1024.0);
 
     // gyro = new ADXRS450_Gyro();
     // gyro.calibrate();

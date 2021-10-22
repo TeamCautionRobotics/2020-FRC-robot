@@ -25,7 +25,7 @@ public class BallChuckerRotatorPark extends CommandBase {
   @Override
   public void execute() {
 
-    ballChucker.setRotatorPosition(120.0);
+    ballChucker.setRotatorPosition(17.0);
 
   }
 

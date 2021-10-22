@@ -16,6 +16,8 @@ public class BallChuckerFlywheel extends SubsystemBase {
     private final SpeedControllerGroup flywheelMotors;
     private final Encoder flywheelEncoder;
 
+    private boolean locked = false;
+
     private PIDController flywheelPid;
 
     private boolean pidActive = false;
@@ -79,6 +81,14 @@ public class BallChuckerFlywheel extends SubsystemBase {
 
     public boolean getPidAtSetpoint() {
         return flywheelPid.atSetpoint();
+    }
+
+    public void setLocked(boolean lock) {
+        locked = lock;
+    }
+
+    public boolean getLocked() {
+        return locked;
     }
 
     @Override

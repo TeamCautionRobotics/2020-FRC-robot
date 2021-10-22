@@ -24,7 +24,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ToggleReaper;
 import frc.robot.commands.ClimbControl;
 import frc.robot.commands.ArmUp;
-import frc.robot.commands.Autonomous;
+import frc.robot.commands.AutoDriveThreeFeet;
+import frc.robot.commands.AutoInFrontOfGoal;
 import frc.robot.commands.BallChuckerFlywheelAuto;
 import frc.robot.commands.BallChuckerRotatorAuto;
 import frc.robot.commands.BallChuckerRotatorManual;
@@ -50,6 +51,7 @@ import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.Reaper;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -83,6 +85,7 @@ public class RobotContainer {
 
   SendableChooser<Command> m_chooser = new SendableChooser<>();
   private final Command inFrontOfGoalAuto;
+  private final Command driveThreeFeetAuto;
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -145,8 +148,15 @@ public class RobotContainer {
     ballChuckerRotator.setDefaultCommand(new BallChuckerRotatorAuto(ballChuckerRotator, limelightData, rotatorLocked));
     climb.setDefaultCommand(new ClimbControl(climb, () -> -manipulator.getY(Hand.kRight), () -> manipulator.getRawAxis(2), () -> manipulator.getRawAxis(3)));
 
-    inFrontOfGoalAuto = new Autonomous(driveBase, ballChuckerIndexer, ballTransfer, rotatorLocked, flywheelLocked);
+    inFrontOfGoalAuto = new ParallelRaceGroup(
+                            new AutoInFrontOfGoal(driveBase, ballChuckerIndexer, ballTransfer, ballChuckerRotator, ballChuckerFlywheel), 
+                            new BallChuckerFlywheelAuto(ballChuckerFlywheel, limelightData, flywheelLocked));
+
+    driveThreeFeetAuto = new AutoDriveThreeFeet(driveBase);
+    
+    
     m_chooser.setDefaultOption("AUTO: In front of goal", inFrontOfGoalAuto);
+    m_chooser.addOption("AUTO: Drive forward 3 feet", driveThreeFeetAuto);
 
     // Configure the button bindings
     configureButtonBindings();
@@ -163,7 +173,7 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-
+    
     // JOYSTICK BINDS:
     // shifter
     new JoystickButton(leftJoystick, 4).toggleWhenPressed(new ToggleShifter(driveBase));

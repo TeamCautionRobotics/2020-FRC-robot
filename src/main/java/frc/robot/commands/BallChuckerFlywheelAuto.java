@@ -62,15 +62,16 @@ public class BallChuckerFlywheelAuto extends CommandBase {
 
       // Distance in inch
       distance = (h2 - h1) / Math.tan(Math.PI*(a1 + tY) / 180.0);
+      SmartDashboard.putNumber("Limelight Calculated Distance:", distance);
 
       desiredRps = Math.pow(0.000003516428755144 * distance, 3) - Math.pow(0.0066848566503 * distance, 2) + (0.339064673194 * distance) + 35.678336060798;
 
       ballChucker.setSpeed(desiredRps);
 
-      if (ballChucker.getPidAtSetpoint()) {
-        locked = true;
+      if ((desiredRps - 5) < ballChucker.getSpeed() && ballChucker.getSpeed() < (desiredRps + 5)) {
+        ballChucker.setLocked(true);
       } else {
-        locked = false;
+        ballChucker.setLocked(false);
       }
 
     } else {  // no target, set half speed

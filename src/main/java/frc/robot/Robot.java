@@ -88,8 +88,6 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
 
-    SmartDashboard.putBoolean("Locked in Container", m_robotContainer.rotatorLocked);
-
   }
 
   @Override
@@ -109,7 +107,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
 
-    SmartDashboard.putBoolean("Locked in Container", m_robotContainer.rotatorLocked);
+    SmartDashboard.putBoolean("HIGH GEAR:", m_robotContainer.driveBase.getShifterState());
 
   }
 

@@ -32,6 +32,8 @@ public class BallChuckerRotator extends SubsystemBase {
 
     private boolean homingSwitchHit = false;
 
+    private boolean locked = false;
+
     public BallChuckerRotator(SpeedController rotatorMotorObj, Encoder rotatorEncoderObj, DigitalInput rotatorSwitchObj) {
 
         this.rotatorMotor = rotatorMotorObj;
@@ -146,6 +148,14 @@ public class BallChuckerRotator extends SubsystemBase {
     public boolean getRotatorSwitch() {
         // ROTATOR SWITCH IS INVERTED ON BOT!
         return !rotatorSwitch.get();
+    }
+
+    public void setLocked(boolean lock) {
+        locked = lock;
+    }
+
+    public boolean getLocked() {
+        return locked;
     }
 
     @Override

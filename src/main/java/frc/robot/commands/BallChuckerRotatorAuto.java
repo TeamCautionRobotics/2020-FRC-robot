@@ -91,12 +91,10 @@ public class BallChuckerRotatorAuto extends CommandBase {
 
       // Are we locked?
       if (-6.0 < tX && tX < -3.0) {
-        locked = true;
+        ballChucker.setLocked(true);
       } else {
-        locked = false;
+        ballChucker.setLocked(false);
       }
-
-      SmartDashboard.putBoolean("Locked In Command", locked);
 
     } else {  // no target mode
 

@@ -51,8 +51,9 @@ public class BallChuckerRotator extends SubsystemBase {
         rotatorEncoder.setDistancePerPulse(360.0 / ((124.0 / 15.0) * (50.0 * 1024.0)));
         rotatorEncoder.setReverseDirection(true);
 
+        homingSwitchHit = false;
         // home up before use
-        this.fullReset();
+        
 
     }
 

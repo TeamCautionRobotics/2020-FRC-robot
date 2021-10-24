@@ -51,9 +51,9 @@ public class AutoInFrontOfGoal extends CommandBase {
     // reset encoders
     driveBase.resetEncoders();
 
-    // drive forward 3 feet
-    while (driveBase.getDistance() < 36) {
-      driveBase.drive(0.75);
+    // drive back 3 feet
+    while (driveBase.getDistance() > -36) {
+      driveBase.drive(-0.75);
     } 
 
     // stop
@@ -82,20 +82,27 @@ public class AutoInFrontOfGoal extends CommandBase {
         ballsShot = true;
       }
 
+      SmartDashboard.putString("autostate", "SHOOTING");
+
     } else if (rotatorSubsystem.getLocked() && !flywheelSubsystem.getLocked() && !ballsShot) {  // flywheel has slowed, wait for it to spin up again
       
       driveBase.drive(0);
       indexer.setPower(0);
       elevator.moveBalls(0);
 
+      SmartDashboard.putString("autostate", "ROTATOR LOCK - WAITING FOR FLYWHEEL");
+
     } else if (!rotatorSubsystem.getLocked() && !ballsShot) {  // no lock and balls haven't been shot, rotate in place until we get lock
-      driveBase.drive(-0.2, 0.2);
+      // driveBase.drive(-0.2, 0.2);
+      SmartDashboard.putString("autostate", "NO LOCK");
     } else if (ballsShot){  // balls have been shot. stop everything
       indexer.setPower(0);
       elevator.moveBalls(0);
       driveBase.drive(0);
       autoDone = true;
+      SmartDashboard.putString("autostate", "DONE");
     }
+
 
   }
 

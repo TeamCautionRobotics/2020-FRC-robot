@@ -64,7 +64,10 @@ public class BallChuckerFlywheelAuto extends CommandBase {
       distance = (h2 - h1) / Math.tan(Math.PI*(a1 + tY) / 180.0);
       SmartDashboard.putNumber("Limelight Calculated Distance:", distance);
 
-      desiredRps = Math.pow(0.000003516428755144 * distance, 3) - Math.pow(0.0066848566503 * distance, 2) + (0.339064673194 * distance) + 35.678336060798;
+      desiredRps = Math.pow(0.000003516428755144 * distance, 3) - Math.pow(0.0066848566503 * distance, 2) + (0.339064673194 * distance) + 45.678336060798;
+
+      SmartDashboard.putNumber("flywheel desired rps", desiredRps);
+      SmartDashboard.putNumber("flywheel actual rps", ballChucker.getSpeed());
 
       ballChucker.setSpeed(desiredRps);
 

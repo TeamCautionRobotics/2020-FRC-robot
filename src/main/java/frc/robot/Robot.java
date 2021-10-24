@@ -75,7 +75,9 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
 
-    m_robotContainer.ballChuckerRotator.fullReset();
+    while (!m_robotContainer.ballChuckerRotator.homingSwitchHit) {
+      m_robotContainer.ballChuckerRotator.fullReset();
+    }
 
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
@@ -103,7 +105,9 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
 
-    m_robotContainer.ballChuckerRotator.fullReset();
+    while (!m_robotContainer.ballChuckerRotator.homingSwitchHit) {
+      m_robotContainer.ballChuckerRotator.fullReset();
+    }
   }
 
   /**

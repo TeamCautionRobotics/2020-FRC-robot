@@ -30,7 +30,7 @@ public class BallChuckerRotator extends SubsystemBase {
     public double rotatorMovementLimitHigh = 120.0;
     public boolean forceDisablePid = false;
 
-    private boolean homingSwitchHit = false;
+    public boolean homingSwitchHit = false;
 
     private boolean locked = false;
 
@@ -53,12 +53,13 @@ public class BallChuckerRotator extends SubsystemBase {
 
         homingSwitchHit = false;
         // home up before use
-        
 
     }
 
     public void fullReset() {
         // Slowly turn rotator until we hit the switch
+
+        homingSwitchHit = false;
 
         rotatorMotor.set(resetMovePwr);
 
@@ -165,7 +166,8 @@ public class BallChuckerRotator extends SubsystemBase {
         // homing routine:
         if (!homingSwitchHit) {
 
-            fullReset();
+            // fullReset();
+            ;
 
         } else {
 

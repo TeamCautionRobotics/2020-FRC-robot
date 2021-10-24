@@ -24,7 +24,7 @@ public class BallChuckerFlywheel extends SubsystemBase {
     private double pidSetpoint = 0.0;
     private double pidResult;
 
-    public double pidP = 0.006;
+    public double pidP = 0.003;
     public double pidI = 0.012;
     public double pidD = 0.000000;
 

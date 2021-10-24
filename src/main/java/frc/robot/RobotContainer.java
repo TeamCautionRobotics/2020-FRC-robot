@@ -51,6 +51,7 @@ import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.Reaper;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.VictorSP;
@@ -178,12 +179,15 @@ public class RobotContainer {
     // shifter
     new JoystickButton(leftJoystick, 4).toggleWhenPressed(new ToggleShifter(driveBase));
     // indexer
-    new JoystickButton(rightJoystick, 1).whileHeld(new RunIndexer(ballChuckerIndexer, () -> 0.75));
+    // new JoystickButton(rightJoystick, 1).whileHeld(new RunIndexer(ballChuckerIndexer, () -> 0.75));
+    new JoystickButton(rightJoystick, 1).whileHeld(new ParallelCommandGroup(new RunIndexer(ballChuckerIndexer, () -> 0.75), new ElevateBalls(ballTransfer, () -> -1)));
     // auto flywheel
     new JoystickButton(rightJoystick, 3).whileHeld(new BallChuckerFlywheelAuto(ballChuckerFlywheel, limelightData, flywheelLocked));
     // Failsafes
     new JoystickButton(leftJoystick, 11).toggleWhenPressed(new BallChuckerRotatorManual(ballChuckerRotator, () -> manipulator.getX(Hand.kLeft)));
     new JoystickButton(leftJoystick, 11).toggleWhenPressed(new BallChuckerFlywheelManual(ballChuckerFlywheel, false, () -> -rightJoystick.getRawAxis(2)));
+    // Elevator 
+    new JoystickButton(rightJoystick, 2).whileHeld(new ElevateBalls(ballTransfer, () -> -1));
 
     // MANIPULATOR BINDS:
     //intake piston 
